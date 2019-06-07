@@ -1,4 +1,4 @@
-# ui-app
+# TronTopia VUE UI
 
 ## Project setup
 ```
