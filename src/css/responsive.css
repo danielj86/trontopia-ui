@@ -1,0 +1,3055 @@
+@media(min-width:1025px) and (max-width:1350px){
+
+	/* **** Home Page **** */
+
+	.container{
+
+		width: auto;
+
+	}
+
+	.navbar-default{
+
+		padding: 15px 0;
+
+	}
+
+	h1.logo-txt{
+
+		font-size: 28px;
+
+		line-height: 40px;
+
+	}
+
+	.navbar-default .navbar-nav>li>a{
+
+		font-size: 16px;
+
+		font-weight: normal;
+
+	}
+
+	.navbar-default .navbar-nav>li{
+
+		margin-right:15px;
+
+	}
+
+	.headlines-box{
+
+		padding: 15px;
+
+	}
+
+	.headline-bx p{
+
+		font-size: 16px;
+
+		margin: 0 10px 0 0;
+
+	}
+
+	.headline-bx label{
+
+		padding: 8px 15px;
+
+		font-weight: 15px;
+
+	}
+
+	.dice-img{min-height: 100%;}
+
+	.dic-nm h3{font-size: 16px;}
+
+	/* **** End Home Page **** */
+
+
+
+	/* **** Dice Blueline Page **** */
+
+	.dice-hedln{
+
+		padding: 15px 10px;
+
+	}
+
+	.dice-nav li a{
+
+		font-size: 14px;
+
+	}
+
+	.dice-nav li img{
+
+		width: 30px;
+
+		margin-right: 3px;
+
+	}
+
+	.dice-head p{
+
+		display: inline-block;
+
+		margin: 0 5px 0 0;
+
+		font-size: 16px;
+
+		font-weight: normal;
+
+	}
+
+	.dice-head label{
+
+		margin:0 10px 0px;
+
+		font-size: 14px;
+
+		padding: 8px 10px;
+
+	}
+
+	.main-bet .form-group .form-control{
+
+		font-size: 16px;
+
+		padding: 8px 45px 8px 45px;
+
+	}
+	.frm-gt span.multi,
+	.main-bet .form-group span{
+		top: 12px;
+		font-size: 14px;
+
+	}
+
+	.main-bet .form-group img{
+
+		padding: 3px;
+
+		width: auto;
+
+	}
+
+	.sider-bar{
+
+		margin: 0 0 30px;
+
+	}
+
+	.od-ec,
+
+	.selct-size{
+
+		margin: 0 0 10px;
+
+	}
+
+	.main-bet label{
+
+		font-size: 14px;
+
+	}
+
+	.od-ec li a,
+
+	.selct-size li a{
+
+		padding: 10px 5px;
+
+		font-size: 14px;
+
+	}
+
+	.main-bet .form-group label{
+
+		font-size: 16px;
+
+	}
+
+	.counter-bx{
+
+		padding: 10px 15px;
+
+	}
+
+	.bets-tabs-dt .nav-tabs li a{
+
+		font-size: 18px;
+
+		margin: 0;
+
+	}
+
+	.table-bets .head-th{
+
+		padding: 15px 5px;
+
+		word-break: break-all;
+
+	}
+
+	input.sw + label span {
+
+	    line-height: 24px;
+
+	    margin-left: 42px;
+
+	    padding-left: 16px;
+
+	    font-size: 12px;
+
+	    display: none;
+
+	    font-weight: normal;
+
+	}
+
+	input.sw + label{
+
+		margin: 0 auto;
+
+		display: table;
+
+	}
+
+	.dic-bs{
+
+		padding: 20px 5px;
+
+		word-break: break-all;
+
+	}
+
+	/* **** End Dice Blueline Page **** */
+
+
+
+	/* **** Popups **** */
+
+	.chet-bx{
+
+		padding: 20px 15px;
+
+	}
+
+	.modal-dialog{
+
+		margin: 15px auto 0;
+
+	}
+
+	#refer .modal-dialog,#hplay .modal-dialog,
+
+	#dividend .modal-dialog{
+
+		width:70%;
+
+	}
+
+	.referrals-pop,
+
+	.dividend-pop{
+
+		padding: 35px 15px;
+
+	}
+
+	.progress-step .progress span.title,.withdr-bx p,
+
+	.dividend-pop h6{
+
+		font-size: 16px;
+
+	}
+
+	.available-bx{
+
+		padding: 15px;
+
+	}
+
+	.available-bx h3{
+
+		font-size: 20px;
+
+	}
+
+	.available-bx p{
+
+		font-size: 16px;
+
+		line-height: 24px;
+
+	}
+
+	img.how-img,img.how-img-two,
+
+	img.divi-img{
+
+		display: none;
+
+	}
+
+	.with-bx{
+
+		margin: 0 0 20px;
+
+	}
+
+	.referrals-pop h6{
+
+		font-size: 20px;
+
+		line-height: 24px;
+
+	}
+
+	a.dwnld{
+
+		font-size: 16px;
+
+	}
+
+	.refre-data{
+
+		padding: 15px;
+
+	}
+
+	.refre-data p{
+
+		font-size: 15px;
+
+		line-height: 22px;
+
+		margin: 0 0 10px;
+
+	}
+
+	.refre-data h6{
+
+		font-size: 15px;
+
+		line-height: 22px;
+
+	}
+
+	.refer-progres .icnbxon img{
+
+		width: 25px;
+
+		margin: 10px auto 0;
+
+	}
+
+	.refer-progres .progress{
+
+		margin: 0;
+
+	}
+
+	.refer-progres p{
+
+		font-size: 15px;
+
+	}
+
+	.refre-links{
+
+		padding: 15px 0;
+
+	}
+
+	.link-bx{
+
+		margin: 0 0 25px;
+
+	}
+
+	.link-bx h6{
+
+		font-size: 16px;
+
+	}
+
+	/* **** End Popups **** */
+
+
+
+	.notifcatio-bx ul{
+
+		right: 10px;
+
+	}
+	.lucktest-bxx{padding: 35px 35px;}
+	.lucktest-bxx #lucky_no{font-size: 150px;}
+	.bet-label div svg{width: 15px;margin: 0 5px 0 0;}
+	.toogle-bx p{display: none;}
+	.toogle-bx .switch{margin: 0 auto;display: table;}
+
+	/* **** Fastdice Page **** */
+	.fast-nav li a{font-size: 14px;}
+	.main-cunt .od-ec li a, .main-cunt .selct-size li a{padding: 15px 5px;}
+	.payout-block{margin: 0 auto 30px;}
+	.jac-box{margin: 0 0 38px;}
+	.table-bets{padding: 15px 20px;}
+	.main-cunt .btn-main{font-size: 10px 15px;font-size: 16px;}
+	.banner-info h2{font-size:38px;}
+	.banner-info h4{font-size:38px;margin: 0 0 10px;}
+	.odometer.odometer-auto-theme, .odometer.odometer-theme-car{font-size:80px;line-height:80px; letter-spacing: 15px}
+	/* **** End Fastdice Page **** */
+
+}
+
+@media(min-width:1201px) and (max-width:1350px){
+	.banner-info h2{font-size:42px;}
+	.banner-info h4{font-size:42px;margin: 0 0 10px;}
+	.odometer.odometer-auto-theme, .odometer.odometer-theme-car{font-size:120px;line-height:110px; letter-spacing: 15px}
+}
+
+
+@media(min-width:992px) and (max-width:1024px){
+
+	/* **** Home Page **** */
+
+	.navbar-default{
+
+		padding: 15px 0;
+
+	}
+
+	h1.logo-txt{
+
+		font-size: 24px;
+
+		line-height: 40px;
+
+	}
+
+	.navbar-default .navbar-nav>li>a{
+
+		font-size: 15px;
+
+		font-weight: normal;
+
+	}
+
+	.navbar-default .navbar-nav>li{
+
+		margin-right: 15px;
+
+	}
+
+
+
+	.headlines-box{
+
+		padding: 15px;
+
+	}
+
+	.headline-bx p{
+
+		display: block;
+
+		margin: 0 0 10px;
+
+	}
+
+	.headline-bx label{
+
+		font-size: 16px;
+
+	}
+
+
+
+	footer{
+
+		padding: 15px;
+
+	}
+
+	.footer-bx p{
+
+		font-size: 14px;
+
+	}
+
+	.dice-img{min-height: 100%;}
+
+	.dic-nm h3{font-size: 16px;}
+
+	/* **** End Home Page **** */
+
+
+
+	/* **** Dice Blueline Page **** */
+
+	.dice-hedln{
+
+		padding: 15px 10px;
+
+	}
+
+	.dice-nav li a{
+
+		font-size: 12px;
+
+	}
+
+	.dice-nav li img{
+
+		width: 30px;
+
+		margin-right: 3px;
+
+	}
+
+	.dice-head p{
+
+		display: inline-block;
+
+		margin: 0 5px 0 0;
+
+		font-size: 16px;
+
+		font-weight: normal;
+
+	}
+
+	.dice-head label{
+
+		margin:0 10px 0px;
+
+		font-size: 14px;
+
+		padding: 8px 10px;
+
+	}
+
+	.frm-gt {
+
+		width: 82%;
+
+	}
+
+	.main-bet .form-group .form-control{
+
+		font-size: 16px;
+
+		padding: 8px 45px 8px 45px;
+
+	}
+	.sider-bar .nav-tabs > li{
+		margin-right: 10px;
+	}
+
+	.main-bet .form-group span{
+
+		font-size: 13px;
+
+	}
+	.main-bet .form-group span,
+	.frm-gt span.multi{top: 12px;}
+
+	.main-bet .form-group img{
+
+		padding: 3px;
+
+		width: 100%;
+
+	}
+
+	.sider-bar{
+
+		margin: 0 0 30px;
+
+	}
+
+	.selct-size{
+
+		margin: 0 0 10px;
+
+	}
+
+	.main-bet label{
+
+		font-size: 14px;
+
+	}
+
+	.od-ec li a,
+
+	.selct-size li a{
+
+		padding: 10px 5px;
+
+		font-size: 14px;
+
+	}
+
+	.main-bet .form-group label{
+
+		font-size: 16px;
+
+	}
+
+	.counter-bx{
+
+		padding: 10px 15px;
+
+	}
+
+	.bets-tabs-dt .nav-tabs li a{
+
+		font-size: 18px;
+
+		margin: 0;
+
+	}
+
+	.table-bets .head-th{
+
+		padding: 15px 5px;
+
+		word-break: break-all;
+
+	}
+
+	input.sw + label span {
+
+	    line-height: 24px;
+
+	    margin-left: 42px;
+
+	    padding-left: 16px;
+
+	    font-size: 12px;
+
+	    display: none;
+
+	    font-weight: normal;
+
+	}
+
+	input.sw + label{
+
+		margin: 0 auto;
+
+		display: table;
+
+	}
+
+	.dic-bs{
+
+		padding: 20px 5px;
+
+		word-break: break-all;
+
+	}
+
+	/* **** End Dice Blueline Page **** */
+
+
+
+	/* **** Popups **** */
+
+	.chet-bx{
+
+		padding: 20px 15px;
+
+	}
+
+	.modal-dialog{
+
+		margin: 15px auto 0;
+
+	}
+
+	#refer .modal-dialog,#hplay .modal-dialog,
+
+	#dividend .modal-dialog{
+
+		width: 80%;
+
+	}
+
+	.referrals-pop,
+
+	.dividend-pop{
+
+		padding: 35px 15px;
+
+	}
+
+	.progress-step .progress span.title,.withdr-bx p,
+
+	.dividend-pop h6{
+
+		font-size: 16px;
+
+	}
+
+	.available-bx{
+
+		padding: 15px;
+
+	}
+
+	.available-bx h3{
+
+		font-size: 20px;
+
+	}
+
+	.available-bx p{
+
+		font-size: 16px;
+
+		line-height: 24px;
+
+	}
+
+	img.how-img,img.how-img-two,
+
+	img.divi-img{
+
+		display: none;
+
+	}
+
+	.with-bx{
+
+		margin: 0 0 20px;
+
+	}
+
+	.referrals-pop h6{
+
+		font-size: 20px;
+
+		line-height: 24px;
+
+	}
+
+	a.dwnld{
+
+		font-size: 16px;
+
+	}
+
+	.refre-data{
+
+		padding: 15px;
+
+	}
+
+	.refre-data p{
+
+		font-size: 15px;
+
+		line-height: 22px;
+
+		margin: 0 0 10px;
+
+	}
+
+	.refre-data h6{
+
+		font-size: 15px;
+
+		line-height: 22px;
+
+	}
+
+	.refer-progres .icnbxon img{
+
+		width: 25px;
+
+		margin: 10px auto 0;
+
+	}
+
+	.refer-progres .progress{
+
+		margin: 0;
+
+	}
+
+	.refer-progres p{
+
+		font-size: 15px;
+
+	}
+
+	.refre-links{
+
+		padding: 15px 0;
+
+	}
+
+	.link-bx{
+
+		margin: 0 0 25px;
+
+	}
+
+	.link-bx h6{
+
+		font-size: 16px;
+
+	}
+
+	/* **** End Popups **** */
+
+
+
+	.notifcatio-bx ul{
+
+		right: 10px;
+
+	}
+	.ic-dim {
+		width: 15%;
+	}
+	.payout-block .ic-dim h6{font-size: 24px;}
+
+	/* **** Fastdice Page **** */
+	.fast-nav li a{font-size: 14px;}
+	.main-cunt .od-ec li a, .main-cunt .selct-size li a{padding: 15px 5px;}
+	.payout-block{margin: 0 auto 30px;}
+	.jac-box{margin: 0 0 38px;}
+	.table-bets{padding: 15px 20px;}
+	.main-cunt .btn-main{font-size: 10px 15px;font-size: 16px;}
+	.banner-info h2{font-size:38px;}
+	.banner-info h4{font-size:38px;margin: 0 0 10px;}
+	.odometer.odometer-auto-theme, .odometer.odometer-theme-car{font-size:70px;line-height:70px; letter-spacing: 15px}
+	/* **** End Fastdice Page **** */
+
+}
+
+
+
+@media(min-width:768px) and (max-width:991px){
+
+	/* **** Home Page **** */
+
+	.navbar-default{
+
+		padding: 15px 0;
+
+	}
+
+	h1.logo-txt{
+
+		font-size: 18px;
+
+		line-height: 40px;
+
+	}
+
+	.navbar-default .navbar-nav>li>a{
+
+		font-size: 12px;
+
+		font-weight: normal;
+
+	}
+
+	.navbar-default .navbar-nav>li{
+
+		margin-right: 10px;
+
+	}
+
+
+
+	.headline-bx p{
+
+		display: block;
+
+		margin: 0 0 10px;
+
+	}
+
+	.headline-bx label{
+
+		font-size: 16px;
+
+	}
+
+	.dice-img{min-height: 100%;}
+
+	.dic-nm h3{font-size: 16px;}
+
+
+
+	footer{
+
+		padding: 15px;
+
+	}
+
+	/* **** End Home Page **** */
+
+
+
+	/* **** Dice Blueline Page **** */
+
+	.dice-hedln{
+
+		padding: 15px;
+
+	}
+
+	.dice-nav li a{
+
+		font-size: 12px;
+
+		line-height:24px;
+
+	}
+
+	.dice-nav li img{
+
+		width: 23px;
+
+		margin-right: 3px;
+
+	}
+	.headlines-box-first li img{width: auto;}
+	.dice-head p{
+
+		display: inline-block;
+
+		margin: 0 10px 0 0;
+
+	}
+	.bet-label div svg{
+		width: 15px;
+		margin: 0 8px 0 0;
+	}
+	.dice-head label{
+
+		margin:0 10px 10px;
+
+		font-size: 14px;
+
+		padding: 8px 10px;
+
+	}
+
+	.main-bet .form-group .form-control{
+
+		font-size: 16px;
+
+		padding: 8px 43px 8px 50px;
+
+	}
+
+	.main-bet .form-group span{
+
+		font-size: 16px;
+
+	}
+
+	.main-bet .form-group img{
+
+		padding: 0;
+
+		width: 21px;
+
+	}
+
+	.selct-size{
+
+		margin: 0 0 10px;
+
+	}
+
+	.main-bet label{
+
+		font-size: 14px;
+
+	}
+
+	.od-ec li a,
+
+	.selct-size li a{
+
+		padding: 11px 15px;
+
+		font-size: 14px;
+
+	}
+
+	.main-bet .form-group label{
+
+		font-size: 16px;
+
+	}
+
+	.sider-bar{
+
+		margin: 0 0 30px;
+
+	}
+
+	.bets-tabs-dt .nav-tabs li a{
+
+		font-size: 16px;
+
+		margin: 0;
+
+	}
+
+	.table-bets .head-th{
+
+		padding: 15px 5px;
+
+		word-break: break-all;
+
+	}
+
+	/* **** End Dice Blueline Page **** */
+
+
+
+	/* **** Popups **** */
+
+	.chet-bx{
+
+		padding: 20px 15px;
+
+	}
+
+	.modal-dialog{
+
+		margin: 15px auto 0;
+
+	}
+
+	#refer .modal-dialog,#hplay .modal-dialog,
+
+	#dividend .modal-dialog{
+
+		width: 80%;
+
+	}
+
+	.referrals-pop,
+
+	.dividend-pop{
+
+		padding: 35px 15px;
+
+	}
+
+	.progress-step .progress span.title,.withdr-bx p,
+
+	.dividend-pop h6{
+
+		font-size: 16px;
+
+	}
+
+	.available-bx{
+
+		padding: 15px;
+
+	}
+
+	.available-bx h3{
+
+		font-size: 20px;
+
+	}
+
+	.available-bx p{
+
+		font-size: 16px;
+
+		line-height: 24px;
+
+	}
+
+	.with-bx:after,img.how-img,img.how-img-two,
+
+	img.divi-img{
+
+		display: none;
+
+	}
+
+	.with-bx{
+
+		margin: 0 0 20px;
+
+	}
+
+	.referrals-pop h6{
+
+		font-size: 20px;
+
+		line-height: 24px;
+
+	}
+
+	a.dwnld{
+
+		font-size: 16px;
+
+	}
+
+	.refre-data{
+
+		padding: 15px;
+
+	}
+
+	.refre-data p{
+
+		font-size: 15px;
+
+		line-height: 22px;
+
+		margin: 0 0 10px;
+
+	}
+
+	.refre-data h6{
+
+		font-size: 15px;
+
+		line-height: 22px;
+
+	}
+
+	.refer-progres .icnbxon img{
+
+		width: 25px;
+
+		margin: 10px auto 0;
+
+	}
+
+	.refer-progres .progress{
+
+		margin: 0;
+
+	}
+
+	.refer-progres p{
+
+		font-size: 15px;
+
+	}
+
+	.refre-links{
+
+		padding: 15px 0;
+
+	}
+
+	.link-bx{
+
+		margin: 0 0 25px;
+
+	}
+
+	.link-bx h6{
+
+		font-size: 16px;
+
+	}
+
+	/* **** End Popups **** */
+
+
+
+	.notifcatio-bx ul{
+
+		right: 10px;
+
+	}
+
+	/* **** Fastdice Page **** */
+	.fast-nav li{display: block;margin: 0 0 10px;}
+	.main-cunt .od-ec li a, .main-cunt .selct-size li a{padding: 15px 5px;}
+	.payout-block{margin: 0 auto 30px;}
+	.jac-box{margin: 0 0 38px;}
+	.table-bets{padding: 15px 20px;}
+	.banner-info h2{font-size:40px;}
+	.banner-info h4{font-size:40px;margin: 0 0 10px;}
+	.odometer.odometer-auto-theme, .odometer.odometer-theme-car{font-size:100px;line-height:80px; letter-spacing: 15px}
+	/* **** End Fastdice Page **** */
+
+}
+
+
+
+@media(min-width:448px) and (max-width:767px){
+
+	/* **** Home Page **** */
+
+	.navbar-default{
+
+		padding: 15px;
+
+	}
+
+	.navbar-toggle{
+
+		margin-right: 0;
+
+	}
+
+	h1.logo-txt{
+
+		font-size: 30px;
+
+		line-height: 48px;
+
+	}
+
+	.navbar-default .navbar-nav{
+
+		float: none;
+
+		margin: 10px 15px;
+
+	}
+
+	.navbar-default .navbar-nav>li{
+
+		margin-right: 0;
+
+	}
+
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a{
+
+		color: #fff;
+
+	}
+
+	.navbar-default .navbar-nav>li>a{
+
+		font-size: 14px;
+
+		font-weight: normal;
+
+	}
+
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a:focus, .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover{
+
+		color: #fff;
+
+	}
+
+
+
+	.headline-bx{
+
+		margin: 0 0;
+
+	}
+
+	.headline-bx p{
+
+		display:inline-block;
+
+		font-size: 14px;
+
+		margin: 0 0;
+
+	}
+
+	.headline-bx label{padding: 5px 10px;font-size: 14px;margin-left: 5px;}
+
+	.desktopmode{display: none;}
+
+	.respon-mode{display: block;}
+
+
+
+	footer{
+
+		padding: 15px;
+
+		text-align: center;
+
+	}
+
+	.footer-bx p{
+
+		font-weight: normal;
+
+		margin: 0 0 10px;
+
+	}
+
+	.social-bx{
+
+		text-align: center;
+
+	}
+
+	.dice-img{min-height: 100%;}
+
+	.dic-nm h3{font-size: 16px;}
+
+	/* **** End Home Page **** */
+
+
+
+	/* **** Dice Blueline Page **** */
+
+	.dice-hedln{
+
+		padding: 15px;
+
+	}
+
+	.dice-nav li a{
+
+		font-size: 15px;
+
+		margin-right: 10px;
+
+	}
+
+	.dice-nav li img{
+
+		width: 25px;
+
+	}
+
+
+	.od-ec li a,
+
+	.selct-size li a{
+
+		padding: 10px 10px;
+
+		font-size: 16px;
+
+		font-weight: normal;
+
+	}
+
+	.main-bet .form-group img{
+
+		padding: 5px;
+		width: auto;
+
+	}
+
+	.main-bet .form-group span,
+
+	.main-bet .form-group .form-control{
+
+		font-size: 20px;
+
+	}
+
+	.sider-bar {
+
+		margin: 0 0 30px;
+
+	}
+
+	.sider-bar .nav-tabs{
+
+		padding: 0 15px;
+
+	}
+
+	.king-wrp .nav-tabs li{
+
+		width: 48%;
+
+	}
+
+	.main-coutn{
+
+		padding: 15px;
+
+	}
+
+	.sider-bar .nav-tabs > li > a{
+
+		font-size: 20px;
+
+	}
+
+	.king-wrp .nav-tabs li > a{
+
+		font-size: 16px;
+
+	}
+
+	.main-coutn li .col-xs-2,
+
+	.main-coutn li .col-xs-4,
+
+	.main-coutn li .col-xs-3{
+
+	    padding: 0;
+
+	}
+
+	.head-th{
+
+		padding: 15px 10px;
+
+	}
+
+	.dt-tbs .head-th{
+
+		padding: 15px 10px;
+
+	}
+
+
+
+	.bets-tabs-dt .nav-tabs li{
+
+		margin-right: 15px;
+
+	}
+
+	.bets-tabs-dt .nav-tabs li a{
+
+		font-size: 16px;
+
+		padding: 10px 0;
+
+		margin: 0;
+
+	}
+
+	.table-bets{
+
+		padding: 15px;
+
+	}
+
+	.table-bets .head-th{
+
+		padding: 15px 5px;
+
+		word-break:break-word;
+
+	}
+
+	.table-bets .head-th p{
+
+		font-weight: normal;
+
+		font-size: 13px;
+
+	}
+
+	/* **** End Dice Blueline Page **** */
+
+
+
+	/* **** Popups **** */
+
+	.chet-bx{
+
+		padding: 20px 15px;
+
+	}
+
+	.modal-dialog{
+
+		margin: 15px 0;
+
+	}
+
+	#refer .modal-dialog,#hplay .modal-dialog,
+
+	#dividend .modal-dialog{
+
+		width: 100%;
+
+	}
+
+	.referrals-pop,
+
+	.dividend-pop{
+
+		padding: 35px 15px;
+
+	}
+
+	.progress-step .progress span.title,.withdr-bx p,
+
+	.dividend-pop h6{
+
+		font-size: 16px;
+
+	}
+
+	.available-bx{
+
+		padding: 15px;
+
+	}
+
+	.available-bx h3{
+
+		font-size: 20px;
+
+	}
+
+	.available-bx p{
+
+		font-size: 16px;
+
+		line-height: 24px;
+
+	}
+
+	.with-bx:after,img.how-img,img.how-img-two,
+
+	img.divi-img{
+
+		display: none;
+
+	}
+
+	.with-bx{
+
+		margin: 0 0 20px;
+
+	}
+
+	.referrals-pop h6{
+
+		font-size: 20px;
+
+		line-height: 24px;
+
+	}
+
+	a.dwnld{
+
+		font-size: 16px;
+
+	}
+
+	.refre-data{
+
+		padding: 15px;
+
+	}
+
+	.refre-data p{
+
+		font-size: 15px;
+
+		line-height: 22px;
+
+		margin: 0 0 10px;
+
+	}
+
+	.refre-data h6{
+
+		font-size: 15px;
+
+		line-height: 22px;
+
+	}
+
+	.refer-progres .icnbxon img{
+
+		width: 25px;
+
+		margin: 10px auto 0;
+
+	}
+
+	.refer-progres .progress{
+
+		margin: 0;
+
+	}
+
+	.refer-progres p{
+
+		font-size: 15px;
+
+	}
+
+	.refre-links{
+
+		padding: 15px 0;
+
+	}
+
+	.link-bx{
+
+		margin: 0 0 25px;
+
+	}
+
+	.link-bx h6{
+
+		font-size: 16px;
+
+	}
+
+	/* **** End Popups **** */
+
+
+
+	.notifcatio-bx ul{
+
+		right: 10px;
+
+	}
+
+	/* **** Fast Dice Page **** */
+	.dice-head label{margin: 0 0 0 10px;}
+	.main-cunt .btn-main{padding: 10px 30px; font-size: 16px;}
+	.main-cunt{margin: -15px 0 0;}
+	.payout-block{margin: 0 auto 30px;}
+	.main-cunt .selct-size{margin: 0 0 30px;}
+	.jac-box{margin: 25px 0;}
+	.banner-info h2{font-size:26px;}
+	.banner-info h4{font-size: 26px;margin: 0 0 10px;}
+	.odometer.odometer-auto-theme, .odometer.odometer-theme-car{font-size:30px;line-height: 24px; letter-spacing: 15px}
+	/* **** End Fast Dice Page **** */
+
+}
+
+
+
+@media(max-width:447px){
+
+	/* **** Home Page **** */
+
+	.navbar-default{
+
+		padding: 15px;
+
+	}
+
+	.navbar-toggle{
+
+		margin-right: 0;
+
+	}
+
+	h1.logo-txt{
+
+		font-size: 28px;
+
+		line-height: 48px;
+
+	}
+
+	h1.logo-txt img{width: 28px;}
+
+	.navbar-default .navbar-nav{
+
+		float: none;
+
+		margin: 10px 15px;
+
+	}
+
+	.navbar-default .navbar-nav>li{
+
+		margin-right: 0;
+
+	}
+
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a{
+
+		color: #fff;
+
+	}
+
+	.navbar-default .navbar-nav>li>a{
+
+		font-size: 14px;
+
+		font-weight: normal;
+
+	}
+
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a:focus, .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover{
+
+		color: #fff;
+
+	}
+
+
+
+	.headline-bx{
+
+		margin: 0 0;
+
+	}
+
+	.headline-bx p{
+
+		display:inline-block;
+
+		font-size: 14px;
+
+		margin: 0 0;
+
+	}
+
+	.headline-bx label{padding: 5px 10px;font-size: 14px;margin-left: 5px;}
+
+	.desktopmode{display: none;}
+
+	.respon-mode{display: block;}
+
+
+
+	footer{
+
+		padding: 15px;
+
+		text-align: center;
+
+	}
+
+	.footer-bx p{
+
+		font-weight: normal;
+
+		margin: 0 0 10px;
+
+	}
+
+	.social-bx{
+
+		text-align: center;
+
+	}
+
+	.dice-img{min-height: 100%;}
+
+	.dic-nm h3{font-size: 16px;}
+
+	/* **** End Home Page **** */
+
+
+
+	/* **** Dice Blueline Page **** */
+
+	.dice-hedln{
+
+		padding: 15px;
+
+	}
+
+	.dice-nav li a{
+
+		font-size: 10px;
+
+	}
+
+	.dice-nav li img{
+
+		width: 25px;
+
+	}
+
+	.dice-head label{
+
+		margin:0 0 20px;
+
+	}
+
+	.od-ec li a,
+
+	.selct-size li a{
+
+		padding: 10px 5px;
+
+		font-size: 14px;
+
+		font-weight: normal;
+
+	}
+
+	.main-bet .form-group img{
+
+		padding: 5px;
+
+	}
+
+	.main-bet .form-group span,
+
+	.main-bet .form-group .form-control{
+
+		font-size: 16px;
+
+	}
+
+	.sider-bar {
+
+		margin: 0 0 30px;
+
+	}
+
+	.sider-bar .nav-tabs{
+
+		padding: 0 15px;
+
+	}
+
+	.king-wrp .nav-tabs li{
+
+		width: 48%;
+
+	}
+
+	.main-coutn{
+
+		padding: 15px;
+
+	}
+
+	.sider-bar .nav-tabs > li > a{
+
+		font-size: 18px;
+
+	}
+
+	.king-wrp .nav-tabs li > a{
+
+		font-size: 14px;
+
+	}
+
+	.main-coutn li .col-xs-2,
+
+	.main-coutn li .col-xs-4,
+
+	.main-coutn li .col-xs-3{
+
+	    padding: 0;
+
+	}
+
+	.head-th{
+
+		padding: 15px 5px;
+
+	}
+
+	.head-th p{
+
+		font-size: 13px;
+
+	}
+
+	.dt-tbs .head-th{
+
+		padding: 15px 5px;
+
+	}
+
+
+
+	.bets-tabs-dt .nav-tabs li{
+
+		margin-right: 10px;
+
+	}
+
+	.bets-tabs-dt .nav-tabs li a{
+
+		font-size: 14px;
+
+		padding: 10px 0;
+
+		margin: 0;
+
+	}
+
+	.table-bets{
+
+		padding: 15px;
+
+	}
+
+	.table-bets li .col-sm-2{
+
+	    padding: 0;
+
+	}
+
+	/* **** End Dice Blueline Page **** */
+
+
+
+	/* **** Popups **** */
+
+	.chet-bx{
+
+		padding: 20px 15px;
+
+	}
+
+	.modal-dialog{
+
+		margin: 15px 0;
+
+	}
+
+	#refer .modal-dialog,#hplay .modal-dialog,
+
+	#dividend .modal-dialog{
+
+		width: 100%;
+
+	}
+
+	.referrals-pop,
+
+	.dividend-pop{
+
+		padding: 35px 15px;
+
+	}
+
+	.progress-step .progress span.title,.withdr-bx p,
+
+	.dividend-pop h6{
+
+		font-size: 16px;
+
+	}
+
+	.available-bx{
+
+		padding: 15px;
+
+	}
+
+	.available-bx h3{
+
+		font-size: 20px;
+
+	}
+
+	.available-bx p{
+
+		font-size: 16px;
+
+		line-height: 24px;
+
+	}
+
+	.with-bx:after,img.how-img,img.how-img-two,
+
+	img.divi-img{
+
+		display: none;
+
+	}
+
+	.with-bx{
+
+		margin: 0 0 20px;
+
+	}
+
+	.referrals-pop h6{
+
+		font-size: 20px;
+
+		line-height: 24px;
+
+	}
+
+	a.dwnld{
+
+		font-size: 16px;
+
+	}
+
+	.refre-data{
+
+		padding: 15px;
+
+	}
+
+	.refre-data p{
+
+		font-size: 15px;
+
+		line-height: 22px;
+
+		margin: 0 0 10px;
+
+	}
+
+	.refre-data h6{
+
+		font-size: 15px;
+
+		line-height: 22px;
+
+	}
+
+	.refer-progres .icnbxon img{
+
+		width: 25px;
+
+		margin: 10px auto 0;
+
+	}
+
+	.refer-progres .progress{
+
+		margin: 0;
+
+	}
+
+	.refer-progres p{
+
+		font-size: 15px;
+
+	}
+
+	.refre-links{
+
+		padding: 15px 0;
+
+	}
+
+	.link-bx{
+
+		margin: 0 0 25px;
+
+	}
+
+	.link-bx h6{
+
+		font-size: 16px;
+
+	}
+
+	/* **** End Popups **** */
+
+
+
+	.notifcatio-bx ul{
+
+		right: 10px;
+
+	}
+
+
+	/* **** Fast Dice Page **** */
+	.dice-head label{margin: 0 0 0 10px;}
+	.main-cunt .btn-main{padding: 10px 20px; font-size: 15px;}
+	.main-cunt{margin: -10px 0 0;}
+	.payout-block{margin: 0 auto 30px;}
+	.main-cunt .selct-size{margin: 0 0 30px;}
+	.jac-box{margin: 25px 0;}
+	.fast-nav li a{font-size: 13px;}
+	.banner-info h2{font-size: 20px;}
+	.banner-info h4{font-size: 20px;margin: 0 0 10px;}
+	.odometer.odometer-auto-theme, .odometer.odometer-theme-car{font-size: 22px;line-height: 24px; letter-spacing: 15px}
+	/* **** End Fast Dice Page **** */
+
+}
+
+
+@media (max-width: 1200px){
+    #bouncingLetterMooving {
+        display: block;
+        left: 18%!important;
+    }
+}
+
+
+@media(min-width: 992px){
+    .bouncing-latter-mobile{
+        display: none;
+    }
+    .bouncing-latter-desktop{
+        display: block;
+    }
+    #bouncingLetterMooving{
+        display:block;
+        /*left: 12%!important*/
+    }
+    
+    #bouncingLetterMooving_mobile_view{
+        display:none;
+    }
+}
+
+
+
+@media(min-width: 768px){
+    .bouncing-latter-mobile{
+        display: none;
+    }
+    .bouncing-latter-desktop{
+        display: block;
+    }
+    #bouncingLetterMooving{
+        display:block;
+    }
+    
+    #bouncingLetterMooving_mobile_view{
+        display:none;
+    }
+	.progress-bar-left-padding{
+		padding-right: 0!important;
+	}
+}
+
+@media (max-width: 1080px) {
+	.bouncing-latter-mobile{
+        display: block;
+    }
+    .bouncing-latter-desktop{
+        display: none;
+    }
+	
+	#bouncingLetterMooving{
+        display:none;
+        left: 12%!important
+    }
+    
+    #bouncingLetterMooving_mobile_view{
+        display:block;
+    	top: 104px!important;
+    	left: 32%!important;
+    }
+}
+
+@media (max-width: 992px) {
+	.bouncing-latter-mobile{
+        display: block;
+    }
+    .bouncing-latter-desktop{
+        display: none;
+    }
+	
+	#bouncingLetterMooving{
+        display:none;
+    }
+    
+    #bouncingLetterMooving_mobile_view{
+        display:block;
+    	top: 104px!important;
+    	left: 32%!important;
+    }
+}
+
+@media (max-width: 768px) {
+    .headline-bx p {
+        font-size: 14px;
+    }
+    .headline-bx label {
+        padding: 6px 6px;
+        font-size: 14px;
+    }
+    
+    
+    .table-bets .head-at .row .col-xs-2:nth-child(1){
+        display:none;
+    }
+    .table-bets .head-at .row .col-xs-2:nth-child(2){
+        width:25%;
+    }
+    .table-bets .head-at .row .col-xs-2:nth-child(3){
+        width:25%;
+    }
+    .table-bets .dt-tbs .row .col-xs-2:nth-child(1){
+        display:none;
+    }
+    .table-bets .dt-tbs .row .col-xs-2:nth-child(2){
+        width:25%;
+    }
+    .table-bets .dt-tbs .row .col-xs-2:nth-child(3){
+        width:25%;
+    }
+    
+    .table-bets .head-th p {
+        font-size: 10px!important
+    }
+    
+    .main-wrapper {
+        width: 100%;
+        background: url(../images/2.png) 0 0 no-repeat;
+        background-size: 100% 100%;
+        background-attachment: fixed;
+        background-position: center;
+        height: 100vh;
+        overflow: auto;
+    }
+    .main-bet .form-group span{
+        top:10px;
+    }
+
+	.bouncing-latter-mobile{
+        display: block;
+    }
+    .bouncing-latter-desktop{
+        display: none;
+    }
+	
+	#bouncingLetterMooving{
+        display:none;
+    }
+    
+    #bouncingLetterMooving_mobile_view{
+        display:block;
+    	top: 104px!important;
+    	left: 32%!important;
+    }
+
+    #notSignIn .modal-dialog{
+    	width: 90%;
+    	margin:30px auto;
+	}
+	#notSignIn .modal-content{
+	    padding:25px 15px;
+	}
+	.login-wrps h3{
+	    font-size:18px;
+	}
+
+}
+
+@media(max-width: 533px){
+    .luckybox{
+	    height: 95px;
+	}
+	
+	/*.headlines-box-first{
+	    display: none;
+	}*/
+
+    .predictbox span {
+        font-size: 4rem;
+    }
+    #lucky_no{
+        font-size: 4rem;
+    }
+    
+    .rang-bx {
+        padding: 30px 10px;
+    }
+    
+    .rang-bx{
+        border: none;
+    }
+    .bouncing-latter-mobile{
+        display: block;
+    }
+    .bouncing-latter-desktop{
+        display: none;
+    }
+    .lucky-no-padding{
+        padding-left: 0px;
+        padding-right: 15px;
+    }
+    .slider-padding-left {
+        padding-left: 15px;
+    }
+    
+    #bouncingLetterMooving{
+        display:none;
+    }
+    
+    #bouncingLetterMooving_mobile_view{
+        display:block;
+    }
+    .trx-txt{
+        display: none;
+    }
+    .frm-gt {
+        position: relative;
+        width: 100%;
+        display: inline-block;
+    }
+    
+    .toogle-bx{
+        /*text-align: center;*/
+    }
+    .roll-m{
+        display: none!important;
+    }
+    .ic-dim{
+        display: none;
+    }
+    
+    .dic-bs {
+        padding: 0px;
+    }
+    .main-bet .form-group {
+        margin: 0;
+        padding: 0px 0px;
+        background: #343742;
+        border-radius: 10px;
+        position: relative;
+        margin: 18px 0 0px;
+    }
+    #slider-range {
+        margin-top: 1rem;
+        padding-right: 6px;
+        left: 0;
+    }
+    #trxBalance {
+        display: block !important;
+        padding: 12px;
+    }
+    .main-bet label {
+        font-size: 11px;
+        font-weight: 500;
+        color: #fff;
+        display: inline-block;
+        text-transform: uppercase;
+        margin: 0 0 5px;
+        position: relative;
+    }
+    
+    .toogle-bx p{
+        display: none; 
+    }
+    .btn-main {
+	    font-size: 18px;
+	    font-weight: 500;
+	    color: #fff;
+	    text-transform: uppercase;
+	    background: #0cd6cf;
+	    border-radius: 6px;
+	    width: 100%;
+	    display: block;
+	    padding: 4px 3px;
+	    text-align: center;
+	}
+	
+	.toogle-bx .slider {
+
+	  position: absolute;
+
+	  cursor: pointer;
+
+	  top: 0;
+
+	  left: 0;
+
+	  right: 0;
+
+	  bottom: 0;
+
+	  background-color: #272a36;
+
+	  -webkit-transition: .4s;
+
+	  transition: .4s;
+	  border: 1px solid #0cd6cf;
+
+	}
+
+
+
+	.toogle-bx .slider:before {
+
+	    position: absolute;
+	    content: "";
+	    height: 17px;
+	    width: 17px;
+	    left: 2px;
+	    bottom: 2px;
+	    background-color: #5a5c63;
+	    -webkit-transition: .4s;
+	    transition: .4s;
+
+	}
+	.dic-bs{
+
+	    padding: 0px;
+
+	    background: transparent;
+
+	    border-radius: 10px;
+
+	}
+	.toogle-bx .switch {
+
+	    position: relative;
+
+	    display: inline-block;
+
+	    width: 44px;
+	    height: 22px;
+
+	}
+
+	#notSignIn .modal-dialog{
+    	width: 90%;
+    	margin:30px auto;
+	}
+	#notSignIn .modal-content{
+	    padding:25px 15px;
+	}
+	.login-wrps h3{
+	    font-size:18px;
+	}
+}
+
+@media(max-width: 484px){
+    .luckybox{
+	    height: 95px;
+	}
+	
+	/*.headlines-box-first{
+	    display: none;
+	}*/
+
+    .predictbox span {
+        font-size: 4rem;
+    }
+    #lucky_no{
+        font-size: 4rem;
+    }
+    
+    .rang-bx {
+        padding: 30px 10px;
+    }
+    
+    .rang-bx{
+        border: none;
+    }
+    .bouncing-latter-mobile{
+        display: block;
+    }
+    .bouncing-latter-desktop{
+        display: none;
+    }
+    .lucky-no-padding{
+        padding-left: 0px;
+        padding-right: 15px;
+    }
+    .slider-padding-left {
+        padding-left: 15px;
+    }
+    
+    #bouncingLetterMooving{
+        display:none;
+    }
+    
+    #bouncingLetterMooving_mobile_view{
+        display:block;
+    	top: 62px!important; 
+    	left: 15%!important;
+    }
+    .trx-txt{
+        display: none;
+    }
+    .frm-gt {
+        position: relative;
+        width: 100%;
+        display: inline-block;
+    }
+    
+    .toogle-bx{
+        /*text-align: center;*/
+    }
+    .roll-m{
+        display: none!important;
+    }
+    .ic-dim{
+        display: none;
+    }
+    
+    .dic-bs {
+        padding: 0px;
+    }
+    .main-bet .form-group {
+        margin: 0;
+        padding: 0px 0px;
+        background: #343742;
+        border-radius: 10px;
+        position: relative;
+        margin: 18px 0 0px;
+    }
+    #slider-range {
+        margin-top: 1rem;
+        padding-right: 6px;
+        left: 0;
+    }
+    #trxBalance {
+        display: block !important;
+        padding: 12px;
+    }
+    .main-bet label {
+        font-size: 11px;
+        font-weight: 500;
+        color: #fff;
+        display: inline-block;
+        text-transform: uppercase;
+        margin: 0 0 5px;
+        position: relative;
+    }
+    
+    .toogle-bx p{
+        display: none; 
+    }
+    .btn-main {
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    text-transform: uppercase;
+    background: #0cd6cf;
+    border-radius: 6px;
+    width: 100%;
+    display: block;
+    padding: 4px 3px;
+    text-align: center;
+	}
+
+	.toogle-bx .slider {
+
+	  position: absolute;
+
+	  cursor: pointer;
+
+	  top: 0;
+
+	  left: 0;
+
+	  right: 0;
+
+	  bottom: 0;
+
+	  background-color: #272a36;
+
+	  -webkit-transition: .4s;
+
+	  transition: .4s;
+	  border: 1px solid #0cd6cf;
+
+	}
+
+
+
+	.toogle-bx .slider:before {
+
+	    position: absolute;
+	    content: "";
+	    height: 17px;
+	    width: 17px;
+	    left: 2px;
+	    bottom: 2px;
+	    background-color: #5a5c63;
+	    -webkit-transition: .4s;
+	    transition: .4s;
+
+	}
+	.dic-bs{
+
+	    padding: 0px;
+
+	    background: transparent;
+
+	    border-radius: 10px;
+
+	}
+	.toogle-bx .switch {
+
+	    position: relative;
+
+	    display: inline-block;
+
+	    width: 44px;
+	    height: 22px;
+
+	}
+}
+
+
+@media(max-width:550px){
+
+	/* **** Home Page **** */
+
+	.navbar-default{
+
+		padding: 15px;
+
+	}
+
+	.navbar-toggle{
+
+		margin-right: 0;
+
+	}
+	
+    .predictbox span {
+        font-size: 4rem;
+    }
+    #lucky_no{
+        font-size: 4rem !important;
+    }
+    
+    .rang-bx {
+        padding: 25px;
+         border: none;
+    }
+    
+
+	h1.logo-txt{
+
+		font-size: 28px;
+
+		line-height: 48px;
+
+	}
+
+	h1.logo-txt img{width: 28px;}
+
+	.navbar-default .navbar-nav{
+
+		float: none;
+
+		margin: 10px 15px;
+
+	}
+
+	.navbar-default .navbar-nav>li{
+
+		margin-right: 0;
+
+	}
+
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a{
+
+		color: #fff;
+
+	}
+
+	.navbar-default .navbar-nav>li>a{
+
+		font-size: 14px;
+
+		font-weight: normal;
+
+	}
+
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a:focus, .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover{
+
+		color: #fff;
+
+	}
+
+
+    /* .headline-bx p:nth-child(1) {
+        display: none;
+    }
+    .headline-bx label:nth-child(2) {
+        display: none;
+    }*/
+
+
+	.headline-bx{
+
+		margin: 0px;
+
+	}
+
+	.headline-bx p{
+
+		display: inline-block;
+
+		margin: 0px;
+		font-size: 12px;
+
+	}
+    
+    .headline-bx label{
+        
+        padding: 3px 3px;
+        font-size: 12px;
+    }
+
+
+	footer{
+
+		padding: 15px;
+
+		text-align: center;
+
+	}
+
+	.footer-bx p{
+
+		font-weight: normal;
+
+		margin: 0 0 10px;
+
+	}
+
+	.social-bx{
+
+		text-align: center;
+
+	}
+
+	/* **** End Home Page **** */
+
+
+
+	/* **** Dice Blueline Page **** */
+
+	.dice-hedln{
+
+		padding: 10px;
+
+	}
+
+	.dice-nav li a{
+
+		font-size: 10px;
+
+	}
+
+	/*.dice-nav li img{*/
+
+	/*	width: 25px;*/
+
+	/*}*/
+
+	.dice-head label{
+
+		margin:0px;
+
+	}
+
+	.od-ec li a,
+
+	.selct-size li a{
+
+		padding: 10px 5px;
+
+		font-size: 14px;
+
+		font-weight: normal;
+
+	}
+
+	.main-bet .form-group img{
+
+		padding: 5px;
+
+	}
+
+	.main-bet .form-group span,
+
+	.main-bet .form-group .form-control{
+
+		font-size: 16px;
+
+	}
+
+	.sider-bar {
+
+		margin: 0 0 30px;
+
+	}
+
+	.sider-bar .nav-tabs{
+
+		padding: 0 15px;
+
+	}
+
+	.king-wrp .nav-tabs li{
+
+		width: 48%;
+
+	}
+
+	.main-coutn{
+
+		padding: 15px;
+
+	}
+
+	.sider-bar .nav-tabs > li > a{
+
+		font-size: 18px;
+
+	}
+
+	.king-wrp .nav-tabs li > a{
+
+		font-size: 14px;
+
+	}
+
+	.main-coutn li .col-xs-2,
+
+	.main-coutn li .col-xs-4,
+
+	.main-coutn li .col-xs-3{
+
+	    padding: 0;
+
+	}
+
+	.head-th{
+
+	/* 		padding: 15px 5px; */
+    padding: 33px 10px;
+
+	}
+
+	.head-th p{
+
+		font-size: 13px;
+
+	}
+
+	.dt-tbs .head-th{
+
+	/* 		padding: 15px 5px; */
+    	padding: 33px 10px;
+
+	}
+
+
+
+	.bets-tabs-dt .nav-tabs li{
+
+		margin-right: 10px;
+
+	}
+
+	.bets-tabs-dt .nav-tabs li a{
+
+		font-size: 14px;
+
+		padding: 10px 0;
+
+		margin: 0;
+
+	}
+
+	.table-bets{
+
+		padding: 15px;
+
+	}
+
+	.table-bets li .col-sm-2{
+
+	    padding: 0;
+
+	    /*width: 100%;*/
+
+	}
+
+	/* **** End Dice Blueline Page **** */
+
+
+
+	/* **** Popups **** */
+
+	.chet-bx{
+
+		padding: 20px 15px;
+
+	}
+
+	.modal-dialog{
+
+		margin: 15px 0;
+
+	}
+
+	#refer .modal-dialog, #hplay .modal-dialog, #dividend .modal-dialog,  #fair .modal-dialog {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+	}
+
+	.referrals-pop,
+
+	.dividend-pop{
+
+		padding: 35px 15px;
+
+	}
+
+	.progress-step .progress span.title,.withdr-bx p,
+
+	.dividend-pop h6{
+
+		font-size: 16px;
+
+	}
+
+	.available-bx{
+
+		padding: 15px;
+
+	}
+
+	.available-bx h3{
+
+		font-size: 20px;
+
+	}
+
+	.available-bx p{
+
+		font-size: 16px;
+
+		line-height: 24px;
+
+	}
+
+	.with-bx:after,img.how-img,img.how-img-two,
+
+	img.divi-img{
+
+		display: none;
+
+	}
+
+	.with-bx{
+
+		margin: 0 0 20px;
+
+	}
+
+	.referrals-pop h6{
+
+		font-size: 20px;
+
+		line-height: 24px;
+
+	}
+
+	a.dwnld{
+
+		font-size: 16px;
+
+	}
+
+	.refre-data{
+
+		padding: 15px;
+
+	}
+
+	.refre-data p{
+
+		font-size: 15px;
+
+		line-height: 22px;
+
+		margin: 0 0 10px;
+
+	}
+
+	.refre-data h6{
+
+		font-size: 15px;
+
+		line-height: 22px;
+
+	}
+
+	.refer-progres .icnbxon img{
+
+		width: 25px;
+
+		margin: 10px auto 0;
+
+	}
+
+	.refer-progres .progress{
+
+		margin: 0;
+
+	}
+
+	.refer-progres p{
+
+		font-size: 15px;
+
+	}
+
+	.refre-links{
+
+		padding: 15px 0;
+
+	}
+
+	.link-bx{
+
+		margin: 0 0 25px;
+
+	}
+
+	.link-bx h6{
+
+		font-size: 16px;
+
+	}
+
+	/* **** End Popups **** */
+
+
+
+	.notifcatio-bx ul{
+
+		right: 10px;
+
+	}
+
+	.dt-tbs .row .col-xs-6{
+		padding: 0;
+	}
+
+}
+
+@media (max-width: 320px){
+    .headline-bx p:nth-child(1) {
+        display: none;
+    }
+    .headline-bx label:nth-child(2) {
+        display: none;
+    }
+    .headline-bx p {
+        display: inline-block;
+        margin: 0px;
+        font-size: 12px;
+    }
+    .headline-bx label {
+        padding: 3px 3px;
+        font-size: 12px;
+    }
+	h1.logo-txt {
+    	font-size: 24px;
+	}
+	.head-th img:last-child {
+    	position: relative;
+    	left: 5px;
+	}
+}
