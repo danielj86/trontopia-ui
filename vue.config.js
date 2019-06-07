@@ -1,8 +1,10 @@
 module.exports = {
-  pluginOptions: {
-    'style-resources-loader': {
-      preProcessor: 'less',
-      patterns: []
+  css: {
+    loaderOptions: {
+      css: {
+        localIdentName: '[name]-[hash]',
+        camelCase: 'only'
+      }
     }
   }
 }
