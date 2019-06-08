@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import actions from './actions/actions';
+import actions from "./actions/actions";
 
 Vue.use(Vuex);
 

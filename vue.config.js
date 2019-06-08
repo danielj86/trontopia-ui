@@ -2,9 +2,9 @@ module.exports = {
   css: {
     loaderOptions: {
       css: {
-        localIdentName: '[name]-[hash]',
-        camelCase: 'only'
+        localIdentName: "[name]-[hash]",
+        camelCase: "only"
       }
     }
   }
-}
+};
