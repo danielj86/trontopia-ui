@@ -167,11 +167,11 @@ import TronService from "../services/tronService";
 import LocalCache from "../cache/localCache";
 import SoundService from "../services/soundsService";
 import UserService from "../services/userService";
+import BettingService from "../services/bettingService";
 
 import UltimateDiceContract from "../contracts/ultimateDiceContract";
 import TokenContract from "../contracts/tokenContract";
 import DividendContract from "../contracts/dividendContract";
-import { all } from "q";
 
 export default {
   name: "HelloWorld",
@@ -220,6 +220,11 @@ export default {
 
       //fetch TRX balance
       await TronService.fetchMyTRXBalance();
+
+      //update sidebet jackpot size
+      let jackpot = await UltimateDiceContract.currentSideBetJackpotSize();
+      BettingService.setBettingSidePotSize(jackpot);
+
 
       
     } catch (ex) {

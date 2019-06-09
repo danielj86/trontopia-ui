@@ -3,7 +3,10 @@
     <div class="row">
       <div class="col-lg-4 col-md-4 col-sm-4">
         <div class="footer-bx">
-          <p>Current Time: <span id="currentTime"></span> (UTC)</p>
+          <p>
+            Current Time:
+            <span id="currentTime"></span> (UTC)
+          </p>
         </div>
       </div>
 
@@ -15,13 +18,13 @@
 
       <div class="col-lg-3 col-md-3 col-sm-3">
         <div class="social-bx">
-          <a href="https://t.me/trontopia" target="_blank"
-            ><i class="fa fa-paper-plane"></i
-          ></a>
+          <a href="https://t.me/trontopia" target="_blank">
+            <i class="fa fa-paper-plane"></i>
+          </a>
 
-          <a href="https://www.twitter.com/tron_topia" target="_blank"
-            ><i class="fa fa-twitter"></i
-          ></a>
+          <a href="https://www.twitter.com/tron_topia" target="_blank">
+            <i class="fa fa-twitter"></i>
+          </a>
         </div>
       </div>
     </div>
@@ -44,8 +47,7 @@
         href="/cdn-cgi/l/email-protection"
         class="__cf_email__"
         data-cfemail="d4b7b5a494a0a6bbbaa0bba4bdb5fab7bbfa"
-        >[email&#160;protected]</a
-      >
+      >[email&#160;protected]</a>
     </p>
   </footer>
 </template>

@@ -12,7 +12,7 @@ class TronHelper {
         window.tronWeb.on("addressChanged", callback);
     }
 
-    static sunToTrx(sun) {
+    static fromSun(sun) {
         const str = window.tronWeb.fromSun(sun).toString();
         return TextHelper.number_to_2decimals(str);
     }
@@ -29,7 +29,7 @@ class TronHelper {
 
         let res = await HTTP.POST("https://api.shasta.trongrid.io/wallet/getaccount", { address: store.state.userAddressHex });
         let trxBal = res['balance'];
-        let balance = this.sunToTrx(trxBal);
+        let balance = this.fromSun(trxBal);
 
         store.commit('SET_MY_TRX_BALANCE', balance);
     }

@@ -1,7 +1,6 @@
 import options from '../options';
 import TronService from '../services/tronService';
 
-
 class TokenContract {
 
     static async getContractInstance(){
@@ -16,6 +15,11 @@ class TokenContract {
         let decimalVal = TronService.toDecimal(val[0]);
 
         return decimalVal / 100000000;
+    }
+
+    static async totalSupply(){
+        let tokenContractInstance = await this.getContractInstance();
+        return await tokenContractInstance.totalSupply().call();
     }
 
     static async getAvailabletoWithdrawTOPIA() {

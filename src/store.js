@@ -11,6 +11,7 @@ export default new Vuex.Store({
     loggedIn: false,
     soundIsOn: false,
     myAvaliableToken: 0.0,
+    sidebetJackpot:0.0,
     myTRXBalance: 0.0,
     totals: {
       myTotalWon: 0,
@@ -41,6 +42,9 @@ export default new Vuex.Store({
     },
     SET_MY_TRX_BALANCE: (state, balance) => {
       state.myTRXBalance = balance;
+    },
+    SET_SIDEBET_JACKPOT: (state, jackpot) => {
+      state.sidebetJackpot = jackpot;
     }
   },
   actions
