@@ -195,6 +195,8 @@ export default {
     //set sounds preferences
     SoundService.initSound();
 
+    UltimateDiceContract.watchEvents();
+
     try {
       //wait 5 secs for tronweb or else catch
       await TronService.waitForTronWeb(5000);
@@ -226,7 +228,7 @@ export default {
       BettingService.setBettingSidePotSize(jackpot);
 
 
-      
+
     } catch (ex) {
       console.log(JSON.stringify(ex));
       this.$store.commit("SET_IS_LOGGEDIN", false);
@@ -242,18 +244,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>

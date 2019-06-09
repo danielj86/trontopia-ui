@@ -1,5 +1,4 @@
 import TextHelper from '../helpers/textHelper';
-import HTTP from '../helpers/HTTP';
 import store from '../store';
 
 class TronHelper {
@@ -25,10 +24,12 @@ class TronHelper {
         return await window.tronWeb.defaultAddress.hex;
     }
 
-    static async fetchMyTRXBalance() {
+    static async getBalance(wallet) {
+        return await window.tronWeb.trx.getBalance(wallet);
+    }
 
-        let res = await HTTP.POST("https://api.shasta.trongrid.io/wallet/getaccount", { address: store.state.userAddressHex });
-        let trxBal = res['balance'];
+    static async fetchMyTRXBalance() {
+        let trxBal = await    this.getBalance(store.state.userAddress);
         let balance = this.fromSun(trxBal);
 
         store.commit('SET_MY_TRX_BALANCE', balance);

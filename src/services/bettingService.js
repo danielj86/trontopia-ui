@@ -26,6 +26,47 @@ class BettingService {
     static setBetPayout(payout){
         store.commit('SET_BET_PAYOUT', payout);
     }
+
+    static rollBet(){
+
+        //set rolling state to true
+
+        //set timestamp
+
+        //disable slider
+
+        //cookie
+
+        //get game contract
+
+        //clear style for bounce num
+
+        //is mobile
+
+        //get dividends from contract
+
+        //sidebet amount
+
+        //validate bet
+
+        //validate payout
+
+        //generate random seed for bet
+
+        //validate user balance
+
+        //convert sidebet to int
+
+        //generate rollIntegerVariables
+
+        //get previousFinishBet from local storage
+
+        //start watching events
+
+        //call finishBet_and_startBet contract method
+
+        //listen to events with uniqueId
+    }
 }
 
 

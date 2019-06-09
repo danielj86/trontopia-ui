@@ -157,13 +157,13 @@
 
             <div class="frm-gt">
               <input
-                type="text"
+                type="number"
                 autocomplete="off"
                 class="form-control"
+                @keyup="betAmountChanged()"
                 id="betAmt"
                 v-model="$store.state.bet.amount"
                 aria-describedby="emailHelp"
-                value="50"
                 name="number"
                 placeholder="0.00"
               >
@@ -471,14 +471,43 @@
 </template>
 <script>
 import $ from "jquery";
+import Vue from "vue";
+import VueAlertify from "vue-alertify";
 import constants from "../constants";
 import TextHelper from "../helpers/textHelper";
 import BettingService from "../services/bettingService";
+
+Vue.use(VueAlertify);
 
 export default {
   name: "BettingBox",
   props: {},
   methods: {
+    betAmountChanged: function() {
+      const MAX_BET_AMOUNT = 25000;
+      const betAmt = this.$store.state.bet.amount;
+
+      if (isNaN(betAmt)) {
+        this.$alertify.error("Input must be Numeric");
+        BettingService.setBetPayout(0);
+        return false;
+      } else if (betAmt < 0) {
+        this.$alertify.error("Wager amount must be Positive");
+        this.$store.state.bet.amount = 50;
+        BettingService.setBetPayout(0);
+        return false;
+      } else {
+        if (betAmt > MAX_BET_AMOUNT) {
+          this.$alertify.error("Max Bet Amount is " + MAX_BET_AMOUNT);
+          this.$store.state.bet.amount = 50;
+        }
+      }
+
+      this.getMultiplierValue(
+        this.$store.state.bet.from,
+        this.$store.state.bet.to
+      );
+    },
     getMultiplierValue: function(start, end) {
       let self = this;
       var differ = parseInt(end) - parseInt(start);
@@ -553,4 +582,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 </style>
