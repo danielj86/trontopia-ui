@@ -21,11 +21,12 @@
           href="#chat-scroll"
           class="navbar-toggle collapsed"
           style="padding: 0px 0px;font-size: 30px;border: 0;color: #fff;margin: 3px 8px 0px 0px;background: transparent;"
-          ><i class="fa fa-comments mv" title=""></i
-        ></a>
+        >
+          <i class="fa fa-comments mv" title></i>
+        </a>
         <a class="navbar-brand" href="index.html">
           <h1 class="logo-txt">
-            <img src="../assets/images/logo.png" alt="LOGO" />
+            <img src="../assets/images/logo.png" alt="LOGO">
             <strong>TRON</strong>TOPIA
           </h1>
         </a>
@@ -34,25 +35,24 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav" id="menu">
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-              >Games <i class="fa fa-angle-down"></i
-            ></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Games
+              <i class="fa fa-angle-down"></i>
+            </a>
 
             <ul class="dropdown-menu">
-              <li><a href="/dice.php"> Ultimate Dice</a></li>
+              <li>
+                <a href="/dice.php">Ultimate Dice</a>
+              </li>
 
-              <li><a href=""> Lucky One Max (Back Soon!) </a></li>
+              <li>
+                <a href>Lucky One Max (Back Soon!)</a>
+              </li>
             </ul>
           </li>
 
           <li>
-            <a
-              id="dividendPopup"
-              href="#"
-              data-toggle="modal"
-              data-target="#dividend"
-              >Dividends</a
-            >
+            <a id="dividendPopup" href="#" data-toggle="modal" data-target="#dividend">Dividends</a>
           </li>
 
           <li>
@@ -77,13 +77,13 @@
             <a
               href="https://tronscan.org/#/address/TGpP9GPsjyq2yo4WrwSJvqYwqZLKRnSzE8"
               target="_blank"
-              >Token</a
-            >
+            >Token</a>
           </li>
 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle user" data-toggle="dropdown">
-              <i class="user_icon fa fa-user"></i><span id="isLogin"></span>
+              <i class="user_icon fa fa-user"></i>
+              <span id="isLogin">{{getUserAddress}}</span>
             </a>
 
             <!--<ul class="dropdown-menu tes-block">
@@ -92,9 +92,9 @@
 
                                 <li><a href="#">Profile</a></li>
 
-                            </ul>-->
+            </ul>-->
           </li>
-          <li class="nav-item" id="login_or_not">
+          <li class="nav-item" id="login_or_not" v-show="$store.state.loggedIn">
             <a
               class="nav-link header-menu-item bg-user"
               href="#"
@@ -103,7 +103,9 @@
               data-toggle="modal"
               data-target="#not_log_in"
             >
-              <span class="display-block"><span id="isnotLogin"></span></span>
+              <span class="display-block">
+                <span id="isnotLogin"></span>
+              </span>
             </a>
           </li>
         </ul>
@@ -112,9 +114,16 @@
   </nav>
 </template>
 <script>
+import UserHelper from "../services/userService";
+
 export default {
   name: "Navigation",
-  props: {}
+  props: {},
+  computed: {
+    getUserAddress() {
+      return UserHelper.getUserAddress();
+    }
+  }
 };
 </script>
 

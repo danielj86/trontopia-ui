@@ -10,118 +10,10 @@
     </div>
     -->
 
-    <!-- Dividend Popup -->
-
     <DividendPopup/>
-
-    <!-- End Dividend Popup -->
-
-    <!-- Referrals Popup -->
-
-    <RefrealsPopup />
-
-    <!-- End Referrals Popup -->
-
-    <!-- Referrals Popup -->
-
-    <div id="unclaimedWinners" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content gradient-border">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">
-              <img src="../assets/images/close-po.png" alt="#">
-            </button>
-            <center>
-              <h5>Claim unclaimed winning</h5>
-            </center>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-sm-12">
-                <form class="text-left">
-                  <div class="form-group">
-                    <label for="finishBetGambler">User wallet :</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="finishBetGambler"
-                      aria-describedby="seed"
-                      value
-                    >
-                  </div>
-                  <div class="form-group">
-                    <label for="finishBetUniqueID">Unique Bet ID:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="finishBetUniqueID"
-                      aria-describedby="seed"
-                      value
-                    >
-                  </div>
-                  <div class="form-group">
-                    <label for="finishBetUserSeed">User seed :</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="finishBetUserSeed"
-                      aria-describedby="seed"
-                      value
-                    >
-                  </div>
-                  <div class="form-group">
-                    <label for="finishBetBlockNumber">Block number :</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="finishBetBlockNumber"
-                      aria-describedby="seed"
-                      value
-                    >
-                  </div>
-                  <div class="form-group">
-                    <label for="finishBetParamsArray">Bet Parameters Array :</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="finishBetParamsArray"
-                      aria-describedby="seed"
-                      value
-                    >
-                  </div>
-                  <div class="with-bx container-fluid">
-                    <div class="row">
-                      <div class="col-xs-4 col-sm-3">
-                        <div class="row">
-                          <button type="button" class="btn btn-main" id="finishBetBtn">Claim</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="col-sm-12">
-                <p style="margin-top: 20px;" title class="text-left">
-                  <span title>
-                    In rare circumstances; it is possible for a winning bet to not be finished fully.
-                    <br>You can claim your winning bets that have not been paid to you by filling the information out above and clicking CLAIM.
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- End Referrals Popup -->
-
-    <!-- How to Play Popup -->
-
+    <RefrealsPopup/>
     <HowToPlay/>
-
-    <!-- End How to Play Popup -->
+    <FairPopup/>
 
     <div class="main-wrapper">
       <!-- Header  -->
@@ -143,15 +35,16 @@
           <div class="row" id="numView">
             <BettingBox/>
             <LeaderBoard/>
+            <BestTabuler/>
           </div>
         </div>
+
+        <!-- End Main Content -->
+
+        <!-- Footer      -->
+
+        <Footer/>
       </div>
-
-      <!-- End Main Content -->
-
-      <!-- Footer      -->
-
-      <Footer/>
 
       <!-- End Footer -->
     </div>
@@ -182,133 +75,7 @@
             </div>
           </div>
         </li>
-
-        <!-- <li>
-
-                    <div class="notify-bx">
-
-                        <div class="ic-nit">
-
-                            <img src="images/dimnd-1.png" alt="">
-
-                        </div>
-
-                        <div class="noti-dt">
-
-                            <h6>Well Played!</h6>
-
-                            <p>You won 1,025.95 TRX.</p>
-
-
-
-                            <a href="javascript:void(0);" class="close-no"><img src="images/close2.png" alt=""></a>
-
-                        </div>
-
-                    </div>
-
-        </li>-->
-
-        <!--<li class="alert-noti">
-
-                    <div class="notify-bx">
-
-                        <div class="ic-nit">
-
-                            <img src="images/dimnd-2.png" alt="">
-
-                        </div>
-
-                        <div class="noti-dt">
-
-                            <h6>So close!</h6>
-
-                            <p>You lost 1,000 TOPIA.</p>
-
-
-
-                            <a href="javascript:void(0);" class="close-no"><img src="images/close2.png" alt=""></a>
-
-                        </div>
-
-                    </div>
-
-        </li>-->
       </ul>
-    </div>
-
-    <div id="fair" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content gradient-border">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">
-              <img src="../assets/images/close-po.png" alt="#">
-            </button>
-            <center>
-              <h5>Provably Fair Betting</h5>
-            </center>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-sm-12">
-                <form class="text-left">
-                  <div class="form-group">
-                    <label for="seeds">Current Seed (SHA256) :</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="cur_seeds"
-                      aria-describedby="seed"
-                      value
-                      disabled="disabled"
-                    >
-                  </div>
-                  <div class="form-group">
-                    <label for="seeds">Enter Your Custom Seed:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="new_seeds"
-                      aria-describedby="seed"
-                      value
-                    >
-                  </div>
-                  <div class="form-group">
-                    <label for="seeds">New Seed (SHA256) :</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="formated_seeds"
-                      aria-describedby="seed"
-                      value
-                      disabled="disabled"
-                    >
-                  </div>
-                  <div class="with-bx container-fluid">
-                    <div class="row">
-                      <div class="col-xs-4 col-sm-3">
-                        <div class="row">
-                          <button type="button" class="btn btn-main" id="new_seedValue">Update</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="col-sm-12">
-                <p style="margin-top: 20px;" title class="text-left">
-                  <span title>
-                    All bets on TRONTOPIA are placed directly to our Smart Contracts on the blockchain. The wager results are verifiable on the blockchain by viewing the transaction ID's for your wagers.
-                    <br>
-                    <br>You can enter your own seed above, to be utilized for your wagers. This can be changed at your own will. If you do not enter your own seed, then a random seed will be used.
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- For if user is not loged in and click on Roll Over button -->
@@ -379,41 +146,7 @@
     </div>
 
     <!-- For showing If user is not loged In -->
-    <div
-      class="modal"
-      id="notSignIn"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLongTitle"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-            id="rollPopClose"
-          >
-            <img src="../assets/images/close-po.png" alt id="closeNotSignIn">
-          </button>
-
-          <div class="login-wrps">
-            <img src="../assets/images/wel-pop.png" alt>
-            <h3>Please Login to Tronlink</h3>
-
-            <p>
-              tronlink wallet installed please visit
-              <a
-                href="https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec"
-              >Tronlink</a> and download the chrome extension.
-            </p>
-            <p>(trontopia is only availble using chrome browser for the time being)</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <LogedOutPopup/>
   </div>
 </template>
 
@@ -425,11 +158,24 @@ import LeaderBoard from "./LeaderBoard";
 import Footer from "./Footer";
 import HowToPlay from "./HowToPlay";
 import DividendPopup from "./DividendPopup";
-import RefrealsPopup from './ReferalsPopup';
+import RefrealsPopup from "./ReferalsPopup";
+import LogedOutPopup from "./LogedOutPopup";
+import FairPopup from "./FairPopup";
+import BestTabuler from "./BestTabuler";
+
+import TronHelper from "../services/tronService";
+import LocalCache from "../cache/localCache";
+import SoundService from "../services/soundsService";
+
+import UltimateDiceContract from "../contracts/ultimateDiceContract";
+import TokenContract from "../contracts/tokenContract";
+import DividendContract from "../contracts/dividendContract";
 
 export default {
   name: "HelloWorld",
   components: {
+    FairPopup,
+    LogedOutPopup,
     DividendPopup,
     RefrealsPopup,
     HowToPlay,
@@ -437,7 +183,38 @@ export default {
     DiceHeader,
     BettingBox,
     LeaderBoard,
+    BestTabuler,
     Footer
+  },
+  mounted: async function() {
+    //clear sidebets
+    LocalCache.clearSideBets();
+
+    //set sounds preferences
+    SoundService.initSound();
+
+    try {
+      //wait 5 secs for tronweb or else catch
+      await TronHelper.waitForTronWeb(5000);
+
+      let userAddress = await window.tronWeb.defaultAddress.base58;
+      let userAddressHex = await window.tronWeb.defaultAddress.hex;
+
+      this.$store.commit("SET_USER_ADDRESS", userAddress);
+      this.$store.commit("SET_USER_ADDRESS_HEX", userAddressHex);
+      this.$store.commit("SET_IS_LOGGEDIN", true);
+
+      //init contracts
+      UltimateDiceContract.Init();
+      TokenContract.Init();
+      DividendContract.Init();
+
+    } catch (ex) {
+
+      this.$store.commit("SET_IS_LOGGEDIN", false);
+      this.$store.commit("SET_USER_ADDRESS_HEX", "");
+      this.$store.commit("SET_USER_ADDRESS", "");
+    }
   },
   props: {
     msg: String

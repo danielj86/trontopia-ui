@@ -37,3 +37,7 @@
 <style src="./assets/css/style.css?v=5"></style>
 <style src="./assets/css/responsive.css?v=5"></style>
 <style src="./assets/css/alertify.css?v=5"></style>
+
+<script>
+
+</script>

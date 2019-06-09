@@ -4,11 +4,7 @@
       <div class="headlines-box headlines-box-first dice-hedln">
         <div class="dice-nav">
           <center>
-            <img
-              src="../assets/images/ultimate_dice.png"
-              alt=""
-              height="45px"
-            />
+            <img src="../assets/images/ultimate_dice.png" alt height="45px">
           </center>
         </div>
       </div>
@@ -18,29 +14,28 @@
       <div class="headlines-box dice-hedln desktopmode">
         <div class="headline-bx dice-head">
           <p>BETS MADE</p>
-          <label id="myBetVals">Loading..</label>
+          <label id="myBetVals">{{$store.state.totals.myTotalBets}}</label>
 
           <p>TOPIA</p>
-          <label id="myTotalToken">Loading..</label>
+          <label id="myTotalToken">{{$store.state.totals.myTotalToken}}</label>
 
           <p>Total Won</p>
-          <label id="myTotalWon">Loading..</label>
-          <p><img src="../assets/images/sound_on.png" id="sound-icon" /></p>
+          <label id="myTotalWon">{{$store.state.totals.myTotalWon}}</label>
+          <p>
+            <img v-if="$store.state.soundIsOn" src='../assets/images/sound_on.png' id="sound-icon" @click="toggleSound">
+             <img v-if="!$store.state.soundIsOn" src='../assets/images/sound_off.png' id="sound-icon" @click="toggleSound">
+          </p>
         </div>
       </div>
 
       <div class="headlines-box respon-mode">
         <div class="headline-bx">
-          <a href="javascript:void(0);" class="openc"
-            ><p>BETS MADE</p>
-            <label id="myBetVals2">Loading..</label></a
-          >
+          <a href="javascript:void(0);" class="openc">
+            <p>BETS MADE</p>
+            <label id="myBetVals2">Loading..</label>
+          </a>
           <div class="sond">
-            <img src="../assets/images/sound_on.png" id="sound-icon" /><a
-              href="javascript:void(0);"
-              class="openc"
-              ><i class="fa fa-angle-down"></i
-            ></a>
+            <img src="../assets/images/sound_on.png" id="sound-icon">
           </div>
         </div>
 
@@ -60,9 +55,18 @@
   </div>
 </template>
 <script>
+
+import SoundService from '../services/soundsService';
+
 export default {
   name: "Header",
-  props: {}
+  props: {},
+  computed:{},
+  methods:{
+    toggleSound(){
+      SoundService.toggleSound();
+    }
+  }
 };
 </script>
 
