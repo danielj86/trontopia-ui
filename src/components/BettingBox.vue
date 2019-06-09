@@ -480,7 +480,7 @@ export default {
   props: {},
   methods: {
     getMultiplierValue: function(start, end) {
-        let self = this;
+      let self = this;
       var differ = parseInt(end) - parseInt(start);
 
       if (differ == 0) {
@@ -500,9 +500,7 @@ export default {
 
           BettingService.setMultiplier(multiplier + " x");
 
-          var betAmt, fixedPayOut;
-          betAmt = self.$store.state.bet.amount;
-          fixedPayOut = parseInt(betAmt) * multiplier;
+          let fixedPayOut = parseInt(self.$store.state.bet.amount) * multiplier;
 
           BettingService.setBetPayout(
             TextHelper.number_to_2decimals(fixedPayOut)
@@ -544,7 +542,6 @@ export default {
             : (end = "0" + ui.values[1]);
 
           BettingService.setBetFromTo(start, end);
-
           self.getMultiplierValue(start, end);
         }
       },
