@@ -4,9 +4,9 @@ let ultimateDiceContractInstance = {};
 
 class UltimateDiceContract {
 
-     static async Init() {
-        let ultimateDiceContractInfo = await tronWeb.trx.getContract(options.testnet.ultimateDiceContractAddress);
-        ultimateDiceContractInstance = await tronWeb.contract(ultimateDiceContractInfo.abi.entrys, ultimateDiceContractInfo.contract_address);
+    static async getContractInstance(){
+        let contractInfo = await tronWeb.trx.getContract(options.testnet.ultimateDiceContractAddress);
+        return await tronWeb.contract(contractInfo.abi.entrys, contractInfo.contract_address);
     }
 
 

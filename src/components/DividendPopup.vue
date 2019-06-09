@@ -116,55 +116,12 @@
             </div>
           </div>
 
-          <!--             new row -->
-
-          <!-- 				<div class="progress-step refer-progres" style="padding-top: 30px;">
-
-                   <h4>Current Level: <span id="freeze-tier-lvl">Bronze Freeze(75% Reward)</span></h4>
-
-                    <div class="referpr">
-
-                        <div class="icnbxon">
-
-                            <img id="div-left-image" src="images/freeze1.png" alt="" style="width: 70%;">
-
-                        </div>
-
-                        <div class="progress">
-
-                            <div class="progress-bar" id="freeze-progress" role="progressbar" aria-valuenow="80" aria-valuemin="0"
-
-                                aria-valuemax="100" style="max-width:0%">
-
-                                <span class="title"><span id="days">0</span> / <span id="days-to-complete">0</span></span>
-
-                            </div>
-
-                        </div>
-
-                        <div class="icnbxon">
-
-                            <img id="div-right-image" src="images/freeze2.png" alt="" style="width: 70%;">
-
-                        </div>
-
-                    </div>
-
-                    <p id="till_what_reward">Till Silver Freeze(85% Reward)</p>
-
-          </div>-->
-
           <div class="withdr-bx">
             <div class="row">
               <div class="col-md-3 col-sm-3">
                 <div class="with-bx with-bx1">
-                  <!--  <h5 style="text-align: left;color: #0cd6cf;margin-top: 16px; font-size: 20px;">
-                                	<img src="images/topia.png" alt="" style="width: 10%;margin-right: 6px;display: inline-block;" />  
-                                	<span id="myAvailableToken" style="color: #fff;"></span>
-                                	TOPIA
-                  </h5>-->
                   <h5>WITHDRAW DIVIDEND</h5>
-                  <input type name id="myAvailableDividend" placeholder="0.00" disabled>
+                  <input type name id="myAvailableDividend" placeholder="0.00" disabled v-bind:val="$store.state.myAvaliableToken">
                   <a
                     href="#"
                     class="btn-main"
@@ -176,12 +133,7 @@
               <div class="col-md-3 col-sm-3">
                 <div class="with-bx with-bx1">
                   <h5>WITHDRAW TOPIA</h5>
-                  <!--	<h5 style="text-align: left;color: #e80505; font-size: 20px;">
-                                 	<img src="images/tron_logo.png" alt="tron logo" style="width: 10%;margin-right: 6px;display: inline-block;" /> 
-                                	<span id="myAvailableDividend" style="color: #fff;">0</span>
-                                	TRX
-                  </h5>-->
-                  <input type name id="myAvailableToken" placeholder="0.00" disabled>
+                  <input type name id="myAvailableToken" placeholder="0.00" disabled :value="$store.state.myAvaliableToken">
                   <a
                     href="#"
                     class="btn-main"
@@ -198,7 +150,7 @@
                     FREEZE TOPIA
                   </h5>
 
-                  <input type name id="myAvailableToken2" placeholder="0 Topia" disabled>
+                  <input type name id="myAvailableToken2" v-bind:value="$store.state.totals.myTotalToken2" placeholder="0 Topia" disabled>
 
                   <a href="#" class="btn-main frebtn" id="freezeTopia">Freeze</a>
                 </div>

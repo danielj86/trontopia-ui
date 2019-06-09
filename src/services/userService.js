@@ -1,4 +1,5 @@
 import store from '../store';
+import TronService from '../services/tronService';
 
 class UserHelper {
 
@@ -14,7 +15,15 @@ class UserHelper {
         return null;
     }
 
+    static setMyTotalTokens(totalTokens) {
+        store.commit('SET_MY_TOTAL_TOKENS', totalTokens);
+    }
 
+    static setMyAvaliableTokens(avaliableTokens) {
+        store.commit('SET_MY_AVALIABLE_TOKENS', avaliableTokens);
+    }
+
+  
 }
 
 export default UserHelper

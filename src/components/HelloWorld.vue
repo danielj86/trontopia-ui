@@ -163,13 +163,15 @@ import LogedOutPopup from "./LogedOutPopup";
 import FairPopup from "./FairPopup";
 import BestTabuler from "./BestTabuler";
 
-import TronHelper from "../services/tronService";
+import TronService from "../services/tronService";
 import LocalCache from "../cache/localCache";
 import SoundService from "../services/soundsService";
+import UserService from "../services/userService";
 
 import UltimateDiceContract from "../contracts/ultimateDiceContract";
 import TokenContract from "../contracts/tokenContract";
 import DividendContract from "../contracts/dividendContract";
+import { all } from "q";
 
 export default {
   name: "HelloWorld",
@@ -195,22 +197,33 @@ export default {
 
     try {
       //wait 5 secs for tronweb or else catch
-      await TronHelper.waitForTronWeb(5000);
+      await TronService.waitForTronWeb(5000);
 
-      let userAddress = await window.tronWeb.defaultAddress.base58;
-      let userAddressHex = await window.tronWeb.defaultAddress.hex;
+      TronService.onUserAddressChange(() => {
+        alert("address changed");
+      });
+
+      let userAddress = await TronService.getMyAddress();
+      let userAddressHex = await TronService.getMyAddressHex();
 
       this.$store.commit("SET_USER_ADDRESS", userAddress);
       this.$store.commit("SET_USER_ADDRESS_HEX", userAddressHex);
       this.$store.commit("SET_IS_LOGGEDIN", true);
 
-      //init contracts
-      UltimateDiceContract.Init();
-      TokenContract.Init();
-      DividendContract.Init();
+      //get user token balance
+      let userBalance = await TokenContract.balanceOf(userAddress);
+      UserService.setMyTotalTokens(userBalance);
 
+      /* For getting user available tokens to  */
+      let userAvailableToken = await TokenContract.getAvailabletoWithdrawTOPIA();
+      UserService.setMyAvaliableTokens(userAvailableToken);
+
+      //fetch TRX balance
+      await TronService.fetchMyTRXBalance();
+
+      
     } catch (ex) {
-
+      console.log(JSON.stringify(ex));
       this.$store.commit("SET_IS_LOGGEDIN", false);
       this.$store.commit("SET_USER_ADDRESS_HEX", "");
       this.$store.commit("SET_USER_ADDRESS", "");

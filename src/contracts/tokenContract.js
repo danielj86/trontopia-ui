@@ -1,14 +1,31 @@
 import options from '../options';
+import TronService from '../services/tronService';
 
-let tokenContractInstance = {};
 
 class TokenContract {
 
-     static async Init() {
+    static async getContractInstance(){
         let tokenContractInfo = await tronWeb.trx.getContract(options.testnet.tokenContractAddress);
-        tokenContractInstance = await tronWeb.contract(tokenContractInfo.abi.entrys, tokenContractInfo.contract_address);
+        return await tronWeb.contract(tokenContractInfo.abi.entrys, tokenContractInfo.contract_address);
     }
 
+    static async balanceOf(wallet) {
+       let tokenContractInstance = await this.getContractInstance();
+        let tokens = await tokenContractInstance.balanceOf(wallet).call();
+        let val = Object.values(tokens);
+        let decimalVal = TronService.toDecimal(val[0]);
+
+        return decimalVal / 100000000;
+    }
+
+    static async getAvailabletoWithdrawTOPIA() {
+        let tokenContractInstance = await this.getContractInstance();
+        let tokens = await tokenContractInstance.displayAvailabletoWithdrawTOPIA().call();
+        let val = Object.values(tokens);
+        let decimalVal = TronService.toDecimal(val[0]);
+
+        return decimalVal / 100000000;
+    }
 
 }
 

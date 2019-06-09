@@ -103,9 +103,9 @@
                 id="trxBalance"
                 style
                 name="number"
-                value="0"
                 class="form-control"
                 disabled
+                v-bind:value="$store.state.myTRXBalance"
               >
 
               <span class="trx-txt">trx</span>
