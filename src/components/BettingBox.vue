@@ -135,7 +135,7 @@
               <label class="roll-m">Roll</label>
 
               <input type="button" class="btn-main roll-btn" value="roll" id="rollDice">
-              <input type="button" class="btn-main roll-btn" value="rolling..." id="rollBtn">
+              <!-- <input type="button" class="btn-main roll-btn" value="rolling..." id="rollBtn"> -->
             </div>
           </div>
         </form>
@@ -490,44 +490,102 @@
   </div>
 </template>
 <script>
-
-import $ from 'jquery';
-
+import $ from "jquery";
+import constants from '../constants';
+import TextHelper from '../helpers/textHelper';
 
 export default {
   name: "BettingBox",
   props: {},
+  methods: {
+    getMultiplierValue: function(start, end) {
+      var differ = parseInt(end) - parseInt(start);
+
+      if (differ == 0) {
+        differ = 1;
+      } else if (differ == 1) {
+        differ = 2;
+      } else {
+        differ = differ + 1;
+      }
+      var winChance = parseInt(differ);
+
+      $("#winChance").val(winChance + "%");
+      $.each(constants.multiplierJSON, function(key, value) {
+        if (differ == value.win_val) {
+          var multiplierAmount = value.value;
+          // multiplierAmount = multiplierAmount.toString();
+          //multiplierAmount = multiplierAmount.slice(0, (multiplierAmount.indexOf("."))+3);
+          $("#multiplier").val(multiplierAmount + " x");
+          $("#hidden_multiplier").val(multiplierAmount);
+
+          var betAmt, multiplier, payout, fixedPayOut;
+          betAmt = $("#betAmt").val();
+          multiplier = $("#hidden_multiplier").val();
+          fixedPayOut = parseInt(betAmt) * multiplier;
+          fixedPayOut = fixedPayOut.toString();
+          /*if(fixedPayOut.indexOf(".")!=-1){
+                            fixedPayOut = fixedPayOut.slice(0, (fixedPayOut.indexOf("."))+3);
+                          }*/
+
+          $("#payout").val(TextHelper.number_to_2decimals(fixedPayOut));
+
+          /*Checking the dividenet is greater than Payout*/
+          var dividentVal, payoutVal, res;
+          dividentVal = 500000;
+          res = (parseInt(dividentVal) * 1) / 100;
+
+          if (fixedPayOut > res) {
+            //document.getElementById("rollDice").disabled = true;
+            //return false;
+          }
+        }
+      });
+    }
+  },
   mounted: function() {
-      jQuery.ui.slider({
-            range: true,
-            orientation: "horizontal",
-            min: 0,
-            max: 99,
-            values: [25, 75],
-            step: 1,
-            slide: function(event, ui) {
-                if((ui.values[1] - ui.values[0]) > 94) {
-                  if(ui.values[1] > 94) {
-                      let val_0 = ui.values[1] - 94;
-                      $("#slider-range").slider('values',0,val_0);
-                  } if(ui.values[0] < 5) {
-                      let val_1 = 94 + ui.values[0];
-                      ui.values[1] = val_1;
-                      $("#slider-range").slider('values',1,val_1);
-                    }
-                }
+    let sliderEl = document.getElementById("slider-range");
+    let start, end;
+    let self = this;
+    jQuery.ui.slider(
+      {
+        range: true,
+        orientation: "horizontal",
+        min: 0,
+        max: 99,
+        values: [25, 75],
+        step: 1,
+        slide: function(event, ui) {
+          if (ui.values[1] - ui.values[0] > 94) {
+            if (ui.values[1] > 94) {
+              let val_0 = ui.values[1] - 94;
+              $("#slider-range").slider("values", 0, val_0);
+            }
+            if (ui.values[0] < 5) {
+              let val_1 = 94 + ui.values[0];
+              ui.values[1] = val_1;
+              $("#slider-range").slider("values", 1, val_1);
+            }
+          }
 
-                ui.values[0] >= 10 ? start = ui.values[0] : start = "0" + ui.values[0];
-                ui.values[1] >= 10 ? end = ui.values[1] : end = "0" + ui.values[1];
+          ui.values[0] >= 10
+            ? (start = ui.values[0])
+            : (start = "0" + ui.values[0]);
+          ui.values[1] >= 10
+            ? (end = ui.values[1])
+            : (end = "0" + ui.values[1]);
 
-                $("#min_price").html(start);
-                $("#max_price").html(end);
+          $("#min_price").html(start);
+          $("#max_price").html(end);
 
-                $("#startVal").val(start);
-                $("#endVal").val(end);
+          $("#startVal").val(start);
+          $("#endVal").val(end);
 
-                getMultiplierValue(start, end);
-            }}, $("#slider-range")[0]);
+          self.getMultiplierValue(start, end);
+        }
+      },
+      sliderEl
+    );
   }
 };
 </script>
