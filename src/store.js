@@ -18,6 +18,10 @@ export default new Vuex.Store({
       myTotalToken: 0,
       myTotalToken2: 0,
       myTotalBets: 0,
+    },
+    bet:{
+      from:25,
+      to:75
     }
   },
   mutations: {
@@ -45,6 +49,10 @@ export default new Vuex.Store({
     },
     SET_SIDEBET_JACKPOT: (state, jackpot) => {
       state.sidebetJackpot = jackpot;
+    },
+    SET_BET_FROM_TO(state,bets){
+      state.bet.from =bets.from;
+      state.bet.to = bets.to;
     }
   },
   actions

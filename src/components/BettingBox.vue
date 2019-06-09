@@ -4,11 +4,10 @@
       <div class="row">
         <div class="col-12 col-xs-8 col-md-8 slider-padding-left">
           <div class="box predictbox" style="padding-top: 10px">
-            <input type="hidden" id="startVal" value="40">
-            <input type="hidden" id="endVal" value="77">
+            <input type="hidden" id="startVal" v-bind:value="$store.state.bet.from" />
+            <input type="hidden" id="endVal"  v-bind:value="$store.state.bet.to" />
             <span>
-              <text id="min_price">49</text>-
-              <text id="max_price">70</text>
+             {{$store.state.bet.from}} - {{$store.state.bet.to}}
             </span>
             <p>Prediction</p>
           </div>
@@ -210,31 +209,6 @@
                   x2
                 </a>
               </li>
-
-              <!--<li><a href="javascript:void(0);">
-
-                                                    <label class="checkbx">
-
-                                                        <input type="radio" name="r1">
-
-                                                        <span class="checkmark"></span>
-
-                                                    </label>
-
-                                                    x4</a></li>
-
-                                            <li><a href="javascript:void(0);">
-
-                                                    <label class="checkbx">
-
-                                                        <input type="radio" name="r1">
-
-                                                        <span class="checkmark"></span>
-
-                                                    </label>
-
-              x8</a></li>-->
-
               <li>
                 <a href="javascript:void(0);" onclick="updateBetAmount('max')" unselectable="on">
                   <label class="checkbx">
@@ -493,6 +467,7 @@
 import $ from "jquery";
 import constants from '../constants';
 import TextHelper from '../helpers/textHelper';
+import BettingService from '../services/bettingService';
 
 export default {
   name: "BettingBox",
@@ -575,8 +550,7 @@ export default {
             ? (end = ui.values[1])
             : (end = "0" + ui.values[1]);
 
-          $("#min_price").html(start);
-          $("#max_price").html(end);
+        BettingService.setBetFromTo(start,end);
 
           $("#startVal").val(start);
           $("#endVal").val(end);
