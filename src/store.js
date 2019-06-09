@@ -11,7 +11,7 @@ export default new Vuex.Store({
     loggedIn: false,
     soundIsOn: false,
     myAvaliableToken: 0.0,
-    sidebetJackpot:0.0,
+    sidebetJackpot: 0.0,
     myTRXBalance: 0.0,
     totals: {
       myTotalWon: 0,
@@ -19,9 +19,13 @@ export default new Vuex.Store({
       myTotalToken2: 0,
       myTotalBets: 0,
     },
-    bet:{
-      from:25,
-      to:75
+    bet: {
+      from: 25,
+      to: 75,
+      winChance: 0,
+      multiplier: 0,
+      amount:0,
+      payout:0
     }
   },
   mutations: {
@@ -50,9 +54,18 @@ export default new Vuex.Store({
     SET_SIDEBET_JACKPOT: (state, jackpot) => {
       state.sidebetJackpot = jackpot;
     },
-    SET_BET_FROM_TO(state,bets){
-      state.bet.from =bets.from;
+    SET_BET_FROM_TO(state, bets) {
+      state.bet.from = bets.from;
       state.bet.to = bets.to;
+    },
+    SET_BET_WIN_CHANCE(state, winChance) {
+      state.bet.winChance = winChance;
+    },
+    SET_BET_MULTIPLIER(state, multiplier) {
+      state.bet.multiplier = multiplier;
+    },
+    SET_BET_PAYOUT(state, payout) {
+      state.bet.payout = payout;
     }
   },
   actions

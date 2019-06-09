@@ -4,11 +4,9 @@
       <div class="row">
         <div class="col-12 col-xs-8 col-md-8 slider-padding-left">
           <div class="box predictbox" style="padding-top: 10px">
-            <input type="hidden" id="startVal" v-bind:value="$store.state.bet.from" />
-            <input type="hidden" id="endVal"  v-bind:value="$store.state.bet.to" />
-            <span>
-             {{$store.state.bet.from}} - {{$store.state.bet.to}}
-            </span>
+            <input type="hidden" id="startVal" v-bind:value="$store.state.bet.from">
+            <input type="hidden" id="endVal" v-bind:value="$store.state.bet.to">
+            <span>{{$store.state.bet.from}} - {{$store.state.bet.to}}</span>
             <p>Prediction</p>
           </div>
         </div>
@@ -163,6 +161,7 @@
                 autocomplete="off"
                 class="form-control"
                 id="betAmt"
+                v-model="$store.state.bet.amount"
                 aria-describedby="emailHelp"
                 value="50"
                 name="number"
@@ -238,7 +237,7 @@
                 type="text"
                 id="payout"
                 name
-                value="20.10"
+                v-bind:value="$store.state.bet.payout"
                 placeholder="0.00"
                 class="form-control"
                 disabled
@@ -255,12 +254,12 @@
               <label>multiplier</label>
 
               <div class="form-group" aria-describedby="emailHelp">
-                <input type="text" name id="multiplier" class="form-control" disabled>
                 <input
-                  style="border:2px solid #01f593"
-                  type="hidden"
-                  id="hidden_multiplier"
-                  value
+                  type="text"
+                  v-bind:value="$store.state.bet.multiplier"
+                  name
+                  id="multiplier"
+                  class="form-control"
                   disabled
                 >
               </div>
@@ -270,7 +269,14 @@
               <label>win chance</label>
 
               <div class="form-group" aria-describedby="emailHelp">
-                <input type="text" name id="winChance" class="form-control" disabled>
+                <input
+                  type="text"
+                  name
+                  id="winChance"
+                  v-bind:value="$store.state.bet.winChance"
+                  class="form-control"
+                  disabled
+                >
               </div>
             </div>
           </div>
@@ -465,15 +471,16 @@
 </template>
 <script>
 import $ from "jquery";
-import constants from '../constants';
-import TextHelper from '../helpers/textHelper';
-import BettingService from '../services/bettingService';
+import constants from "../constants";
+import TextHelper from "../helpers/textHelper";
+import BettingService from "../services/bettingService";
 
 export default {
   name: "BettingBox",
   props: {},
   methods: {
     getMultiplierValue: function(start, end) {
+        let self = this;
       var differ = parseInt(end) - parseInt(start);
 
       if (differ == 0) {
@@ -485,35 +492,21 @@ export default {
       }
       var winChance = parseInt(differ);
 
-      $("#winChance").val(winChance + "%");
+      BettingService.setWinChance(winChance + "%");
+
       $.each(constants.multiplierJSON, function(key, value) {
         if (differ == value.win_val) {
-          var multiplierAmount = value.value;
-          // multiplierAmount = multiplierAmount.toString();
-          //multiplierAmount = multiplierAmount.slice(0, (multiplierAmount.indexOf("."))+3);
-          $("#multiplier").val(multiplierAmount + " x");
-          $("#hidden_multiplier").val(multiplierAmount);
+          var multiplier = value.value;
 
-          var betAmt, multiplier, payout, fixedPayOut;
-          betAmt = $("#betAmt").val();
-          multiplier = $("#hidden_multiplier").val();
+          BettingService.setMultiplier(multiplier + " x");
+
+          var betAmt, fixedPayOut;
+          betAmt = self.$store.state.bet.amount;
           fixedPayOut = parseInt(betAmt) * multiplier;
-          fixedPayOut = fixedPayOut.toString();
-          /*if(fixedPayOut.indexOf(".")!=-1){
-                            fixedPayOut = fixedPayOut.slice(0, (fixedPayOut.indexOf("."))+3);
-                          }*/
 
-          $("#payout").val(TextHelper.number_to_2decimals(fixedPayOut));
-
-          /*Checking the dividenet is greater than Payout*/
-          var dividentVal, payoutVal, res;
-          dividentVal = 500000;
-          res = (parseInt(dividentVal) * 1) / 100;
-
-          if (fixedPayOut > res) {
-            //document.getElementById("rollDice").disabled = true;
-            //return false;
-          }
+          BettingService.setBetPayout(
+            TextHelper.number_to_2decimals(fixedPayOut)
+          );
         }
       });
     }
@@ -550,10 +543,7 @@ export default {
             ? (end = ui.values[1])
             : (end = "0" + ui.values[1]);
 
-        BettingService.setBetFromTo(start,end);
-
-          $("#startVal").val(start);
-          $("#endVal").val(end);
+          BettingService.setBetFromTo(start, end);
 
           self.getMultiplierValue(start, end);
         }
