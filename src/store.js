@@ -9,12 +9,12 @@ export default new Vuex.Store({
     userAddress: "",
     userAddressHex: "",
     loggedIn: false,
-    diceRolling:false,
+    diceRolling: false,
     soundIsOn: false,
     myAvaliableToken: 0.0,
     sidebetJackpot: 0.0,
     myTRXBalance: 0.0,
-    referId:0,
+    referId: 0,
     totals: {
       myTotalWon: 0,
       myTotalToken: 0,
@@ -26,9 +26,10 @@ export default new Vuex.Store({
       to: 75,
       winChance: 0,
       multiplier: 0,
-      amount:0,
-      payout:0,
-      uniqueid:''
+      amount: 0,
+      payout: 0,
+      uniqueid: '',
+      betHash: ''
     }
   },
   mutations: {
@@ -70,15 +71,18 @@ export default new Vuex.Store({
     SET_BET_PAYOUT(state, payout) {
       state.bet.payout = payout;
     },
-    SET_ROLLING_STATE(state,rollingStatus){
+    SET_ROLLING_STATE(state, rollingStatus) {
       state.diceRolling = rollingStatus;
     },
-    SET_CURRENT_BET_UNIQUEID(state,uniqueID){
+    SET_CURRENT_BET_UNIQUEID(state, uniqueID) {
       state.bet.uniqueid = uniqueID;
     },
-    SET_REFERAL_ID(state,referId){
+    SET_CURRENT_BET_HASH(state, betHash) {
+      state.bet.betHash = betHash;
+    },
+    SET_REFERAL_ID(state, referId) {
       state.referId = referId;
-    }    
+    }
   },
   actions
 });

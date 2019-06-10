@@ -6,7 +6,7 @@ let dividendContractInstance = {};
 class DividendContract {
 
     static async getContractInstance() {
-        let contractInfo = await window.tronWeb.trx.getContract(options.mainet.dividendContractAddress);
+        let contractInfo = await window.tronWeb.trx.getContract(options.testnet.dividendContractAddress);
         return await window.tronWeb.contract(contractInfo.abi.entrys, contractInfo.contract_address);
     }
 

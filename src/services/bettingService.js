@@ -7,6 +7,8 @@ import eventBus from '../eventBus/eventBus';
 import UltimateDiceContract from '../contracts/ultimateDiceContract';
 import Helper from '../helpers/Helper';
 import constants from '../constants';
+import { setTimeout } from 'core-js';
+import EventHandler from '../handlers/bettingEventsHandler';
 
 class BettingService {
 
@@ -45,33 +47,46 @@ class BettingService {
         return false;
     }
 
-    static async tryGetStartEventForBet(tx_hash) {
+    static clearCurrentBetUniqueId() {
+        store.commit('SET_CURRENT_BET_UNIQUEID', '');
+    }
 
+    static setCurrentBetUniqueId(uniqueId) {
+        if (uniqueId.startsWith("0x")) uniqueId = uniqueId.substring(2);
+        //set bet seed in state for events search
+        store.commit('SET_CURRENT_BET_UNIQUEID', uniqueId);
+    }
+
+    static async tryGetStartEventForBet(tx_hash, timeout) {
+        let self = this;
         async function fetchFunc() {
             try {
                 if (tx_hash !== null) {
-
                     const events = await tronWeb.getEventByTransactionID(tx_hash);
 
                     for (let i = 0; i < events.length; i++) {
-                        if (events[i].name === "BetStarted") {
-                            console.log("Received a BetStarted event from getEventByTransactionID!");
-
-                            receivedEvent(events[i], false);
+                        if (events[i].name == "BetStarted") {
+                            clearInterval(interval);
+                           EventHandler.HandleBetStartEvent(events[i]);
                         }
                     }
 
                     if (events.length >= 1) {
-                        tx_hash = null;
+                        clearInterval(interval);
                     }
                 }
             }
             catch (e) {
+                clearInterval(interval);
                 console.error(e);
             }
         }
 
-        return setInterval(fetchFunc, 500);
+        let interval = setInterval(fetchFunc, 500);
+
+        setTimeout(() => {
+            clearInterval(interval);
+        }, timeout);
     }
 
 
@@ -117,7 +132,7 @@ class BettingService {
         if (betAmt < options.bets.MIN_BET_AMOUNT) {
             return this.rollDiceFailed('The min bet amount is currently ' + options.bets.MIN_BET_AMOUNT);
         }
-        if (sidebet != '') {
+        if (sidebet && sidebet.length > 0) {
             if (sidebetAmount < options.bets.MIN_SIDEBET_AMOUNT) {
                 return this.rollDiceFailed('The min side bet amount is currently ' + options.bets.MIN_SIDEBET_AMOUNT);
             }
@@ -150,13 +165,10 @@ class BettingService {
         let seed = Cache.getSeedValue();
 
         if (!seed || seed.length == 0) {
-            let tSeed = await Helper.getRandomSeedHash();
-            seed = tSeed.toLowerCase();
+            seed = await Helper.getRandomSeedHash();
         }
-        else {
-            seed = seed.toLowerCase();
-            if (seed.startsWith("0x")) seed = seed.substring(2);
-        }
+        seed = seed.toLowerCase();
+
 
         //convert sidebet to int
 
@@ -194,25 +206,19 @@ class BettingService {
             finishBet_rollIntegerVariables = betToFinish[4];
         }
 
-        //set bet seed in state for events search
-        store.commit('SET_CURRENT_BET_UNIQUEID', seed);
-
-        //start watching events
-        UltimateDiceContract.watchEvents();
+        //set bet seed in store
+        this.setCurrentBetUniqueId(seed);
 
         //call finishBet_and_startBet contract method
         try {
-            var result = await UltimateDiceContract.finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, seed, seed);
-            console.log("startBetTxid=" + result);
+            var betTx = await UltimateDiceContract.finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, seed, seed);
+            console.log("new bet TX=" + betTx);
 
-            let res = this.tryGetStartEventForBet(result);
-
-            setTimeout(() => {
-                clearInterval(res);
-            }, 15000);
+            //try fetching tx events for 10 secs
+            this.tryGetStartEventForBet(betTx, options.bets.BETSTART_EVENT_WATCH_TIMEOUT);
         }
         catch (err) {
-            console.log("tx failed");
+            console.log("bet TX failed");
 
             if (betToFinish !== null) {
                 let finishBetData = Cache.getPreviousBet();
@@ -220,9 +226,8 @@ class BettingService {
                 Cache.setPreviousBet(finishBetData);
             }
 
-            return this.rollDiceFailed(err);
+            return this.rollDiceFailed("Failed to generate bet TX");
         }
-        //listen to events with uniqueId
     }
 }
 

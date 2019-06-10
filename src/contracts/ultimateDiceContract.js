@@ -1,7 +1,7 @@
 import options from '../options';
 import TronService from '../services/tronService';
 import store from '../store';
-
+import EventHandler from '../handlers/bettingEventsHandler';
 
 let contractInstance = null;
 let betStartedEvent = {};
@@ -11,7 +11,7 @@ class UltimateDiceContract {
 
     static async getContractInstance() {
         if (contractInstance == null) {
-            let contractInfo = await window.tronWeb.trx.getContract(options.mainet.ultimateDiceContractAddress);
+            let contractInfo = await window.tronWeb.trx.getContract(options.testnet.ultimateDiceContractAddress);
             contractInstance = await window.tronWeb.contract(contractInfo.abi.entrys, contractInfo.contract_address);
         }
         return contractInstance;
@@ -24,7 +24,7 @@ class UltimateDiceContract {
     }
 
     static async getContractBalance() {
-        let contractBalance = await TronService.getBalance(options.mainet.ultimateDiceContractAddress);
+        let contractBalance = await TronService.getBalance(options.testnet.ultimateDiceContractAddress);
         contractBalance = TronService.fromSun(contractBalance);
     }
 
@@ -46,34 +46,35 @@ class UltimateDiceContract {
         try { betFinishedEvent.stop(); } catch (ee) { }
 
         try {
+
             // Start watching BetStarted events
             betStartedEvent = await ultimateDiceContractInstance.BetStarted().watch(async (err, res) => {
-                    console.log('betStartedEvent event');
-                    if (err !== null) {
-                        console.error("Error while received BetStarted event:", err);
-                        // setTimeout(initBetStartedEventWatcher, 1000);
-                        return;
-                    }
-
-                    // receivedEvent(res, true);
+                console.log('betStartedEvent event');
+                if (err !== null) {
+                    console.error("Error while received BetStarted event:", err);
+                    return;
                 }
+
+                EventHandler.HandleBetStartEvent(res);
+            }
             );
-            betStartedEvent.start();
 
             // Start watching BetStarted events
             betFinishedEvent = await ultimateDiceContractInstance.BetFinished().watch(async (err, res) => {
-                    console.log('betFinishedEvent event');
-                    if (err !== null) {
-                        console.error("Error while received BetFinished event:", err);
-                        // setTimeout(initBetStartedEventWatcher, 1000);
-                        return;
-                    }
-
-                    // receivedEvent(res, true);
+                console.log('betFinishedEvent event');
+                if (err !== null) {
+                    console.error("Error while received BetFinished event:", err);
+                    // setTimeout(initBetStartedEventWatcher, 1000);
+                    return;
                 }
-            );
 
-            betFinishedEvent.start();
+                if (res.result._betHash == store.state.bet.betHash) {
+                    //clear state
+                    store.commit('SET_CURRENT_BET_UNIQUEID','');
+                    receivedEvent(res, true);
+                }
+            }
+            );
         }
         catch (e) {
             // setTimeout(initBetStartedEventWatcher, 1000);
