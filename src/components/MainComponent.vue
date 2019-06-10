@@ -191,18 +191,20 @@ export default {
     Footer
   },
   mounted: async function() {
-
     eventBus.$on("alertify", function(msgobj) {
       if (msgobj.type == "error") {
         this.$alertify.error(msgobj.msg);
       }
     });
-    
+
     //clear sidebets
     LocalCache.clearSideBets();
 
     //set sounds preferences
     SoundService.initSound();
+
+    let referalId = await DividendContract.referrers();
+    this.$store.commit("SET_REFERAL_ID", referalId);
 
     UltimateDiceContract.watchEvents();
 

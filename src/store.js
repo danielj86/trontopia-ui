@@ -14,6 +14,7 @@ export default new Vuex.Store({
     myAvaliableToken: 0.0,
     sidebetJackpot: 0.0,
     myTRXBalance: 0.0,
+    referId:0,
     totals: {
       myTotalWon: 0,
       myTotalToken: 0,
@@ -26,7 +27,8 @@ export default new Vuex.Store({
       winChance: 0,
       multiplier: 0,
       amount:0,
-      payout:0
+      payout:0,
+      uniqueid:''
     }
   },
   mutations: {
@@ -73,6 +75,9 @@ export default new Vuex.Store({
     },
     SET_CURRENT_BET_UNIQUEID(state,uniqueID){
       state.bet.uniqueid = uniqueID;
+    },
+    SET_REFERAL_ID(state,referId){
+      state.referId = referId;
     }    
   },
   actions

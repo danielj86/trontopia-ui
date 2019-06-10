@@ -184,8 +184,7 @@ class BettingService {
 
         //call finishBet_and_startBet contract method
         try {
-            let REFID = await DividendContract.referrers();
-            var result = await UltimateDiceContract.finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, REFID, seed, seed);
+            var result = await UltimateDiceContract.finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, seed, seed);
             console.log("startBetTxid=" + result);
         }
         catch (err) {

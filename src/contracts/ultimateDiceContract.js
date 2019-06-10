@@ -25,7 +25,7 @@ class UltimateDiceContract {
         contractBalance = TronService.fromSun(contractBalance);
     }
 
-    static async finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, REFID, seed, uniqueString) {
+    static async finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, seed, uniqueString) {
         eventWatcherContractInstance = await this.getContractInstance();
        
         try { betStartedEvent.stop(); } catch (ee) { }
@@ -68,7 +68,7 @@ class UltimateDiceContract {
             return;
         }
 
-        return await eventWatcherContractInstance.finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, REFID, seed, uniqueString).send({
+        return await eventWatcherContractInstance.finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, store.state.referId, seed, uniqueString).send({
             shouldPollResponse: false,
             feeLimit: options.bets.FEE_LIMIT,
             callValue: store.state.bet.amount * 1000000,
