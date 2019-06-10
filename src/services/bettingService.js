@@ -20,7 +20,6 @@ class BettingService {
             to: betTo
         };
         store.commit('SET_BET_FROM_TO', obj);
-
     }
 
     static setWinChance(winChance) {
@@ -44,6 +43,35 @@ class BettingService {
         eventBus.$emit('diceRollState', false);
         store.commit('SET_ROLLING_STATE', false);
         return false;
+    }
+
+    static async tryGetStartEventForBet(tx_hash) {
+
+        async function fetchFunc() {
+            try {
+                if (tx_hash !== null) {
+
+                    const events = await tronWeb.getEventByTransactionID(tx_hash);
+
+                    for (let i = 0; i < events.length; i++) {
+                        if (events[i].name === "BetStarted") {
+                            console.log("Received a BetStarted event from getEventByTransactionID!");
+
+                            receivedEvent(events[i], false);
+                        }
+                    }
+
+                    if (events.length >= 1) {
+                        tx_hash = null;
+                    }
+                }
+            }
+            catch (e) {
+                console.error(e);
+            }
+        }
+
+        return setInterval(fetchFunc, 500);
     }
 
 
@@ -138,7 +166,7 @@ class BettingService {
         }
 
         //generate rollIntegerVariables
-        const rollIntegerVariables = [store.state.bet.from, store.state.bet.to, store.state.bet.amount, sidebetInt, sidebetAmount];
+        const rollIntegerVariables = [store.state.bet.from * 1, store.state.bet.to * 1, store.state.bet.amount * 1, 0, 0];
 
         //get previousFinishBet from local storage
         let betToFinish = null;
@@ -176,18 +204,20 @@ class BettingService {
         try {
             var result = await UltimateDiceContract.finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, seed, seed);
             console.log("startBetTxid=" + result);
+
+            let res = this.tryGetStartEventForBet(result);
+
+            setTimeout(() => {
+                clearInterval(res);
+            }, 15000);
         }
         catch (err) {
             console.log("tx failed");
 
             if (betToFinish !== null) {
-                let finishBetData = JSON.parse(localStorage.getItem('previousFinishBet'));
-                if (localStorage.hasOwnProperty("DebugLog")) {
-                    console.log("Added back unfinished bet to local storage:");
-                    console.log(betToFinish);
-                }
+                let finishBetData = Cache.getPreviousBet();
                 finishBetData.unshift(betToFinish);
-                localStorage.setItem('previousFinishBet', JSON.stringify(finishBetData));
+                Cache.setPreviousBet(finishBetData);
             }
 
             return this.rollDiceFailed(err);

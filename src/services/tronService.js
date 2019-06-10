@@ -39,8 +39,7 @@ class TronHelper {
     static async fetchMyTRXBalance() {
         let trxBal = await this.getBalance(store.state.userAddress);
         let balance = this.fromSun(trxBal);
-
-        store.commit('SET_MY_TRX_BALANCE', balance);
+        return balance;
     }
 
     static waitForTronWeb(interval) {

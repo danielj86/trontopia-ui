@@ -3,15 +3,18 @@ import TronService from '../services/tronService';
 import store from '../store';
 
 
-let eventWatcherContractInstance = {};
+let contractInstance = null;
 let betStartedEvent = {};
 let betFinishedEvent = {};
 
 class UltimateDiceContract {
 
     static async getContractInstance() {
-        let contractInfo = await window.tronWeb.trx.getContract(options.testnet.ultimateDiceContractAddress);
-        return await window.tronWeb.contract(contractInfo.abi.entrys, contractInfo.contract_address);
+        if (contractInstance == null) {
+            let contractInfo = await window.tronWeb.trx.getContract(options.mainet.ultimateDiceContractAddress);
+            contractInstance = await window.tronWeb.contract(contractInfo.abi.entrys, contractInfo.contract_address);
+        }
+        return contractInstance;
     }
 
     static async currentSideBetJackpotSize() {
@@ -21,21 +24,30 @@ class UltimateDiceContract {
     }
 
     static async getContractBalance() {
-        let contractBalance = await TronService.getBalance(options.testnet.ultimateDiceContractAddress);
+        let contractBalance = await TronService.getBalance(options.mainet.ultimateDiceContractAddress);
         contractBalance = TronService.fromSun(contractBalance);
     }
 
     static async finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, seed, uniqueString) {
-        eventWatcherContractInstance = await this.getContractInstance();
-       
+        let ultimateDiceContractInstance = await this.getContractInstance();
+
+        return await ultimateDiceContractInstance.finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, store.state.referId, seed, uniqueString).send({
+            shouldPollResponse: false,
+            feeLimit: options.bets.FEE_LIMIT,
+            callValue: store.state.bet.amount * 1000000,
+            from: store.state.userAddress
+        });
+    }
+    static async watchEvents() {
+
+        let ultimateDiceContractInstance = await this.getContractInstance();
+
         try { betStartedEvent.stop(); } catch (ee) { }
         try { betFinishedEvent.stop(); } catch (ee) { }
 
         try {
             // Start watching BetStarted events
-            betStartedEvent = await eventWatcherContractInstance.BetStarted().watch(
-                {},
-                async (err, res) => {
+            betStartedEvent = await ultimateDiceContractInstance.BetStarted().watch(async (err, res) => {
                     console.log('betStartedEvent event');
                     if (err !== null) {
                         console.error("Error while received BetStarted event:", err);
@@ -46,12 +58,10 @@ class UltimateDiceContract {
                     // receivedEvent(res, true);
                 }
             );
-
+            betStartedEvent.start();
 
             // Start watching BetStarted events
-            betFinishedEvent = await eventWatcherContractInstance.BetFinished().watch(
-                {},
-                async (err, res) => {
+            betFinishedEvent = await ultimateDiceContractInstance.BetFinished().watch(async (err, res) => {
                     console.log('betFinishedEvent event');
                     if (err !== null) {
                         console.error("Error while received BetFinished event:", err);
@@ -62,20 +72,13 @@ class UltimateDiceContract {
                     // receivedEvent(res, true);
                 }
             );
+
+            betFinishedEvent.start();
         }
         catch (e) {
             // setTimeout(initBetStartedEventWatcher, 1000);
             return;
         }
-
-        return await eventWatcherContractInstance.finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, store.state.referId, seed, uniqueString).send({
-            shouldPollResponse: false,
-            feeLimit: options.bets.FEE_LIMIT,
-            callValue: store.state.bet.amount * 1000000,
-            from: store.state.userAddress
-        });
-    }
-    static async watchEvents() {
 
     }
 }

@@ -191,62 +191,57 @@ export default {
     Footer
   },
   mounted: async function() {
+    //Listen to event bus events
     eventBus.$on("alertify", function(msgobj) {
       if (msgobj.type == "error") {
         this.$alertify.error(msgobj.msg);
       }
     });
 
-    //clear sidebets
+    //clear sidebets cache
     LocalCache.clearSideBets();
 
     //set sounds preferences
     SoundService.initSound();
 
-    let referalId = await DividendContract.referrers();
-    this.$store.commit("SET_REFERAL_ID", referalId);
-
-    UltimateDiceContract.watchEvents();
-
     try {
-      //wait 5 secs for tronweb or else catch
-      await TronService.waitForTronWeb(5000);
+      //wait 7 secs for tronweb injection or else catch
+      await TronService.waitForTronWeb(7000);
 
-      TronService.onUserAddressChange(() => {
-        alert("address changed");
-      });
+      //watch contract events
+      UltimateDiceContract.watchEvents();
 
+      //handle user wallet change
+      TronService.onUserAddressChange(() => {});
+
+      //Init user
       let userAddress = await TronService.getMyAddress();
       let userAddressHex = await TronService.getMyAddressHex();
+      let referalId = await DividendContract.referrers(userAddress);
+      let userTrxBalanceSun = await TronService.getBalance(userAddress);
+      let userTrxBalance = TronService.fromSun(userTrxBalanceSun);
 
-      this.$store.commit("SET_USER_ADDRESS", userAddress);
-      this.$store.commit("SET_USER_ADDRESS_HEX", userAddressHex);
-      this.$store.commit("SET_IS_LOGGEDIN", true);
-
-      //get user token balance
-      let userBalance = await TokenContract.balanceOf(userAddress);
-      UserService.setMyTotalTokens(userBalance);
-
-      /* For getting user available tokens to  */
+      let userTokenBalance = await TokenContract.balanceOf(userAddress);
       let userAvailableToken = await TokenContract.getAvailabletoWithdrawTOPIA();
-      UserService.setMyAvaliableTokens(userAvailableToken);
 
-      //fetch TRX balance
-      await TronService.fetchMyTRXBalance();
+      UserService.initUser(
+        userAddress,
+        userAddressHex,
+        referalId,
+        userTrxBalance,
+        userTokenBalance,
+        userAvailableToken
+      );
 
       //update sidebet jackpot size
       let jackpot = await UltimateDiceContract.currentSideBetJackpotSize();
       BettingService.setBettingSidePotSize(jackpot);
     } catch (ex) {
       console.log(JSON.stringify(ex));
-      this.$store.commit("SET_IS_LOGGEDIN", false);
-      this.$store.commit("SET_USER_ADDRESS_HEX", "");
-      this.$store.commit("SET_USER_ADDRESS", "");
+      UserService.Logout();
     }
   },
-  props: {
-    msg: String
-  }
+  props: {}
 };
 </script>
 

@@ -6,7 +6,7 @@ let dividendContractInstance = {};
 class DividendContract {
 
     static async getContractInstance() {
-        let contractInfo = await window.tronWeb.trx.getContract(options.testnet.dividendContractAddress);
+        let contractInfo = await window.tronWeb.trx.getContract(options.mainet.dividendContractAddress);
         return await window.tronWeb.contract(contractInfo.abi.entrys, contractInfo.contract_address);
     }
 
@@ -20,9 +20,9 @@ class DividendContract {
         return dividend;
     }
 
-    static async referrers() {
+    static async referrers(address) {
         let divContractInstance = await this.getContractInstance();
-        let ref = await divContractInstance.referrers(store.state.userAddress).call();
+        let ref = await divContractInstance.referrers(address).call();
         ref = TronService.fromHex(ref);
         return ref;
     }

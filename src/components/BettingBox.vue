@@ -533,7 +533,7 @@ export default {
       } else {
         differ = differ + 1;
       }
-      var winChance = parseInt(differ);
+      var winChance = differ;
 
       BettingService.setWinChance(winChance + "%");
 
@@ -571,9 +571,6 @@ export default {
           $("#bouncingLetterStatic_mobile").hide();
           $("#bouncingLetterMooving_mobile_view").show();
         } else {
-          // $("#bouncingLetterStatic").hide();
-          // $("#bouncingLetterMooving").show();
-
           if (UIHelper.getWindowSize().width < 758) {
             $("#bouncingLetterStatic_mobile").hide();
             $("#bouncingLetterMooving_mobile_view").show();
@@ -591,7 +588,8 @@ export default {
 
     let sliderEl = document.getElementById("slider-range");
     let start, end;
-    jQuery.ui.slider(
+   
+   jQuery.ui.slider(
       {
         range: true,
         orientation: "horizontal",
