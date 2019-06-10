@@ -6,17 +6,7 @@ import options from '../options';
 import eventBus from '../eventBus/eventBus';
 import UltimateDiceContract from '../contracts/ultimateDiceContract';
 import Helper from '../helpers/Helper';
-
-const sidebetToInt = {
-    'yin': 1,
-    'yang': 2,
-    'bang': 3,
-    'zero': 4,
-    'odd': 5,
-    'even': 6
-}
-
-
+import constants from '../constants';
 
 class BettingService {
 
@@ -144,7 +134,7 @@ class BettingService {
 
         let sidebetInt = 0;
         if (sidebet && sidebet.length > 0) {
-            sidebetInt = sidebetToInt[sidebet];
+            sidebetInt = constants.sidebetToInt[sidebet];
         }
 
         //generate rollIntegerVariables
@@ -189,6 +179,7 @@ class BettingService {
         }
         catch (err) {
             console.log("tx failed");
+
             if (betToFinish !== null) {
                 let finishBetData = JSON.parse(localStorage.getItem('previousFinishBet'));
                 if (localStorage.hasOwnProperty("DebugLog")) {
@@ -198,13 +189,8 @@ class BettingService {
                 finishBetData.unshift(betToFinish);
                 localStorage.setItem('previousFinishBet', JSON.stringify(finishBetData));
             }
-            console.log(err);
-            window.rolling = false;
-            $("#rollBtn").hide();
-            $("#rollDice").show();
-            $('#slider-range').slider({ disabled: false });
-            //try { window.betStartedEventWatcher.stop(); } catch (e) {}
-            return;
+
+            return this.rollDiceFailed(err);
         }
         //listen to events with uniqueId
     }

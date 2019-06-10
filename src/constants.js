@@ -1,5 +1,12 @@
 export default {
-
+    sidebetToInt : {
+        'yin': 1,
+        'yang': 2,
+        'bang': 3,
+        'zero': 4,
+        'odd': 5,
+        'even': 6
+    },
     multiplierJSON: [{
         "win_val": "97",
         "value": "1.0103"
