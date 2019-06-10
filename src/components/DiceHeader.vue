@@ -11,6 +11,7 @@
     </div>
 
     <div class="col-md-8 col-sm-7">
+      
       <div class="headlines-box dice-hedln desktopmode">
         <div class="headline-bx dice-head">
           <p>BETS MADE</p>

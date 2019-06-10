@@ -14,5 +14,13 @@ export default {
     sounds:{
         sound_off_image:'images/sound_off.png',
         sound_on_image:'images/sound_on.png',
+    },
+    bets:{
+        FEE_LIMIT:5000000,
+        MAX_BET_AMOUNT:25000,
+        MIN_BET_AMOUNT:50,
+        MIN_SIDEBET_AMOUNT:100,
+        MAX_SIDEBET_AMOUNT:25000,
+        MAX_WIN_DIVISIBLE_AMOUNT:110
     }
 };

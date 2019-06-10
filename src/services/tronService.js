@@ -16,6 +16,14 @@ class TronHelper {
         return TextHelper.number_to_2decimals(str);
     }
 
+    static fromHex(hex) {
+        return window.tronWeb.address.fromHex(hex);
+    }
+
+    static sha3(str) {
+        return window.tronWeb.sha3(str, true);
+    }
+
     static async getMyAddress() {
         return await window.tronWeb.defaultAddress.base58;
     }
@@ -29,7 +37,7 @@ class TronHelper {
     }
 
     static async fetchMyTRXBalance() {
-        let trxBal = await    this.getBalance(store.state.userAddress);
+        let trxBal = await this.getBalance(store.state.userAddress);
         let balance = this.fromSun(trxBal);
 
         store.commit('SET_MY_TRX_BALANCE', balance);

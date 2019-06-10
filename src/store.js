@@ -9,6 +9,7 @@ export default new Vuex.Store({
     userAddress: "",
     userAddressHex: "",
     loggedIn: false,
+    diceRolling:false,
     soundIsOn: false,
     myAvaliableToken: 0.0,
     sidebetJackpot: 0.0,
@@ -66,7 +67,13 @@ export default new Vuex.Store({
     },
     SET_BET_PAYOUT(state, payout) {
       state.bet.payout = payout;
-    }
+    },
+    SET_ROLLING_STATE(state,rollingStatus){
+      state.diceRolling = rollingStatus;
+    },
+    SET_CURRENT_BET_UNIQUEID(state,uniqueID){
+      state.bet.uniqueid = uniqueID;
+    }    
   },
   actions
 });

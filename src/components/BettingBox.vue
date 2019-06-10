@@ -131,7 +131,14 @@
             <div class="col-md-6 col-sm-6">
               <label class="roll-m">Roll</label>
 
-              <input type="button" class="btn-main roll-btn" value="roll" id="rollDice">
+              <input
+                type="button"
+                class="btn-main roll-btn"
+                value="roll"
+                id="rollDice"
+                v-bind:disabled="$store.state.diceRolling"
+                @click="rollDice()"
+              >
               <!-- <input type="button" class="btn-main roll-btn" value="rolling..." id="rollBtn"> -->
             </div>
           </div>
@@ -471,18 +478,25 @@
 </template>
 <script>
 import $ from "jquery";
-import Vue from "vue";
-import VueAlertify from "vue-alertify";
+
 import constants from "../constants";
 import TextHelper from "../helpers/textHelper";
 import BettingService from "../services/bettingService";
-
-Vue.use(VueAlertify);
+import eventBus from "../eventBus/eventBus";
+import UIHelper from '../helpers/UIHelpers';
 
 export default {
   name: "BettingBox",
   props: {},
   methods: {
+    disableSlider: function(disabled) {
+      const el = document.getElementById("slider-range");
+      jQuery(el).slider({ disabled: disabled });
+    },
+    rollDice: async function() {
+      // this.disableSlider(true);
+      await BettingService.rollDice();
+    },
     betAmountChanged: function() {
       const MAX_BET_AMOUNT = 25000;
       const betAmt = this.$store.state.bet.amount;
@@ -539,9 +553,44 @@ export default {
     }
   },
   mounted: function() {
+    let self = this;
+   
+   eventBus.$on("diceRollState", function(diceRollState) {
+   
+   self.disableSlider(diceRollState);
+
+      if (diceRollState) {
+        //clear style for bounce num
+        setTimeout(function() {
+          $("#bounce_num").removeAttr("style");
+          $("#bounce_num2").removeAttr("style");
+        }, 3000);
+
+        //is mobile
+        if (UIHelper.isMobile()) {
+          $("#bouncingLetterStatic_mobile").hide();
+          $("#bouncingLetterMooving_mobile_view").show();
+        } else {
+          // $("#bouncingLetterStatic").hide();
+          // $("#bouncingLetterMooving").show();
+
+          if (UIHelper.getWindowSize().width < 758) {
+            $("#bouncingLetterStatic_mobile").hide();
+            $("#bouncingLetterMooving_mobile_view").show();
+          } else {
+            $("#bouncingLetterStatic").hide();
+            $("#bouncingLetterStatic_mobile").hide();
+            $("#bouncingLetterMooving").show();
+          }
+        }
+      } else {
+        $("#bouncingLetterStatic").show();
+        $("#bouncingLetterMooving").hide();
+      }
+    });
+
     let sliderEl = document.getElementById("slider-range");
     let start, end;
-    let self = this;
     jQuery.ui.slider(
       {
         range: true,

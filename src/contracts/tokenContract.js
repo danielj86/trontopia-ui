@@ -4,8 +4,8 @@ import TronService from '../services/tronService';
 class TokenContract {
 
     static async getContractInstance(){
-        let tokenContractInfo = await tronWeb.trx.getContract(options.testnet.tokenContractAddress);
-        return await tronWeb.contract(tokenContractInfo.abi.entrys, tokenContractInfo.contract_address);
+        let tokenContractInfo = await window.tronWeb.trx.getContract(options.testnet.tokenContractAddress);
+        return await window.tronWeb.contract(tokenContractInfo.abi.entrys, tokenContractInfo.contract_address);
     }
 
     static async balanceOf(wallet) {

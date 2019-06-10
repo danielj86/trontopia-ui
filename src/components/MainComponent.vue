@@ -173,6 +173,8 @@ import UltimateDiceContract from "../contracts/ultimateDiceContract";
 import TokenContract from "../contracts/tokenContract";
 import DividendContract from "../contracts/dividendContract";
 
+import eventBus from "../eventBus/eventBus";
+
 export default {
   name: "HelloWorld",
   components: {
@@ -189,6 +191,13 @@ export default {
     Footer
   },
   mounted: async function() {
+
+    eventBus.$on("alertify", function(msgobj) {
+      if (msgobj.type == "error") {
+        this.$alertify.error(msgobj.msg);
+      }
+    });
+    
     //clear sidebets
     LocalCache.clearSideBets();
 
@@ -226,9 +235,6 @@ export default {
       //update sidebet jackpot size
       let jackpot = await UltimateDiceContract.currentSideBetJackpotSize();
       BettingService.setBettingSidePotSize(jackpot);
-
-
-
     } catch (ex) {
       console.log(JSON.stringify(ex));
       this.$store.commit("SET_IS_LOGGEDIN", false);
@@ -244,5 +250,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>
