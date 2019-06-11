@@ -555,11 +555,15 @@ export default {
   mounted: function() {
     let self = this;
    
+
+
+
    eventBus.$on("diceRollState", function(diceRollState) {
    
    self.disableSlider(diceRollState);
 
       if (diceRollState) {
+        
         //clear style for bounce num
         setTimeout(function() {
           $("#bounce_num").removeAttr("style");

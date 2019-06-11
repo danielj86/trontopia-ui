@@ -57,6 +57,10 @@ class BettingService {
         store.commit('SET_CURRENT_BET_UNIQUEID', uniqueId);
     }
 
+    static setCurrentBetIntegerValues(integrerVals) {
+        store.commit('SET_CURRENT_BET_INTEGER_VALUES', integrerVals);
+    }
+
     static async tryGetStartEventForBet(tx_hash, timeout) {
         let self = this;
         async function fetchFunc() {
@@ -67,7 +71,7 @@ class BettingService {
                     for (let i = 0; i < events.length; i++) {
                         if (events[i].name == "BetStarted") {
                             clearInterval(interval);
-                           EventHandler.HandleBetStartEvent(events[i]);
+                            EventHandler.HandleBetStartEvent(events[i]);
                         }
                     }
 
@@ -89,7 +93,10 @@ class BettingService {
         }, timeout);
     }
 
-
+    static setRollDiceFinished(){
+        eventBus.$emit('diceRollState', false);
+        store.commit('SET_ROLLING_STATE', false);
+    }
 
     static async rollDice() {
         /////////// Set UI & Store status  /////////// 
@@ -180,12 +187,14 @@ class BettingService {
         //generate rollIntegerVariables
         const rollIntegerVariables = [store.state.bet.from * 1, store.state.bet.to * 1, store.state.bet.amount * 1, 0, 0];
 
+        this.setCurrentBetIntegerValues(rollIntegerVariables);
+
         //get previousFinishBet from local storage
         let betToFinish = null;
 
         let betDataReceivedFunc = null;
 
-        let previousBet = Cache.getPreviousBet();
+        let previousBet = Cache.getPreviousBets();
 
         let finishBet_gambler = "0x0000000000000000000000000000000000000000";
         let finishBet_uniqueBetId = tronWeb.sha3("0", true);
@@ -193,18 +202,16 @@ class BettingService {
         let finishBet_blockNumber = 0;
         let finishBet_rollIntegerVariables = [0, 0, 0, 0, 0];
 
-        if (previousBet && previousBet.length > 0) {
+        // if (previousBet && previousBet.length > 0) {
 
-            let finishBetData = JSON.parse(previousBet);
+        //     betToFinish = previousBet.shift();
 
-            betToFinish = finishBetData.shift();
-
-            finishBet_gambler = betToFinish[0];
-            finishBet_uniqueBetId = betToFinish[1];
-            finishBet_userSeed = betToFinish[2];
-            finishBet_blockNumber = betToFinish[3];
-            finishBet_rollIntegerVariables = betToFinish[4];
-        }
+        //     finishBet_gambler = betToFinish[0];
+        //     finishBet_uniqueBetId = betToFinish[1];
+        //     finishBet_userSeed = betToFinish[2];
+        //     finishBet_blockNumber = betToFinish[3];
+        //     finishBet_rollIntegerVariables = betToFinish[4];
+        // }
 
         //set bet seed in store
         this.setCurrentBetUniqueId(seed);
@@ -221,9 +228,9 @@ class BettingService {
             console.log("bet TX failed");
 
             if (betToFinish !== null) {
-                let finishBetData = Cache.getPreviousBet();
+                let finishBetData = Cache.getPreviousBets();
                 finishBetData.unshift(betToFinish);
-                Cache.setPreviousBet(finishBetData);
+                Cache.setPreviousBets(finishBetData);
             }
 
             return this.rollDiceFailed("Failed to generate bet TX");

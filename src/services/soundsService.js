@@ -9,8 +9,22 @@ class SoundService {
         store.commit('SET_SOUND_STATE', isOn);
     }
 
-    static toggleSound(){
+    static toggleSound() {
         store.commit('SET_SOUND_STATE', !store.state.soundIsOn);
+    }
+
+    static playLossSound() {
+        if (store.state.soundIsOn) {
+            const audio = new Audio('assets/audio/loss.mp3');
+            audio.play();
+        }
+    }
+
+    static playWinSound() {
+        if (store.state.soundIsOn) {
+            const audio = new Audio('assets/audio/loss.mp3');
+            audio.play();
+        }
     }
 }
 

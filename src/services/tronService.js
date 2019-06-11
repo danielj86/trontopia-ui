@@ -11,6 +11,10 @@ class TronHelper {
         window.tronWeb.on("addressChanged", callback);
     }
 
+    static async getBlock(blockNumber){
+        return await window.tronWeb.trx.getBlock(blockNumber);
+    }
+
     static fromSun(sun) {
         const str = window.tronWeb.fromSun(sun).toString();
         return TextHelper.number_to_2decimals(str);

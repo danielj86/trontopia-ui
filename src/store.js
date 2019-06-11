@@ -15,6 +15,7 @@ export default new Vuex.Store({
     sidebetJackpot: 0.0,
     myTRXBalance: 0.0,
     referId: 0,
+    extraBetsToDisplayAtTopOfMyBets: [],
     totals: {
       myTotalWon: 0,
       myTotalToken: 0,
@@ -29,7 +30,12 @@ export default new Vuex.Store({
       amount: 0,
       payout: 0,
       uniqueid: '',
-      betHash: ''
+      betHash: '',
+      blockNumber: 0,
+      eventGambler: '',
+      txId: '',
+      betStartedTimestamp: '',
+      integrerVals: []
     }
   },
   mutations: {
@@ -80,8 +86,26 @@ export default new Vuex.Store({
     SET_CURRENT_BET_HASH(state, betHash) {
       state.bet.betHash = betHash;
     },
+    SET_CURRENT_BET_BLOCKNUMBER(state, blockNumber) {
+      state.bet.blockNumber = blockNumber;
+    },
+    SET_CURRENT_BET_TXID(state, txId) {
+      state.bet.txId = txId;
+    },
+    SET_CURRENT_BET_EVENT_GAMBLER(state, eventGambler) {
+      state.bet.eventGambler = eventGambler;
+    },
+    SET_CURRENT_BET_STARTED_TIMESTAMP(state, betStartedTimestamp) {
+      state.bet.betStartedTimestamp = betStartedTimestamp;
+    },
     SET_REFERAL_ID(state, referId) {
       state.referId = referId;
+    },
+    SET_CURRENT_BET_INTEGER_VALUES(state, integrerVals) {
+      state.bet.integrerVals = integrerVals;
+    },
+    PUSH_TO_EXTRA_BETS(state, extraBet) {
+      state.extraBetsToDisplayAtTopOfMyBets.push(extraBet);
     }
   },
   actions

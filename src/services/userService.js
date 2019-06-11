@@ -3,7 +3,7 @@ import TronService from '../services/tronService';
 
 class UserHelper {
 
-    static initUser(address, addressHex, referalId, trxBalance,totalTokens,avaliableTokens) {
+    static initUser(address, addressHex, referalId, trxBalance, totalTokens, avaliableTokens) {
         store.commit("SET_USER_ADDRESS", address);
         store.commit("SET_USER_ADDRESS_HEX", addressHex);
         store.commit("SET_IS_LOGGEDIN", true);
@@ -13,7 +13,7 @@ class UserHelper {
         store.commit('SET_MY_AVALIABLE_TOKENS', avaliableTokens);
     }
 
-    static Logout(){
+    static Logout() {
         store.commit("SET_USER_ADDRESS", "");
         store.commit("SET_USER_ADDRESS_HEX", "");
         store.commit("SET_IS_LOGGEDIN", false);
@@ -33,6 +33,11 @@ class UserHelper {
         }
 
         return null;
+    }
+
+
+    static setMyTRXBalance(trxBalance) {
+        store.commit('SET_MY_TRX_BALANCE', trxBalance);
     }
 
     static setMyTotalTokens(totalTokens) {

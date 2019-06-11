@@ -26,6 +26,7 @@ class UltimateDiceContract {
     static async getContractBalance() {
         let contractBalance = await TronService.getBalance(options.testnet.ultimateDiceContractAddress);
         contractBalance = TronService.fromSun(contractBalance);
+        return contractBalance;
     }
 
     static async finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, seed, uniqueString) {
@@ -38,6 +39,16 @@ class UltimateDiceContract {
             from: store.state.userAddress
         });
     }
+
+    static async calculateBetResultWithBlockHash(userAddress, uniqueString, seed, blockNumber, rollIntegerVariables, block) {
+        let ultimateDiceContractInstance = await this.getContractInstance();
+
+        if(!uniqueString.startsWith("0x")) uniqueString = "0x" + uniqueString;
+        if(!seed.startsWith("0x")) seed = "0x" + seed;
+        
+        return await ultimateDiceContractInstance.calculateBetResultWithBlockHash(userAddress, uniqueString, seed, blockNumber, rollIntegerVariables, block).call();
+    }
+
     static async watchEvents() {
 
         let ultimateDiceContractInstance = await this.getContractInstance();
@@ -70,7 +81,7 @@ class UltimateDiceContract {
 
                 if (res.result._betHash == store.state.bet.betHash) {
                     //clear state
-                    store.commit('SET_CURRENT_BET_UNIQUEID','');
+                    store.commit('SET_CURRENT_BET_UNIQUEID', '');
                     receivedEvent(res, true);
                 }
             }
