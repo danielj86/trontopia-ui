@@ -25,14 +25,14 @@
               <br>Lucky#
             </span>
             <span
-              id="bouncingLetterStatic"
+              id="bouncingLetterStatic1"
               class="bouncing-latter bouncing-latter-desktop"
               style="font-size: 16px; line-height: 5px; position: relative;top: 14px;color: #fff;letter-spacing: 0.7px;"
               title
             >
               <br>Lucky Number
             </span>
-
+ <!-- 
             <span
               id="bouncingLetterMooving"
               class="bouncing-latter"
@@ -51,7 +51,7 @@
               <span class="ud_bounce ud_9">b</span>
               <span class="ud_bounce ud_10">e</span>
               <span class="ud_bounce ud_11">r</span>
-            </span>
+            </span> -->
 
             <span
               id="bouncingLetterMooving_mobile_view"
@@ -490,8 +490,11 @@ let rollInterval = {};
 export default {
   name: "BettingBox",
   props: {},
-  data: {
-    rollInterval: {}
+  data: function() {
+    return {
+      rollInterval: {},
+      diceRolling: false
+    };
   },
   methods: {
     disableSlider: function(disabled) {
@@ -500,7 +503,6 @@ export default {
     },
     rollDice: async function() {
       // this.disableSlider(true);
-
       await BettingService.rollDice();
     },
     betAmountChanged: function() {
@@ -559,19 +561,45 @@ export default {
     },
     rollLuckNumber() {
       let self = this;
-      rollInterval = setInterval(() => {
-        let num = self.$store.state.bet.luckyNumber * 1;
+
+      if (this.$data.diceRolling == false) {
+        this.$data.diceRolling = true;
+        window.rollIntervalID = window.setInterval(() => {
+          let num = self.$store.state.bet.luckyNumber * 1;
+          num += 1;
+
+          if (num.toString() >= "99") num = "0";
+          if (num < 10) num = "0" + num;
+
+          self.$store.state.bet.luckyNumber = num;
+        }, 60);
+      }
+    },
+    stopRollLuckNumber(winningNumber) {
+      window.clearInterval(window.rollIntervalID);
+
+      //from current point to zero
+      while (this.$store.state.bet.luckyNumber != "00") {
+        let tempnum = this.$store.state.bet.luckyNumber * 1;
+        tempnum += 1;
+
+        if (tempnum >= "100") tempnum = "0";
+        if (tempnum < 10) tempnum = "0" + tempnum;
+        this.$store.state.bet.luckyNumber = tempnum;
+      }
+
+      for (let i = 0; i < winningNumber; i++) {
+        let num = this.$store.state.bet.luckyNumber * 1;
         num += 1;
 
         if (num.toString() >= "99") num = "0";
         if (num < 10) num = "0" + num;
 
-        self.$store.state.bet.luckyNumber = num;
-      }, 90);
-    },
-    stopRollLuckNumber(winningNumber) {
-      clearInterval(rollInterval);
+        this.$store.state.bet.luckyNumber = num;
+      }
+
       this.$store.state.bet.luckyNumber = winningNumber;
+      this.$data.diceRolling = false;
     }
   },
   mounted: function() {
