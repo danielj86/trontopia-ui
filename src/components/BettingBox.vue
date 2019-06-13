@@ -483,11 +483,16 @@ import constants from "../constants";
 import TextHelper from "../helpers/textHelper";
 import BettingService from "../services/bettingService";
 import eventBus from "../eventBus/eventBus";
-import UIHelper from '../helpers/UIHelpers';
+import UIHelper from "../helpers/UIHelpers";
+
+let rollInterval = {};
 
 export default {
   name: "BettingBox",
   props: {},
+  data: {
+    rollInterval: {}
+  },
   methods: {
     disableSlider: function(disabled) {
       const el = document.getElementById("slider-range");
@@ -495,6 +500,7 @@ export default {
     },
     rollDice: async function() {
       // this.disableSlider(true);
+
       await BettingService.rollDice();
     },
     betAmountChanged: function() {
@@ -550,20 +556,34 @@ export default {
           );
         }
       });
+    },
+    rollLuckNumber() {
+      let self = this;
+      rollInterval = setInterval(() => {
+        let num = self.$store.state.bet.luckyNumber * 1;
+        num += 1;
+
+        if (num.toString() >= "99") num = "0";
+        if (num < 10) num = "0" + num;
+
+        self.$store.state.bet.luckyNumber = num;
+      }, 90);
+    },
+    stopRollLuckNumber(winningNumber) {
+      clearInterval(rollInterval);
+      this.$store.state.bet.luckyNumber = winningNumber;
     }
   },
   mounted: function() {
     let self = this;
-   
 
+    eventBus.$on("betStarted", this.rollLuckNumber);
+    eventBus.$on("haveWinningNumber", this.stopRollLuckNumber);
 
-
-   eventBus.$on("diceRollState", function(diceRollState) {
-   
-   self.disableSlider(diceRollState);
+    eventBus.$on("diceRollState", function(diceRollState) {
+      self.disableSlider(diceRollState);
 
       if (diceRollState) {
-        
         //clear style for bounce num
         setTimeout(function() {
           $("#bounce_num").removeAttr("style");
@@ -592,8 +612,8 @@ export default {
 
     let sliderEl = document.getElementById("slider-range");
     let start, end;
-   
-   jQuery.ui.slider(
+
+    jQuery.ui.slider(
       {
         range: true,
         orientation: "horizontal",

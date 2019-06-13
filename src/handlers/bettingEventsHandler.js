@@ -5,6 +5,7 @@ import UltimateDiceContract from '../contracts/ultimateDiceContract';
 import UserService from '../services/userService';
 import SoundService from '../services/soundsService';
 import BettingService from '../services/bettingService';
+import EventBus from '../eventBus/eventBus';
 
 
 class BettingEventsHandler {
@@ -75,8 +76,11 @@ class BettingEventsHandler {
             let newBalance = await TronService.fetchMyTRXBalance();
             UserService.setMyTRXBalance(newBalance);
 
+            EventBus.$emit('haveWinningNumber',newWinningNumber);
+
             store.commit('SET_LUCKY_NUMBER', newWinningNumber);
 
+            
             if (isWin) {
 
                 //for win
@@ -121,6 +125,8 @@ class BettingEventsHandler {
 
 
         else if (ev.name === "BetStarted" && ev.result._uniqueBetId == store.state.bet.uniqueid) {
+
+            EventBus.$emit('betStarted');
 
             console.log('bet started event received');
 

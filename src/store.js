@@ -17,6 +17,7 @@ export default new Vuex.Store({
     referId: 0,
     rollButtonLabel:'Roll',
     extraBetsToDisplayAtTopOfMyBets: [],
+    siteLoaded:false,
     totals: {
       myTotalWon: 0,
       myTotalToken: 0,
@@ -114,6 +115,9 @@ export default new Vuex.Store({
     },
     SET_ROLL_BUTTON_LABEL(state, rollButtonLabel){
       state.rollButtonLabel = rollButtonLabel;
+    },
+    SET_SITE_LOADED(state,loaded){
+      state.siteLoaded = loaded;
     }
   },
   actions
