@@ -13,7 +13,7 @@
         <div class="col-12 col-xs-4 col-md-4 lucky-no-padding">
           <div class="box luckybox" style="padding-top: 10px;">
             <span id="rollNum">
-              <span id="lucky_no">00</span>
+              <span id="lucky_no">{{$store.state.bet.luckyNumber}}</span>
             </span>
             <!--<p id="bouncingLetterStatic">Lucky Number</p>-->
             <span
@@ -134,7 +134,7 @@
               <input
                 type="button"
                 class="btn-main roll-btn"
-                value="roll"
+                v-bind:value="$store.state.rollButtonLabel"
                 id="rollDice"
                 v-bind:disabled="$store.state.diceRolling"
                 @click="rollDice()"

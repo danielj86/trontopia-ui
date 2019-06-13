@@ -237,6 +237,7 @@ export default {
       let jackpot = await UltimateDiceContract.currentSideBetJackpotSize();
       BettingService.setBettingSidePotSize(jackpot);
     } catch (ex) {
+      this.$alertify.error('Failed to load Tronlink wallet');
       console.log(JSON.stringify(ex));
       UserService.Logout();
     }

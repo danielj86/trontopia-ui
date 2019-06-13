@@ -37,6 +37,10 @@ class BettingService {
     }
 
 
+    static setRollButtonLabel(label) {
+        store.commit('SET_ROLL_BUTTON_LABEL', label);
+    }
+
     static rollDiceFailed(msg) {
         eventBus.$emit('alertify', {
             type: 'error',
@@ -71,7 +75,7 @@ class BettingService {
                     for (let i = 0; i < events.length; i++) {
                         if (events[i].name == "BetStarted") {
                             clearInterval(interval);
-                            EventHandler.HandleBetStartEvent(events[i]);
+                            EventHandler.HandleBetEvents(events[i]);
                         }
                     }
 
@@ -93,12 +97,18 @@ class BettingService {
         }, timeout);
     }
 
-    static setRollDiceFinished(){
+    static setRollDiceFinished() {
+
+        this.setRollButtonLabel('Roll');
+
         eventBus.$emit('diceRollState', false);
         store.commit('SET_ROLLING_STATE', false);
     }
 
     static async rollDice() {
+
+        this.setRollButtonLabel('Rolling...');
+
         /////////// Set UI & Store status  /////////// 
         eventBus.$emit('diceRollState', true);
         store.commit('SET_ROLLING_STATE', true);
@@ -192,9 +202,6 @@ class BettingService {
         //get previousFinishBet from local storage
         let betToFinish = null;
 
-        let betDataReceivedFunc = null;
-
-        let previousBet = Cache.getPreviousBets();
 
         let finishBet_gambler = "0x0000000000000000000000000000000000000000";
         let finishBet_uniqueBetId = tronWeb.sha3("0", true);
@@ -202,15 +209,15 @@ class BettingService {
         let finishBet_blockNumber = 0;
         let finishBet_rollIntegerVariables = [0, 0, 0, 0, 0];
 
-        // if (previousBet && previousBet.length > 0) {
+        let previousBets = Cache.getPreviousBets();
 
-        //     betToFinish = previousBet.shift();
+        // if (previousBets && previousBets.length > 0) {
 
-        //     finishBet_gambler = betToFinish[0];
-        //     finishBet_uniqueBetId = betToFinish[1];
-        //     finishBet_userSeed = betToFinish[2];
-        //     finishBet_blockNumber = betToFinish[3];
-        //     finishBet_rollIntegerVariables = betToFinish[4];
+        //     finishBet_gambler = previousBets[previousBets.length - 1].gambler;
+        //     finishBet_uniqueBetId = previousBets[previousBets.length - 1].uniqueBetId
+        //     finishBet_userSeed = previousBets[previousBets.length - 1].uniqueBetId;
+        //     finishBet_blockNumber = previousBets[previousBets.length - 1].blockNumber;
+        //     finishBet_rollIntegerVariables = previousBets[previousBets.length - 1].rollIntegers;
         // }
 
         //set bet seed in store

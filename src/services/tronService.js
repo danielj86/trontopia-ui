@@ -52,19 +52,20 @@ class TronHelper {
             let rounds = interval / 500;
             let i = 0;
 
-            let tronCheckTimeout = window.setTimeout(() => {
-
+            let tronWebCheckInterval = window.setInterval(() => {
+                
                 if (window.tronWeb && window.tronWeb.ready) {
-                    window.clearTimeout(tronCheckTimeout);
+                    window.clearInterval(tronWebCheckInterval);
                     resolve(true);
                 }
                 else {
-                    if (i < rounds) {
+                    if (i >= rounds) {
+                        window.clearInterval(tronWebCheckInterval);
                         reject({});
                     }
                 }
                 i++;
-            }, 500);
+            }, 700);
 
         });
     }

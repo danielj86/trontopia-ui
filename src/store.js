@@ -15,6 +15,7 @@ export default new Vuex.Store({
     sidebetJackpot: 0.0,
     myTRXBalance: 0.0,
     referId: 0,
+    rollButtonLabel:'Roll',
     extraBetsToDisplayAtTopOfMyBets: [],
     totals: {
       myTotalWon: 0,
@@ -27,7 +28,7 @@ export default new Vuex.Store({
       to: 75,
       winChance: 0,
       multiplier: 0,
-      amount: 0,
+      amount: 50,
       payout: 0,
       uniqueid: '',
       betHash: '',
@@ -35,7 +36,8 @@ export default new Vuex.Store({
       eventGambler: '',
       txId: '',
       betStartedTimestamp: '',
-      integrerVals: []
+      integrerVals: [],
+      luckyNumber: "00",
     }
   },
   mutations: {
@@ -106,6 +108,12 @@ export default new Vuex.Store({
     },
     PUSH_TO_EXTRA_BETS(state, extraBet) {
       state.extraBetsToDisplayAtTopOfMyBets.push(extraBet);
+    },
+    SET_LUCKY_NUMBER(state, luckyNumber) {
+      state.bet.luckyNumber = luckyNumber;
+    },
+    SET_ROLL_BUTTON_LABEL(state, rollButtonLabel){
+      state.rollButtonLabel = rollButtonLabel;
     }
   },
   actions

@@ -1,7 +1,5 @@
 import options from '../options';
 import TronService from '../services/tronService';
-import store from '../store';
-let dividendContractInstance = {};
 
 class DividendContract {
 
@@ -13,9 +11,7 @@ class DividendContract {
     static async displayAvailableDividendALL() {
         let divContractInstance = this.getContractInstance();
         let dividends = await divContractInstance.displayAvailableDividendALL().call();
-        var val = Object.values(dividends);
-        var divNumber = TronService.toDecimal(val[1]);
-        var dividend = TronService.fromSun(divNumber);
+        var dividend = TronService.fromSun(dividends);
 
         return dividend;
     }

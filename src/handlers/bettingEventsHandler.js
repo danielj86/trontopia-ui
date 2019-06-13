@@ -9,54 +9,25 @@ import BettingService from '../services/bettingService';
 
 class BettingEventsHandler {
 
-    static async HandleBetStartEvent(ev) {
+    static async HandleBetEvents(ev) {
 
-        if (ev.name === "BetStarted" && ev.result._uniqueBetId == store.state.bet.uniqueid) {
+        if (ev.name == "BetFinished" && ev.result._betHash == store.state.bet.betHash) {
 
-            console.log('bet started event received');
+            console.log('bet finished event');
 
-            //clear uniqueId
-            store.commit('SET_CURRENT_BET_UNIQUEID', '');
-
-            //set betHash
-            store.commit('SET_CURRENT_BET_HASH', ev.result._betHash);
-
-            //set bet block number
-            store.commit('SET_CURRENT_BET_BLOCKNUMBER', ev.result._blockNumber);
-
-            //set bet eventGambler
-            store.commit('SET_CURRENT_BET_EVENT_GAMBLER', ev.result._gambler);
-
-            //set txId
-            store.commit('SET_CURRENT_BET_TXID', ev.transaction);
-
-            //set bet started timestamp
-            store.commit('SET_CURRENT_BET_STARTED_TIMESTAMP', ev.timestamp);
-
-            //DELAY tx - Handle lastRollResultTimestamp variable
-            // const timeToWait = lastRollResultTimestamp + 4000 - Date.now();
-            // lastRollResultTimestamp = Date.now();
-            // if (timeToWait > 0)
-            // {
-            //     if (localStorage.hasOwnProperty("DebugLog")) console.log("Artificially slowing down roll result by "+(timeToWait/1000)+"s because it arrived to fast :)");
-            //     await new Promise((resolve, reject) => setTimeout(resolve, timeToWait));
-            // }
-
-
-            //save bet to cache
-
-            // resultData = data.data;
-            // let suc_err = resultData.result;
-            let blockNumber = ev.result._blockNumber;
             let mainBetWin = 0;
             let sideBetWin = 0;
             let newWinningNumber = 0;
 
 
             //saving start bet variables in local storage, which would be used by finish bet in subsequent roll.
-            let previousBetData =
-                [store.state.userAddress, ev.result._uniqueBetId, ev.result._uniqueBetId, ev.result._blockNumber, [store.state.bet.from, store.state.bet.to, store.state.bet.amount, 0, 0]]; // TODO: HANDLE SIDEBET
-
+            let previousBetData = {
+                userAddress: store.state.userAddress,
+                uniqueBetId: store.state.bet.uniqueid,
+                gambler: store.state.bet.eventGambler,
+                blockNumber: store.state.bet.blockNumber,
+                rollIntegers: [store.state.bet.from, store.state.bet.to, store.state.bet.amount, 0, 0]
+            };
 
             let previousBets = Cache.getPreviousBets();
 
@@ -69,21 +40,21 @@ class BettingEventsHandler {
 
             Cache.setPreviousBets(previousBets);
 
-            const block = await TronService.getBlock(blockNumber);
-            let calculateBetResult = await UltimateDiceContract.calculateBetResultWithBlockHash(store.state.userAddress, ev.result._uniqueBetId, ev.result._uniqueBetId, store.state.bet.blockNumber, store.state.bet.integrerVals, "0x" + block.blockID);
+
+
+            const block = await TronService.getBlock(store.state.bet.blockNumber);
+            let calculateBetResult = await UltimateDiceContract.calculateBetResultWithBlockHash(store.state.userAddress, store.state.bet.uniqueid, store.state.bet.uniqueid, store.state.bet.blockNumber, store.state.bet.integrerVals, "0x" + block.blockID);
 
             mainBetWin = TronService.toDecimal(calculateBetResult.mainBetWin)
 
-            sideBetWin = window.tronWeb.toDecimal(calculateBetResult.sideBetWin);
+            sideBetWin = TronService.toDecimal(calculateBetResult.sideBetWin);
             sideBetWin = sideBetWin / 1000000;
 
-            //console.log("sideBetWin=", sideBetWin);
 
-            newWinningNumber = window.tronWeb.toDecimal(calculateBetResult.winningNumber);
+            newWinningNumber = TronService.toDecimal(calculateBetResult.winningNumber);
             console.log("Winning number: " + newWinningNumber);
-            
-            let isWin = ((newWinningNumber >= store.state.bet.from && newWinningNumber <= store.state.bet.to) ? true : false);
 
+            let isWin = ((newWinningNumber >= store.state.bet.from && newWinningNumber <= store.state.bet.to) ? true : false);
 
             let extraBet = {
                 "user": store.state.userAddress,
@@ -104,8 +75,7 @@ class BettingEventsHandler {
             let newBalance = await TronService.fetchMyTRXBalance();
             UserService.setMyTRXBalance(newBalance);
 
-
-            $("#lucky_no").text(newWinningNumber);
+            store.commit('SET_LUCKY_NUMBER', newWinningNumber);
 
             if (isWin) {
 
@@ -140,11 +110,46 @@ class BettingEventsHandler {
                 }
             }
 
+            //clear uniqueId
+            store.commit('SET_CURRENT_BET_UNIQUEID', '');
+
             $("#bounce_num").show();
             $("#bounce_num").animate({ top: '0px', opacity: '0' }, 3000);
 
             BettingService.setRollDiceFinished();
-         
+        }
+
+
+        else if (ev.name === "BetStarted" && ev.result._uniqueBetId == store.state.bet.uniqueid) {
+
+            console.log('bet started event received');
+
+            // //clear uniqueId
+            // store.commit('SET_CURRENT_BET_UNIQUEID', '');
+
+            //set betHash
+            store.commit('SET_CURRENT_BET_HASH', ev.result._betHash);
+
+            //set bet block number
+            store.commit('SET_CURRENT_BET_BLOCKNUMBER', ev.result._blockNumber);
+
+            //set bet eventGambler
+            store.commit('SET_CURRENT_BET_EVENT_GAMBLER', ev.result._gambler);
+
+            //set txId
+            store.commit('SET_CURRENT_BET_TXID', ev.transaction);
+
+            //set bet started timestamp
+            store.commit('SET_CURRENT_BET_STARTED_TIMESTAMP', ev.timestamp);
+
+            //DELAY tx - Handle lastRollResultTimestamp variable
+            // const timeToWait = lastRollResultTimestamp + 4000 - Date.now();
+            // lastRollResultTimestamp = Date.now();
+            // if (timeToWait > 0)
+            // {
+            //     if (localStorage.hasOwnProperty("DebugLog")) console.log("Artificially slowing down roll result by "+(timeToWait/1000)+"s because it arrived to fast :)");
+            //     await new Promise((resolve, reject) => setTimeout(resolve, timeToWait));
+            // }
         }
     }
 }

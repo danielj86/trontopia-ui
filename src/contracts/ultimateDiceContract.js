@@ -66,7 +66,7 @@ class UltimateDiceContract {
                     return;
                 }
 
-                EventHandler.HandleBetStartEvent(res);
+                EventHandler.HandleBetEvents(res);
             }
             );
 
@@ -80,9 +80,7 @@ class UltimateDiceContract {
                 }
 
                 if (res.result._betHash == store.state.bet.betHash) {
-                    //clear state
-                    store.commit('SET_CURRENT_BET_UNIQUEID', '');
-                    receivedEvent(res, true);
+                    EventHandler.HandleBetEvents(res);
                 }
             }
             );
