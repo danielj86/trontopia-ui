@@ -41,15 +41,13 @@ class BettingEventsHandler {
 
             Cache.setPreviousBets(previousBets);
 
-
-
             const block = await TronService.getBlock(store.state.bet.blockNumber);
             let calculateBetResult = await UltimateDiceContract.calculateBetResultWithBlockHash(store.state.userAddress, store.state.bet.uniqueid, store.state.bet.uniqueid, store.state.bet.blockNumber, store.state.bet.integrerVals, "0x" + block.blockID);
 
             mainBetWin = TronService.toDecimal(calculateBetResult.mainBetWin)
 
             sideBetWin = TronService.toDecimal(calculateBetResult.sideBetWin);
-            sideBetWin = sideBetWin / 1000000;
+            sideBetWin =  sideBetWin / 1000000;
 
 
             newWinningNumber = TronService.toDecimal(calculateBetResult.winningNumber);
@@ -72,53 +70,14 @@ class BettingEventsHandler {
 
             //   mybetsData();
 
-            //update user balance balance
+            //update user balance
             let newBalance = await TronService.fetchMyTRXBalance();
             UserService.setMyTRXBalance(newBalance);
 
             EventBus.$emit('haveWinningNumber',newWinningNumber);
 
-            store.commit('SET_LUCKY_NUMBER', newWinningNumber);
-
-            
-            if (isWin) {
-
-                //for win
-                $("#lucky_no").css({ "color": "#01f593", "text-shadow": "0 0 10px #01f593" });
-                let rollWinAmt = "+" + tronWeb.fromSun(mainBetWin);
-
-                $("#bounce_num").css({ "color": "#01f593", "top": "-40px" });
-                $("#bounce_num").text(rollWinAmt + ' TRX');
-
-                try {
-                    SoundService.playWinSound();
-                }
-                catch (e) {
-                    console.error("Failed to play win sound:", e);
-                }
-
-            } else {
-
-                //for loss  
-                $("#lucky_no").css({ "color": "rgb(255, 0, 108)", "text-shadow": "0 0 10px rgb(255, 0, 108)" });
-                let rollWinAmt = '-' + store.state.bet.amount;
-
-                $("#bounce_num").css({ "color": "#ff006c", "top": "-40px" });
-                $("#bounce_num").text(rollWinAmt + ' TRX');
-
-                try {
-                    SoundService.playLossSound();
-                }
-                catch (e) {
-                    console.error("Failed to play loss sound:", e);
-                }
-            }
-
             //clear uniqueId
             store.commit('SET_CURRENT_BET_UNIQUEID', '');
-
-            $("#bounce_num").show();
-            $("#bounce_num").animate({ top: '0px', opacity: '0' }, 3000);
 
             BettingService.setRollDiceFinished();
         }
@@ -129,9 +88,6 @@ class BettingEventsHandler {
             EventBus.$emit('betStarted');
 
             console.log('bet started event received');
-
-            // //clear uniqueId
-            // store.commit('SET_CURRENT_BET_UNIQUEID', '');
 
             //set betHash
             store.commit('SET_CURRENT_BET_HASH', ev.result._betHash);

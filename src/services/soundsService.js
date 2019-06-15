@@ -5,11 +5,11 @@ class SoundService {
 
     static initSound() {
         let soundPreference = cache.getSoundPreference();
-        let isOn = soundPreference == "on";
-        store.commit('SET_SOUND_STATE', isOn);
+        store.commit('SET_SOUND_STATE', soundPreference);
     }
 
     static toggleSound() {
+        cache.setSoundPreferenceisOn(!store.state.soundIsOn);
         store.commit('SET_SOUND_STATE', !store.state.soundIsOn);
     }
 

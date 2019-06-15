@@ -32,7 +32,7 @@
             >
               <br>Lucky Number
             </span>
- <!-- 
+            <!-- 
             <span
               id="bouncingLetterMooving"
               class="bouncing-latter"
@@ -51,7 +51,7 @@
               <span class="ud_bounce ud_9">b</span>
               <span class="ud_bounce ud_10">e</span>
               <span class="ud_bounce ud_11">r</span>
-            </span> -->
+            </span>-->
 
             <span
               id="bouncingLetterMooving_mobile_view"
@@ -184,7 +184,7 @@
           <div class="selct-size">
             <ul>
               <li>
-                <a href="javascript:void(0);" onclick="updateBetAmount('min')" unselectable="on">
+                <a href="javascript:void(0);" @click="updateBetAmount('min')" unselectable="on">
                   <label class="checkbx">
                     <input type="radio" name="r1">
 
@@ -195,7 +195,7 @@
               </li>
 
               <li>
-                <a href="javascript:void(0);" onclick="updateBetAmount('hlf')" unselectable="on">
+                <a href="javascript:void(0);" @click="updateBetAmount('half')" unselectable="on">
                   <label class="checkbx">
                     <input type="radio" name="r1">
 
@@ -206,7 +206,7 @@
               </li>
 
               <li>
-                <a href="javascript:void(0);" onclick="updateBetAmount('dbl')" unselectable="on">
+                <a href="javascript:void(0);" @click="updateBetAmount('double')" unselectable="on">
                   <label class="checkbx">
                     <input type="radio" name="r1">
 
@@ -216,7 +216,7 @@
                 </a>
               </li>
               <li>
-                <a href="javascript:void(0);" onclick="updateBetAmount('max')" unselectable="on">
+                <a href="javascript:void(0);" @click="updateBetAmount('max')" unselectable="on">
                   <label class="checkbx">
                     <input type="radio" name="r1">
 
@@ -484,6 +484,8 @@ import TextHelper from "../helpers/textHelper";
 import BettingService from "../services/bettingService";
 import eventBus from "../eventBus/eventBus";
 import UIHelper from "../helpers/UIHelpers";
+import SoundService from "../services/soundsService";
+import options from "../options";
 
 let rollInterval = {};
 
@@ -506,7 +508,7 @@ export default {
       await BettingService.rollDice();
     },
     betAmountChanged: function() {
-      const MAX_BET_AMOUNT = 25000;
+      const MAX_BET_AMOUNT = options.bets.MAX_BET_AMOUNT;
       const betAmt = this.$store.state.bet.amount;
 
       if (isNaN(betAmt)) {
@@ -529,6 +531,25 @@ export default {
         this.$store.state.bet.from,
         this.$store.state.bet.to
       );
+    },
+    updateBetAmount: function(val) {
+      if (val == "min") {
+        this.$store.state.bet.amount = options.bets.MIN_BET_AMOUNT;
+      } else if (val == "max") {
+        this.$store.state.bet.amount = options.bets.MAX_BET_AMOUNT;
+      } else if (val == "double") {
+        let doubleAmount = this.$store.state.bet.amount * 2;
+        if (doubleAmount > options.bets.MAX_BET_AMOUNT)
+          this.$store.state.bet.amount = options.bets.MAX_BET_AMOUNT;
+        else this.$store.state.bet.amount = doubleAmount;
+      } else if (val == "half") {
+        let halfAmount = this.$store.state.bet.amount / 2;
+        if (halfAmount < options.bets.MIN_BET_AMOUNT)
+          this.$store.state.bet.amount = options.bets.MIN_BET_AMOUNT;
+        else this.$store.state.bet.amount = halfAmount;
+      }
+
+      this.betAmountChanged();
     },
     getMultiplierValue: function(start, end) {
       let self = this;
@@ -599,6 +620,47 @@ export default {
       }
 
       this.$store.state.bet.luckyNumber = winningNumber;
+      let isWin =
+        winningNumber >= this.$store.state.bet.from &&
+        winningNumber <= this.$store.state.bet.to;
+
+      if (isWin) {
+        //for win
+        $("#lucky_no").css({
+          color: "#01f593",
+          "text-shadow": "0 0 10px #01f593"
+        });
+        let rollWinAmt = "+" + tronWeb.fromSun(mainBetWin);
+
+        $("#bounce_num").css({ color: "#01f593", top: "-40px" });
+        $("#bounce_num").text(rollWinAmt + " TRX");
+
+        try {
+          SoundService.playWinSound();
+        } catch (e) {
+          console.error("Failed to play win sound:", e);
+        }
+      } else {
+        //for loss
+        $("#lucky_no").css({
+          color: "rgb(255, 0, 108)",
+          "text-shadow": "0 0 10px rgb(255, 0, 108)"
+        });
+        let rollWinAmt = "-" + this.$store.state.bet.amount;
+
+        $("#bounce_num").css({ color: "#ff006c", top: "-40px" });
+        $("#bounce_num").text(rollWinAmt + " TRX");
+
+        try {
+          SoundService.playLossSound();
+        } catch (e) {
+          console.error("Failed to play loss sound:", e);
+        }
+      }
+
+      $("#bounce_num").show();
+      $("#bounce_num").animate({ top: "0px", opacity: "0" }, 3000);
+
       this.$data.diceRolling = false;
     }
   },
