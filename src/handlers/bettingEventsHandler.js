@@ -45,10 +45,16 @@ class BettingEventsHandler {
             let calculateBetResult = await UltimateDiceContract.calculateBetResultWithBlockHash(store.state.userAddress, store.state.bet.uniqueid, store.state.bet.uniqueid, store.state.bet.blockNumber, store.state.bet.integrerVals, "0x" + block.blockID);
 
             mainBetWin = TronService.toDecimal(calculateBetResult.mainBetWin)
+            mainBetWin = TronService.fromSun(mainBetWin);
 
             sideBetWin = TronService.toDecimal(calculateBetResult.sideBetWin);
-            sideBetWin =  sideBetWin / 1000000;
+            sideBetWin = TronService.fromSun(sideBetWin);
 
+
+            store.commit('SET_BET_WINS', {
+                mainBetWin: mainBetWin,
+                sideBetWin: sideBetWin
+            });
 
             newWinningNumber = TronService.toDecimal(calculateBetResult.winningNumber);
             console.log("Winning number: " + newWinningNumber);
@@ -74,7 +80,7 @@ class BettingEventsHandler {
             let newBalance = await TronService.fetchMyTRXBalance();
             UserService.setMyTRXBalance(newBalance);
 
-            EventBus.$emit('haveWinningNumber',newWinningNumber);
+            EventBus.$emit('haveWinningNumber', newWinningNumber);
 
             //clear uniqueId
             store.commit('SET_CURRENT_BET_UNIQUEID', '');

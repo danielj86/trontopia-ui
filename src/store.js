@@ -39,6 +39,11 @@ export default new Vuex.Store({
       betStartedTimestamp: '',
       integrerVals: [],
       luckyNumber: "00",
+      mainBetWin:0,
+      sideBetWin:0,
+      sidebetAmount:0,
+      sideBetPayout:0,
+      sidebetType:0
     }
   },
   mutations: {
@@ -118,6 +123,13 @@ export default new Vuex.Store({
     },
     SET_SITE_LOADED(state,loaded){
       state.siteLoaded = loaded;
+    },
+    SET_BET_WINS(state,betWins){
+      state.bet.mainBetWin = betWins.mainBetWin;
+      state.bet.sideBetWin = betWins.sideBetWin;
+    },
+    SET_SIDE_BET_TYPE(state,type){
+      state.bet.sidebetType = type;
     }
   },
   actions

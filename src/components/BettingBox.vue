@@ -326,11 +326,13 @@
 
               <div class="frm-gt" aria-describedby="emailHelp">
                 <input
-                  type="text"
+                  type="number"
                   name="number"
                   placeholder="0.00"
                   id="sidebetAmount"
                   class="form-control"
+                  v-model="$store.state.bet.sidebetAmount"
+                  @keyup="calculateSideBetPayout()"
                 >
 
                 <span>trx</span>
@@ -343,7 +345,14 @@
               <div id="sidebet">
                 <ul>
                   <li>
-                    <a href="javascript:void(0);" id="odd" class="btn" style="font-size: 12px">
+                    <a
+                      href="javascript:void(0);"
+                      id="odd"
+                      class="btn"
+                      @click="setSideBetType(5)"
+                      :class="{selected:$store.state.bet.sidebetType == 5}"
+                      style="font-size: 12px"
+                    >
                       <label class="checkbx">
                         <input type="radio" name="r2">
 
@@ -354,7 +363,14 @@
                   </li>
 
                   <li>
-                    <a href="javascript:void(0);" id="even" class="btn" style="font-size: 12px">
+                    <a
+                      href="javascript:void(0);"
+                      id="even"
+                      class="btn"
+                      @click="setSideBetType(6)"
+                      :class="{selected:$store.state.bet.sidebetType == 6}"
+                      style="font-size: 12px"
+                    >
                       <label class="checkbx">
                         <input type="radio" name="r2">
 
@@ -365,7 +381,14 @@
                   </li>
 
                   <li>
-                    <a href="javascript:void(0);" id="yin" class="btn" style="font-size: 12px">
+                    <a
+                      href="javascript:void(0);"
+                      id="yin"
+                      class="btn"
+                      @click="setSideBetType(1)"
+                      :class="{selected:$store.state.bet.sidebetType == 1}"
+                      style="font-size: 12px"
+                    >
                       <label class="checkbx">
                         <input type="radio" name="r2">
 
@@ -376,7 +399,14 @@
                   </li>
 
                   <li>
-                    <a href="javascript:void(0);" id="yang" class="btn" style="font-size: 12px">
+                    <a
+                      href="javascript:void(0);"
+                      id="yang"
+                      class="btn"
+                      @click="setSideBetType(2)"
+                      :class="{selected:$store.state.bet.sidebetType == 2}"
+                      style="font-size: 12px"
+                    >
                       <label class="checkbx">
                         <input type="radio" name="r2">
 
@@ -386,7 +416,14 @@
                     </a>
                   </li>
                   <li>
-                    <a href="javascript:void(0);" id="bang" class="btn" style="font-size: 12px">
+                    <a
+                      href="javascript:void(0);"
+                      id="bang"
+                      class="btn"
+                      @click="setSideBetType(3)"
+                      :class="{selected:$store.state.bet.sidebetType == 3}"
+                      style="font-size: 12px"
+                    >
                       <label class="checkbx">
                         <input type="radio" name="r2">
 
@@ -397,10 +434,16 @@
                   </li>
 
                   <li>
-                    <a href="javascript:void(0);" id="zero" class="btn" style="font-size: 12px">
+                    <a
+                      href="javascript:void(0);"
+                      id="zero"
+                      class="btn"
+                      @click="setSideBetType(4)"
+                      :class="{selected:$store.state.bet.sidebetType == 4}"
+                      style="font-size: 12px"
+                    >
                       <label class="checkbx">
                         <input type="radio" name="r2">
-
                         <span class="checkmark"></span>
                       </label>
                       zero
@@ -429,6 +472,7 @@
                   placeholder
                   id="sidebet-payout"
                   value="0"
+                  v-model="this.$store.state.bet.sideBetPayout"
                   class="form-control"
                   disabled
                 >
@@ -449,14 +493,7 @@
                     name
                     id="sidebet-multiplier"
                     class="form-control"
-                    value
-                    disabled
-                  >
-                  <input
-                    style="border:2px solid #18cae6"
-                    type="hidden"
-                    id="hidden_sidebetmultiplier"
-                    value
+                    v-model="$data.sideBetMultiplier"
                     disabled
                   >
                 </div>
@@ -466,7 +503,13 @@
                 <label>win chance</label>
 
                 <div class="form-group" aria-describedby="emailHelp">
-                  <input type="text" id="sidebet-winChance" class="form-control" value disabled>
+                  <input
+                    type="text"
+                    id="sidebet-winChance"
+                    class="form-control"
+                    v-model="$data.setSideBeWinChance"
+                    disabled
+                  >
                 </div>
               </div>
             </div>
@@ -486,6 +529,7 @@ import eventBus from "../eventBus/eventBus";
 import UIHelper from "../helpers/UIHelpers";
 import SoundService from "../services/soundsService";
 import options from "../options";
+import TronService from "../services/tronService";
 
 let rollInterval = {};
 
@@ -495,16 +539,34 @@ export default {
   data: function() {
     return {
       rollInterval: {},
-      diceRolling: false
+      diceRolling: false,
+      sideBetMultiplier: "",
+      setSideBeWinChance: ""
     };
   },
   methods: {
+    calculateSideBetPayout: function() {
+      var sidebetAmount = this.$store.state.bet.sidebetAmount;
+
+      let res = parseInt(sidebetAmount) * this.$data.sideBetMultiplier;
+      res = res.toString();
+      let decimalPointindex = res.indexOf(".");
+      if (decimalPointindex != -1) {
+        res = res.slice(0, decimalPointindex + 3);
+      }
+      this.$store.state.bet.sideBetPayout = res;
+    },
     disableSlider: function(disabled) {
       const el = document.getElementById("slider-range");
       jQuery(el).slider({ disabled: disabled });
     },
     rollDice: async function() {
       // this.disableSlider(true);
+
+      this.$store.state.bet.luckyNumber = "00";
+      $("#lucky_no").removeClass("win");
+      $("#lucky_no").removeClass("loose");
+
       await BettingService.rollDice();
     },
     betAmountChanged: function() {
@@ -620,17 +682,18 @@ export default {
       }
 
       this.$store.state.bet.luckyNumber = winningNumber;
+
       let isWin =
         winningNumber >= this.$store.state.bet.from &&
         winningNumber <= this.$store.state.bet.to;
 
       if (isWin) {
         //for win
-        $("#lucky_no").css({
-          color: "#01f593",
-          "text-shadow": "0 0 10px #01f593"
-        });
-        let rollWinAmt = "+" + tronWeb.fromSun(mainBetWin);
+        $("#lucky_no").addClass("win");
+
+        let mainBetWin = this.$store.state.bet.mainBetWin;
+
+        let rollWinAmt = "+" + mainBetWin;
 
         $("#bounce_num").css({ color: "#01f593", top: "-40px" });
         $("#bounce_num").text(rollWinAmt + " TRX");
@@ -642,10 +705,7 @@ export default {
         }
       } else {
         //for loss
-        $("#lucky_no").css({
-          color: "rgb(255, 0, 108)",
-          "text-shadow": "0 0 10px rgb(255, 0, 108)"
-        });
+        $("#lucky_no").addClass("loose");
         let rollWinAmt = "-" + this.$store.state.bet.amount;
 
         $("#bounce_num").css({ color: "#ff006c", top: "-40px" });
@@ -662,6 +722,14 @@ export default {
       $("#bounce_num").animate({ top: "0px", opacity: "0" }, 3000);
 
       this.$data.diceRolling = false;
+    },
+    setSideBetType(type) {
+      if (this.$store.state.bet.sidebetAmount == 0)
+        this.$store.state.bet.sidebetAmount = 100;
+      this.$data.sideBetMultiplier = constants.sideBetMultiplier[type];
+      this.$data.setSideBeWinChance = constants.sideBetWinChance[type];
+      this.$store.commit("SET_SIDE_BET_TYPE", type);
+      this.calculateSideBetPayout();
     }
   },
   mounted: function() {
@@ -747,5 +815,20 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+#lucky_no.win {
+  color: rgb(1, 245, 147);
+  text-shadow: rgb(1, 245, 147) 0px 0px 10px;
+}
+
+#lucky_no.loose {
+  color: rgb(255, 0, 108);
+  text-shadow: rgb(255, 0, 108) 0px 0px 10px;
+}
+
+#sidebet li a.selected {
+  color: #0cd6cf !important;
+  background-color: transparent !important;
 }
 </style>

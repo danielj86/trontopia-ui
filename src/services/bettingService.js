@@ -109,6 +109,7 @@ class BettingService {
 
         this.setRollButtonLabel('Rolling...');
 
+
         /////////// Set UI & Store status  /////////// 
         eventBus.$emit('diceRollState', true);
         store.commit('SET_ROLLING_STATE', true);
@@ -195,7 +196,7 @@ class BettingService {
         }
 
         //generate rollIntegerVariables
-        const rollIntegerVariables = [store.state.bet.from * 1, store.state.bet.to * 1, store.state.bet.amount * 1, 0, 0];
+        const rollIntegerVariables = [store.state.bet.from * 1, store.state.bet.to * 1, store.state.bet.amount * 1, store.state.bet.sidebetAmount.toString(), store.state.bet.sidebetType];
 
         this.setCurrentBetIntegerValues(rollIntegerVariables);
 
