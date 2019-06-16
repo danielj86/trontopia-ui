@@ -32,10 +32,12 @@ class UltimateDiceContract {
     static async finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, seed, uniqueString) {
         let ultimateDiceContractInstance = await this.getContractInstance();
 
+        let totalBetSum = await TronService.toSun(store.state.bet.amount + store.state.bet.sidebetAmount);
+
         return await ultimateDiceContractInstance.finishBet_and_startBet(finishBet_gambler, finishBet_uniqueBetId, finishBet_userSeed, finishBet_blockNumber, finishBet_rollIntegerVariables, rollIntegerVariables, store.state.referId, seed, uniqueString).send({
             shouldPollResponse: false,
             feeLimit: options.bets.FEE_LIMIT,
-            callValue: store.state.bet.amount * 1000000,
+            callValue: totalBetSum,
             from: store.state.userAddress
         });
     }

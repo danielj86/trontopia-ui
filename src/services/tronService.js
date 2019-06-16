@@ -20,6 +20,10 @@ class TronHelper {
         return TextHelper.number_to_2decimals(str);
     }
 
+    static toSun(amount) {
+        return window.tronWeb.toSun(amount).toString();
+    }
+
     static fromHex(hex) {
         return window.tronWeb.address.fromHex(hex);
     }
