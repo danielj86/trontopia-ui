@@ -18,6 +18,9 @@ export default new Vuex.Store({
     rollButtonLabel:'Roll',
     extraBetsToDisplayAtTopOfMyBets: [],
     siteLoaded:false,
+    leaderTabs:{
+      activeTab:'chat'
+    },
     totals: {
       myTotalWon: 0,
       myTotalToken: 0,

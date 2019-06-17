@@ -24,7 +24,7 @@ class HTTP {
     };
 
     static async GET(URI) {
-        return HTTPCALL(URI, "GET", {}, null);
+        return this.HTTPCALL(URI, "GET", {}, null);
     };
 
     static async POST(URI, BODY) {

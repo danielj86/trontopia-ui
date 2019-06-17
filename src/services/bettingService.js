@@ -1,13 +1,9 @@
 import store from '../store';
-import UIHelper from '../helpers/UIHelpers';
-import DividendContract from '../contracts/dividendContract';
 import Cache from '../cache/localCache';
 import options from '../options';
 import eventBus from '../eventBus/eventBus';
 import UltimateDiceContract from '../contracts/ultimateDiceContract';
 import Helper from '../helpers/Helper';
-import constants from '../constants';
-import { setTimeout } from 'core-js';
 import EventHandler from '../handlers/bettingEventsHandler';
 
 class BettingService {
@@ -57,7 +53,6 @@ class BettingService {
 
     static setCurrentBetUniqueId(uniqueId) {
         if (uniqueId.startsWith("0x")) uniqueId = uniqueId.substring(2);
-        //set bet seed in state for events search
         store.commit('SET_CURRENT_BET_UNIQUEID', uniqueId);
     }
 
@@ -109,34 +104,15 @@ class BettingService {
 
         this.setRollButtonLabel('Rolling...');
 
-
         /////////// Set UI & Store status  /////////// 
         eventBus.$emit('diceRollState', true);
         store.commit('SET_ROLLING_STATE', true);
 
         //validate user balance
-
         const userBalance = await window.tronWeb.trx.getBalance(global.userAddress);
         if (userBalance < betAmt) {
             return this.rollDiceFailed('Can not wager more than current Max Payout');
         }
-
-        /////////// set timestamp  /////////// 
-        var timestamp = + new Date();
-
-        ///////////  set cookies for finish bet alert /////////// 
-        document.cookie = "rollDiceClickTime=" + timestamp;
-
-
-        //get dividends from contract
-
-        // var dividends = await DividendContract.displayAvailableDividendALL();
-
-
-        ///////////  sidebet amount  /////////// 
-
-
-
 
         /////////// VALIDATE BET  /////////// 
 
@@ -162,22 +138,22 @@ class BettingService {
 
         /////////// VALIDATE PAYOUT  ///////////
 
-        let diceContractBalance = await UltimateDiceContract.getContractBalance();
-        let totalMaxAmount = parseFloat(diceContractBalance) / options.bets.MAX_WIN_DIVISIBLE_AMOUNT;
+        // let diceContractBalance = await UltimateDiceContract.getContractBalance();
+        // let totalMaxAmount = parseFloat(diceContractBalance) / options.bets.MAX_WIN_DIVISIBLE_AMOUNT;
 
-        var PAYOUT_WIN_AMOUNT = parseFloat(store.state.bet.payout);
+        // var PAYOUT_WIN_AMOUNT = parseFloat(store.state.bet.payout);
 
-        var SIDEBET_PAYOUT_WIN_AMOUNT = $('#sidebet-payout').val();
-        if (sidebet != "") {
-            betAmt = betAmt + parseFloat(sidebetAmount);
-            PAYOUT_WIN_AMOUNT = PAYOUT_WIN_AMOUNT + parseFloat(SIDEBET_PAYOUT_WIN_AMOUNT)
-        }
+        // var SIDEBET_PAYOUT_WIN_AMOUNT = $('#sidebet-payout').val();
+        // if (sidebet != "") {
+        //     betAmt = betAmt + parseFloat(sidebetAmount);
+        //     PAYOUT_WIN_AMOUNT = PAYOUT_WIN_AMOUNT + parseFloat(SIDEBET_PAYOUT_WIN_AMOUNT)
+        // }
 
-        var PAYOUT_WIN_AMOUNT = PAYOUT_WIN_AMOUNT - betAmt;
+        // var PAYOUT_WIN_AMOUNT = PAYOUT_WIN_AMOUNT - betAmt;
 
-        if (PAYOUT_WIN_AMOUNT > totalMaxAmount) {
-            return this.rollDiceFailed('Can not wager more than current Max Payout');
-        }
+        // if (PAYOUT_WIN_AMOUNT > totalMaxAmount) {
+        //     return this.rollDiceFailed('Can not wager more than current Max Payout');
+        // }
 
         //generate random seed for bet
         let seed = Cache.getSeedValue();
@@ -185,25 +161,15 @@ class BettingService {
         if (!seed || seed.length == 0) {
             seed = await Helper.getRandomSeedHash();
         }
+       
         seed = seed.toLowerCase();
-
-
-        //convert sidebet to int
-
-        let sidebetInt = 0;
-        if (sidebet && sidebet.length > 0) {
-            sidebetInt = constants.sidebetToInt[sidebet];
-        }
 
         //generate rollIntegerVariables
         const rollIntegerVariables = [store.state.bet.from * 1, store.state.bet.to * 1, store.state.bet.amount * 1, store.state.bet.sidebetAmount * 1, store.state.bet.sidebetType * 1];
-        // const rollIntegerVariables = [store.state.bet.from * 1, store.state.bet.to * 1, store.state.bet.amount * 1, 0, 0];
-
         this.setCurrentBetIntegerValues(rollIntegerVariables);
 
         //get previousFinishBet from local storage
         let betToFinish = null;
-
 
         let finishBet_gambler = "0x0000000000000000000000000000000000000000";
         let finishBet_uniqueBetId = tronWeb.sha3("0", true);
@@ -211,7 +177,7 @@ class BettingService {
         let finishBet_blockNumber = 0;
         let finishBet_rollIntegerVariables = [0, 0, 0, 0, 0];
 
-        let previousBets = Cache.getPreviousBets();
+        // let previousBets = Cache.getPreviousBets();
 
         // if (previousBets && previousBets.length > 0) {
 

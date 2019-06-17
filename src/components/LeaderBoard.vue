@@ -2,21 +2,22 @@
   <div class="col-lg-4 col-md-5 col-sm-12">
     <div id="chat-scroll" class="sider-bar">
       <ul class="nav nav-tabs" style="padding-top:10px;">
-        <li>
-          <a data-toggle="tab" href="#tab1">Leaderboards</a>
+        <li v-bind:class="{'active':$store.state.leaderTabs.activeTab == 'leaders'}">
+          <a data-toggle="tab" @click="$store.state.leaderTabs.activeTab = 'leaders'">Leaderboards</a>
         </li>
 
-        <li class="active">
-          <a data-toggle="tab" href="#tab9">Chat</a>
+        <li v-bind:class="{'active':$store.state.leaderTabs.activeTab == 'chat'}">
+          <a data-toggle="tab" @click="$store.state.leaderTabs.activeTab = 'chat'">Chat</a>
         </li>
 
-        <li>
-          <a data-toggle="tab" href="#tab6">Global Rank</a>
+         <li v-bind:class="{'active':$store.state.leaderTabs.activeTab == 'globalRank'}">
+          <a data-toggle="tab" @click="$store.state.leaderTabs.activeTab = 'globalRank'">Global Rank</a>
         </li>
       </ul>
 
       <div class="tab-content">
-        <div id="tab1" class="tab-pane fade">
+        <div id="leaderboardTab" class="tab" v-show="$store.state.leaderTabs.activeTab == 'leaders'">
+          1
           <div class="king-wrp">
             <ul class="nav nav-tabs">
               <li>
@@ -31,7 +32,7 @@
                       >Side Bet</span>
                       <!--                                             			<span style="display: block;font-size: 24px;text-transform: uppercase;font-style: italic;font-weight: 900;background: linear-gradient(to bottom, #ffff00 0%, #ffa500 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;font-family: fantasy;letter-spacing: 3px;">Jackpot</span> -->
                       <img
-                        src="images/Cool Text - JACKPOT 319957269967239.png"
+                        src="../assets/images/Cool Text - JACKPOT 319957269967239.png"
                         alt="jackpot bag"
                         style="width: 80%;"
                       >
@@ -71,7 +72,10 @@
                         </i>
                         Enable Side Bet to Win:
                       </span>
-                      <span id="sidebet-jackpot" class="trx-value-in glow">{{$store.state.sidebetJackpot}}</span>
+                      <span
+                        id="sidebet-jackpot"
+                        class="trx-value-in glow"
+                      >{{$store.state.sidebetJackpot}}</span>
 
                       <span class="trx-text">TRX</span>
                     </span>
@@ -157,8 +161,9 @@
           </div>
         </div>
 
-        <div id="tab9" class="tab-pane fade active in">
+        <div id="chatTab" class="active in tab"  v-show="$store.state.leaderTabs.activeTab == 'chat'">
           <div class="tab-content">
+            2
             <div
               id="tab7"
               class="chet-bx scroll-touch tab-pane fade in active"
@@ -195,26 +200,79 @@
         </div>
 
         <div
-          id="tab6"
-          class="chet-bx scroll-touch tab-pane fade"
+          id="globalRankTab"
+          v-show="$store.state.leaderTabs.activeTab == 'globalRank'"
+          class="chet-bx scroll-touch tab"
           style="height: 813px; overflow-x: hidden;overflow-y: auto;padding: 0;"
         >
           <div class="main-coutn">
-            <ul id="globalLeaderboard"></ul>
+            <ul id="globalLeaderboard">
+              <li class="head-at">
+                <div class="row">
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th no-padding">
+                      <p>Rank</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-6">
+                    <div class="head-th no-padding text-center">
+                      <p>Player</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-4 col-xs-4">
+                    <div class="head-th no-padding">
+                      <p>Wagered</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="dt-tbs" v-for="item in $data.leaderBoardTable">
+                <div class="row">
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th number-b act1">' + key + '</div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-6">
+                    <div class="head-th">
+                      <p>' + item.user + '</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-4 col-xs-4">
+                    <div class="head-th">
+                      <p>' + item.total + ' TRX</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </div>
-
- 
 </template>
 <script>
+import userService from "../services/userService";
+import { setTimeout } from "timers";
+
 export default {
   name: "LeaderBoard",
-  props: {}
+  props: {},
+  data: {
+    leaderBoardTable: {}
+  },
+  mounted: function() {
+    let self = this;
+    setTimeout(async () => {
+      let table = await userService.getLeaderBoard();
+      self.$data.leaderBoardTable = table;
+    }, 5000);
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.nav.nav-tabs li{
+  cursor: pointer;
+}
+</style>

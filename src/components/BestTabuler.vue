@@ -28,7 +28,85 @@
       </ul>
 
       <div class="tab-content">
-        <div id="bet1" class="tab-pane fade"></div>
+        <div id="bet1" class="tab-pane fade">
+          <div class="text-center" style="color: #fff; padding: 60px;">' + data.msg + '</div>
+
+          <div class="table-bets">
+            <ul>
+              <li class="head-at">
+                <div class="row">
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th">
+                      <p>Time</p>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th">
+                      <p>Player</p>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th">
+                      <p>Prediction</p>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th">
+                      <p>Lucky Number</p>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th">
+                      <p>Bets</p>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th">
+                      <p>Payout</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li v-for="bet in $store.state.myBetsHistory" v-bind:key="bet.id" :class="{'dt-tbs':true, 'rowBoarderColorClass':true, 'safe':true}">
+                <div class="row">
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th">
+                      <p>' + obj.timestamp + '</p>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th">
+                      <p>' + user + '</p>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th">
+                      <p>' + obj.startNumber + " - " + obj.endNumber + '</p>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th">
+                      <p>' + obj.winningNumber + '</p>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th poit">
+                      <p>
+                        ' + obj.bet + '
+                        <span>TRX</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="head-th poit">
+                      <p>' + payout + '</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
 
         <div id="bet2" class="tab-pane fade in active"></div>
 
