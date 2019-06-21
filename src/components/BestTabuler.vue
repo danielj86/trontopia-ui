@@ -124,7 +124,9 @@
 <script>
 export default {
   name: "BestTabuler",
-  props: {}
+  props: {},
+  mounted:()=>{
+  }
 };
 </script>
 

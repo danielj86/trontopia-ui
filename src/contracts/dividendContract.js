@@ -9,9 +9,9 @@ class DividendContract {
     }
 
     static async displayAvailableDividendALL() {
-        let divContractInstance = this.getContractInstance();
+        let divContractInstance = await this.getContractInstance();
         let dividends = await divContractInstance.displayAvailableDividendALL().call();
-        var dividend = TronService.fromSun(dividends);
+        var dividend = TronService.fromSun(dividends[1]);
 
         return dividend;
     }

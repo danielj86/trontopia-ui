@@ -1,8 +1,18 @@
 import store from '../store';
 import HTTP from '../helpers/HTTP';
 import constants from '../constants';
+import DividentContract from '../contracts/dividendContract';
 
 class UserHelper {
+
+    static async getgameStats() {
+        let betsWinResult = await HTTP.GET("https://www.trontopia.co/api/getBetsWin.php");
+        store.commit('SET_TOTAL_BETS',{
+            totalbets:data.totalbets,
+            totalWin:data.totalWin
+        });
+    }
+
 
     static getMultiplier(start, end) {
         let differ = parseInt(end) - parseInt(start);
@@ -19,9 +29,53 @@ class UserHelper {
         return _returnValue;
     }
 
+    static async getDivCountdown() {
+        let timeRes = await HTTP.GET("https://www.trontopia.co/api/gettime.php");
+        var countDownDate = timeRes;
+        var x = setInterval(function () {
+            // Get todays date and time
+            var now = new Date().getTime();
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+            if (distance == 0) { location.reload(); }
+            //comment line no 793 to remvoe 80 hours countdown and remove comment from line 794
+            var hours = parseInt(Math.abs((distance / 36e5)));
+            //var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));                
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            if (seconds < 10) {
+                seconds = '0' + seconds;
+            }
+
+
+            store.state.dividendTimeout = hours + ": " + minutes + ": " + seconds;;
+
+            // // Output the result in an element with id="demo"
+            // document.getElementById("demo").innerHTML = hours + ": " + minutes + ": " + seconds;
+            // document.getElementById("demo2").innerHTML = hours + ": " + minutes + ": " + seconds;
+            // document.getElementById("dividendCountdown").innerHTML = hours + ": " + minutes + ": " + seconds;
+
+            // // If the count down is over, write some text 
+            // if (distance < 0) {
+            //     clearInterval(x);
+            //     document.getElementById("demo").innerHTML = "EXPIRED";
+            //     document.getElementById("demo2").innerHTML = "EXPIRED";
+            //     document.getElementById("dividendCountdown").innerHTML = "EXPIRED";
+            // }
+        }, 1000);
+    }
+
     static async getLeaderBoard() {
         let leaderBoardRes = await HTTP.GET("https://www.trontopia.co/api/getleaderboard.php");
-        return leaderBoardRes.data;
+        let data = leaderBoardRes.data;
+        for (let i = 0; i < data.length; i++) {
+            let item = data[i];
+            if (item.image.length > 0) {
+                item.image = item.image.replace('images/levels/', '');
+            }
+        }
+
+        return data;
         // if(leaderBoardRes.result){
         //     let leaderboardData = leaderBoardRes.data;
         //     for(let i=0;i<leaderboardData.length;i++){
@@ -92,63 +146,24 @@ class UserHelper {
     }
 
     static async getChat() {
-        $.get("api/getchat.php?id=" + global.lastChatID, function (data, status) {
-            data = JSON.parse(data);
-            if (data.result == true) {
-                var str = '';
-                var chatData = data.data;
-                chatData.reverse();
-                $.each(data.data, function (key, obj) {
-                    var cls;
-                    global.lastChatID = obj.id;
-                    if (obj.userid == global.userAddress) {
-                        if (obj.message == myLastChat) {
-                            return true;
-                        }
-                        if (myChatTime == obj.time) {
-                            return true;
-                        }
-                        cls = 'snd';
-                    } else {
-                        cls = 'reci';
-                    }
 
-                    if (myLastChatID.indexOf(obj.id) != -1) {
-                        return true;
-                    }
-                    var username = obj.username;
-                    var message = obj.message;
-                    var time = obj.time;
-                    var image = obj.image;
-                    var color = obj.color;
-                    var level = obj.level;
-                    if (level == 9999) {
-                        level = " [Lvl MOD]";
-                    } else {
-                        level = " [Lvl " + obj.level + "]";
-                    }
-                    username = '<span style="color:' + color + '">' + username + level + ' : </span>';
-                    if (global.level == "9999") {
-                        username = '<span style="color:' + color + '">' + obj.userid + '(' + obj.username + ')' + level + ' : </span>';
-                    }
-                    if (image != '') {
-                        image = '<img src="' + image + '" height="40" width="40">';
-                    }
-                    str += '<li class="' + cls + '"><div>' + image + '<strong>' + username + '</strong>' + message + '</div> <div> <span class="chat-time">' + time + '</span> </div></li>'
+        let chatReponse = await HTTP.GET("https://www.trontopia.co/api/getchat.php?id=" + store.state.lastChatId);
 
-                });
-                if (global.lastChatID == '') {
-                    $('#chatDiv').html(str);
-                    $('#tab7').scrollTop($('#chatDiv').height());
-                } else {
-                    $('#chatDiv').append(str);
-                    $('#tab7').scrollTop($('#chatDiv').height());
+        if (chatReponse.result) {
+            let chatData = chatReponse.data;
+            chatData.reverse();
+
+            for (let i = 0; i < chatData.length; i++) {
+                let item = chatData[i];
+                if (item.image.length > 0) {
+                    item.image = item.image.replace('images/levels/', '');
                 }
-
-            } else {
-                // $('#chatDiv').html(data.msg);
             }
-        });
+
+            return chatData;
+        }
+
+        return null;
     }
 
     static async mybsidebetsData() {
@@ -210,7 +225,6 @@ class UserHelper {
             mysidebetsData_running = false;
         }
     }
-
 
     static async allSideBetsData() {
         if (allSideBetsData_running) return;
@@ -329,7 +343,175 @@ class UserHelper {
         }
     }
 
+    static levelPercentages(i) {
+        if (i == 0) { //level 1
+            return 50;
+        } else if (i == 1) { //level 2
+            return 20;
+        } else if (i == 2) { //level 3
+            return 10;
+        } else if (i == 3 || i == 4) { //level 4 and 5
+            return 5;
+        } else if (i == 5 || i == 6) { //level 6 and 7
+            return 3;
+        } else if (i == 7) { //level 8
+            return 2;
+        } else { //level 9 and 10
+            return 1;
+        }
+    }
 
+    static async getTokenMinters() {
+
+        let tokenMintersResult = await HTTP.GET("https://www.trontopia.co/api/tokenMinters.php");
+
+        var resultminers = tokenMintersResult.data;
+
+        store.commit('SET_TOKEN_MINTERS', {
+            totalSupply: tokenMintersResult.totalSupply,
+            totalMinted: tokenMintersResult.totalMinted
+        });
+
+        return resultminers;
+
+        var counterX = 0;
+        var rankVariable;
+        var minersLeaderboardHTML = ' <li class="head-at"> <div class="row">  <div class="col-md-2 col-sm-2 col-xs-2">      <div class="head-th">   <p>Rank</p>   </div>   </div>   <div class="col-md-5 col-sm-5 col-xs-5">    <div class="head-th">         <p>Player</p>     </div>      </div>     <div class="col-md-3 col-sm-3 col-xs-3">   <div class="head-th">     <p>Total Mined</p>  </div>     </div>     <div class="col-md-2 col-sm-2 col-xs-2">     <div class="head-th">    <p>Prize</p>   </div>   </div>    </div>  </li>';
+        $.each(resultminers, function (key, obj) {
+
+            key = parseInt(key) + 1;
+            var payout = 0;
+
+            //code for the 1-2-3 ranks		
+            if (counterX == 0) {
+                rankVariable = '<div class="head-th number-b act1"> <img src="images/ranks/leaders1.png" height="30" width="30" alt=""> </div>';
+            }
+            else if (counterX == 1) {
+                rankVariable = ' <div class="head-th number-b act2"> <img src="images/ranks/leaders2.png" height="30" width="30" alt=""> </div>';
+            }
+            else if (counterX == 2) {
+                rankVariable = ' <div class="head-th number-b act3">  <img src="images/ranks/leaders3.png" height="30" width="30" alt=""> </div>';
+            }
+            else {
+                rankVariable = '<div class="head-th number-b"> <p>' + (counterX + 1) + '</p></div>';
+            }
+            //let user = getUserAddress(tronWeb.address.fromHex(obj.user));		
+            let user = obj.user;
+            var color = obj.color;
+            var level = obj.level;
+            if (level == 9999) {
+                level = " [Lvl MOD]";
+            } else {
+                level = " [Lvl " + obj.level + "]";
+            }
+            /* 1st position:  "dividend * 0.5 /100 * 50 /100"  and so on. */
+            // if(val[0]==true){		
+            //     payout = dividend * 5 * levelPercentages(counterX) / 1000;		
+            //     payout = number_to_2decimals(payout.toString());		
+            //     //payout = payout.slice(0, (payout.indexOf("."))+3);		
+            // }else{		
+            //     payout = 0;		
+            // }		
+            user = '<span style="color:' + color + '">' + user + level + '</span>';
+            minersLeaderboardHTML += ' <li class="dt-tbs">     <div class="row">    <div class="col-md-2 col-sm-2 col-xs-2">    ' + rankVariable + '  </div>   <div class="col-md-5 col-sm-5 col-xs-5">      <div class="head-th">   <p> ' + user + ' </p>    </div>     </div>  <div class="col-md-3 col-sm-3 col-xs-3">   <div class="head-th">   <p>' + obj.topia + ' TOPIA</p>    </div>    </div>   <div class="col-md-2 col-sm-2 col-xs-2">   <div class="head-th poit">  <p>' + obj.reward + ' <span>TRX</span></p>   </div>   </div>   </div>   </li> ';
+
+
+            counterX++;
+        });
+    }
+
+    static async getKingTopians() {
+
+        //kingtopian table data
+        let dividend = await DividentContract.displayAvailableDividendALL();
+        let kingTopianResult = await HTTP.GET("https://www.trontopia.co/api/kingtopian2.php");
+
+        var resultking = kingTopianResult.data;
+        resultking.sort(function (a, b) {
+            return a.trxplayed - b.trxplayed
+        });
+
+        for (let i = 0; i < resultking.length; i++) {
+            let item = resultking[i];
+
+            if (i <= 10) {
+            }
+        }
+
+        let payout = dividend * 5 * this.levelPercentages(1) / 1000;
+
+        resultking.reverse();
+
+        return resultking;
+        // $.get("api/kingtopian2.php", function (data, status) {
+        //     //$("#sr-table").empty();
+        //     data = JSON.parse(data);
+        //     if (data.result == true) {
+        //         var resultking = data.data;
+        //         resultking.sort(function (a, b) {
+        //             return a.trxplayed - b.trxplayed
+        //         });
+
+        //         resultking.reverse();
+        //         var counterX = 0;
+        //         var rankVariable;
+        //         var kingtopianLeaderboardHTML = ' <li class="head-at"> <div class="row">  <div class="col-md-2 col-sm-2 col-xs-2">      <div class="head-th">   <p>Rank</p>   </div>   </div>   <div class="col-md-5 col-sm-5 col-xs-5">    <div class="head-th">         <p>Player</p>     </div>      </div>     <div class="col-md-3 col-sm-3 col-xs-3">   <div class="head-th">     <p>Total Played</p>  </div>     </div>     <div class="col-md-2 col-sm-2 col-xs-2">     <div class="head-th">    <p>Prize</p>   </div>   </div>    </div>  </li> ';
+
+        //         $.each(resultking, function (key, obj) {
+        //             key = parseInt(key) + 1;
+
+        //             if (key <= 10) {
+
+        //                 //code for the 1-2-3 ranks
+        //                 if (counterX == 0) {
+        //                     rankVariable = '<div class="head-th number-b act1"> <img src="images/ranks/leaders1.png" height="30" width="30" alt=""> </div>';
+        //                 }
+        //                 else if (counterX == 1) {
+        //                     rankVariable = ' <div class="head-th number-b act2"> <img src="images/ranks/leaders2.png" height="30" width="30" alt=""> </div>';
+        //                 }
+        //                 else if (counterX == 2) {
+        //                     rankVariable = ' <div class="head-th number-b act3">  <img src="images/ranks/leaders3.png" height="30" width="30" alt=""> </div>';
+        //                 }
+        //                 else {
+        //                     rankVariable = '<div class="head-th number-b"> <p>' + (counterX + 1) + '</p></div>';
+        //                 }
+        //                 let user = obj.user;
+
+        //                 var color = obj.color;
+        //                 var level = obj.level
+        //                 if (level == 9999) {
+        //                     level = " [Lvl MOD]";
+        //                 } else {
+        //                     level = " [Lvl " + obj.level + "]";
+        //                 }
+        //                 //let user = getUserAddress(tronWeb.address.fromHex(obj.user));
+        //                 if (val[0] == true) {
+        //                     payout = dividend * 5 * levelPercentages(counterX) / 1000;
+        //                     payout = number_to_2decimals(payout.toString());
+        //                     //payout = payout.slice(0, (payout.indexOf("."))+3);
+        //                 } else {
+        //                     payout = 0;
+        //                 }
+
+
+        //                 user = '<span style="color:' + color + '">' + user + level + '</span>';
+
+        //                 /* 1st position:  "dividend * 0.5 /100 * 50 /100"  and so on. */
+
+        //                 kingtopianLeaderboardHTML += ' <li class="dt-tbs">     <div class="row">    <div class="col-md-2 col-sm-2 col-xs-2">    ' + rankVariable + '  </div>   <div class="col-md-5 col-sm-5 col-xs-5">      <div class="head-th">   <p> ' + user + ' </p>    </div>     </div>  <div class="col-md-3 col-sm-3 col-xs-3">   <div class="head-th">   <p>' + obj.trxplayed + ' TRX</p>    </div>    </div>   <div class="col-md-2 col-sm-2 col-xs-2">   <div class="head-th poit">  <p>' + payout + ' <span>TRX</span></p>   </div>   </div>   </div>   </li> ';
+
+        //             }
+        //             counterX++;
+        //         });
+
+
+        //         $("#kingtopianLeaderboardX").html(kingtopianLeaderboardHTML);
+
+        //     } else {
+        //         $("#kingtopianLeaderboardX").html(data.msg);
+        //     }
+        // })
+    }
 
     static async highRollersData() {
         if (highRollersData_running) return;
@@ -451,8 +633,8 @@ class UserHelper {
     }
 
     static async myBetsData() {
-       let address = 'TDgXW4khtUe1eEKDhEC6p7PEeLNNLUCVMZ'; // let address = store.state.userAddress.substring(2);
-        let response = await HTTP.GET("https://www.trontopia.co/api/mybets.php?user=" +address);
+        let address = 'TDgXW4khtUe1eEKDhEC6p7PEeLNNLUCVMZ'; // let address = store.state.userAddress.substring(2);
+        let response = await HTTP.GET("https://www.trontopia.co/api/mybets.php?user=" + address);
         //data = JSON.parse(data);
         try {
             if (response.result == true) {
@@ -538,7 +720,7 @@ class UserHelper {
         store.commit('SET_MY_TOTAL_TOKENS', totalTokens);
         store.commit('SET_MY_AVALIABLE_TOKENS', avaliableTokens);
 
-        setTimeout(this.myBetsData,3000);
+        setTimeout(this.myBetsData, 3000);
     }
 
     static Logout() {

@@ -9,7 +9,7 @@ class SoundService {
     }
 
     static toggleSound() {
-        cache.setSoundPreferenceisOn(!store.state.soundIsOn);
+        cache.setSoundPreference(!store.state.soundIsOn);
         store.commit('SET_SOUND_STATE', !store.state.soundIsOn);
     }
 

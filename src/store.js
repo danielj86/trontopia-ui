@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     userAddress: "",
     userAddressHex: "",
+    dividendTimeout:"",
     loggedIn: false,
     diceRolling: false,
     soundIsOn: false,
@@ -21,6 +22,11 @@ export default new Vuex.Store({
     leaderTabs:{
       activeTab:'chat'
     },
+    tokenMinters:{},
+    topLeaders:{
+      activeTab:'topian'
+    },
+    totalBets:{},
     totals: {
       myTotalWon: 0,
       myTotalToken: 0,
@@ -133,7 +139,14 @@ export default new Vuex.Store({
     },
     SET_SIDE_BET_TYPE(state,type){
       state.bet.sidebetType = type;
+    },
+    SET_TOKEN_MINTERS(state,tokenMinters){
+      state.tokenMinters = tokenMinters;
+    },
+    SET_TOTAL_BETS(state,totalBets){
+      state.totalBets = totalBets;
     }
+
   },
   actions
 });

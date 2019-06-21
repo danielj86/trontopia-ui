@@ -48,7 +48,7 @@
               A total of
               <span id="totalFrozenTopia">0</span> TOPIA is frozen across the network - You will receive
               <span id="approxUserDividends">0</span> TRX Dividends Countdown:
-              <span id="dividendCountdown"></span>
+              <span id="dividendCountdown">0</span>
             </p>
             <p id="frzDiv" style="display:none;">
               A total of

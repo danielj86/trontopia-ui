@@ -11,20 +11,29 @@
     </div>
 
     <div class="col-md-8 col-sm-7">
-      
       <div class="headlines-box dice-hedln desktopmode">
         <div class="headline-bx dice-head">
           <p>BETS MADE</p>
-          <label id="myBetVals">{{$store.state.totals.myTotalBets}}</label>
+          <label id="myBetVals">{{$store.state.totalBets.totalbets}}</label>
 
           <p>TOPIA</p>
           <label id="myTotalToken">{{$store.state.totals.myTotalToken}}</label>
 
           <p>Total Won</p>
-          <label id="myTotalWon">{{$store.state.totals.myTotalWon}}</label>
+          <label id="myTotalWon">{{$store.state.totalBets.totalWin}}</label>
           <p>
-            <img v-if="$store.state.soundIsOn" src='../assets/images/sound_on.png' id="sound-icon" @click="toggleSound">
-             <img v-if="!$store.state.soundIsOn" src='../assets/images/sound_off.png' id="sound-icon" @click="toggleSound">
+            <img
+              v-if="$store.state.soundIsOn"
+              src="../assets/images/sound_on.png"
+              id="sound-icon"
+              @click="toggleSound"
+            >
+            <img
+              v-if="!$store.state.soundIsOn"
+              src="../assets/images/sound_off.png"
+              id="sound-icon"
+              @click="toggleSound"
+            >
           </p>
         </div>
       </div>
@@ -56,15 +65,20 @@
   </div>
 </template>
 <script>
-
-import SoundService from '../services/soundsService';
+import SoundService from "../services/soundsService";
+import UserService from "../services/userService";
 
 export default {
   name: "Header",
   props: {},
-  computed:{},
-  methods:{
-    toggleSound(){
+  computed: {},
+  mounted: () => {
+    setInterval(async () => {
+      await UserService.getgameStats();
+    }, 5000);
+  },
+  methods: {
+    toggleSound() {
       SoundService.toggleSound();
     }
   }

@@ -11,6 +11,7 @@ class UltimateDiceContract {
 
     static async getContractInstance() {
         if (contractInstance == null) {
+            let cAddress = options.testnet.ultimateDiceContractAddress;
             let contractInfo = await window.tronWeb.trx.getContract(options.testnet.ultimateDiceContractAddress);
             contractInstance = await window.tronWeb.contract(contractInfo.abi.entrys, contractInfo.contract_address);
         }
