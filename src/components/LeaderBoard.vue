@@ -617,126 +617,147 @@ export default {
         success: myCallback
       });
 
-       if(global.userSigned==true){
-    var message = $('#message').val();
-    if(message==''){
-        return true;
-    }
-    if(message!='' || message.length==0){
-       
-        var user,useraddress;
-        var d = new Date();
-        var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-        var nd = new Date(utc);
-        if(global.username!=''){
+      if (global.userSigned == true) {
+        var message = $("#message").val();
+        if (message == "") {
+          return true;
+        }
+        if (message != "" || message.length == 0) {
+          var user, useraddress;
+          var d = new Date();
+          var utc = d.getTime() + d.getTimezoneOffset() * 60000;
+          var nd = new Date(utc);
+          if (global.username != "") {
             user = global.username;
             useraddress = global.userAddress;
-        }else{
+          } else {
             user = getUserAddress(global.userAddress);
             useraddress = global.userAddress;
-        }
-        
+          }
 
-        var postData = 'useraddress='+ useraddress +'&user='+ user + '&message='+message;
-        //var d = new Date();
-        var h = nd.getHours();
-        var m = nd.getMinutes();
-        if(m<10){m='0'+m;}
-        var s = nd.getSeconds();
-        if(s<10){s='0'+s;}
-        var time = h+':'+m+':'+s;
-        myChatTime = time;
-        myLastChat = message;
-        if(message!=''){
-            var image = '';
-            if(global.level==9999){
-                level = " [Lvl MOD]";
-             }else{
-                level = " [Lvl " + global.level + "]";
-             }
-            username = '<span style="color:'+global.color+'">'+user+level +' : </span>';
-            if(global.image_url!=''){
-                image = '<img src="'+global.image_url+'" height="40" width="40">';
+          var postData =
+            "useraddress=" +
+            useraddress +
+            "&user=" +
+            user +
+            "&message=" +
+            message;
+          //var d = new Date();
+          var h = nd.getHours();
+          var m = nd.getMinutes();
+          if (m < 10) {
+            m = "0" + m;
+          }
+          var s = nd.getSeconds();
+          if (s < 10) {
+            s = "0" + s;
+          }
+          var time = h + ":" + m + ":" + s;
+          myChatTime = time;
+          myLastChat = message;
+          if (message != "") {
+            var image = "";
+            if (global.level == 9999) {
+              level = " [Lvl MOD]";
+            } else {
+              level = " [Lvl " + global.level + "]";
             }
-              var str = '<li id="divsndID" class="snd"><div>'+image+'<strong>'+username+'</strong>'+message+'</div> <div> <span class="chat-time">'+ time + '</span> </div></li>';
+            username =
+              '<span style="color:' +
+              global.color +
+              '">' +
+              user +
+              level +
+              " : </span>";
+            if (global.image_url != "") {
+              image =
+                '<img src="' + global.image_url + '" height="40" width="40">';
+            }
+            var str =
+              '<li id="divsndID" class="snd"><div>' +
+              image +
+              "<strong>" +
+              username +
+              "</strong>" +
+              message +
+              '</div> <div> <span class="chat-time">' +
+              time +
+              "</span> </div></li>";
 
             //var str = '<li class="snd"><div><strong>'+user+':</strong>'+message+'</div> <div><span class="chat-time">'+ time + '</span> </div></li>';
 
-            var ban = message.substring(0,4);
-            var muted = message.substring(0,5);
-            if(ban=='/ban' || muted=='/mute'){
-               $('#message').val('');
-                alertify.success('User Banned/Muted.');
-            }else{
-                $('#chatDiv').append(str);
-                $('#tab7').scrollTop($('#chatDiv').height());     
+            var ban = message.substring(0, 4);
+            var muted = message.substring(0, 5);
+            if (ban == "/ban" || muted == "/mute") {
+              $("#message").val("");
+              alertify.success("User Banned/Muted.");
+            } else {
+              $("#chatDiv").append(str);
+              $("#tab7").scrollTop($("#chatDiv").height());
             }
-            
-        }
-        $.ajax({
+          }
+          $.ajax({
             url: "api/sendchat.php",
             type: "post",
             data: postData,
             statusCode: {
-                400: function() {
-                    console.log( "400 Bad Request" );
-                    return false;
-                },
-                403: function(){
-                    console.log('403 Forbidden');
-                    return false;
-                },
-                404: function() {
-                  console.log( "404 Not Found" );
-                  return false;
-                },
-                500: function() {
-                    console.log("500 Internal Server Error");
-                },
-                502: function() {
-                  console.log( "502 Bad request" );
-                  return false;
-                },
-                503: function() {
-                  console.log( "503 Service Unavailable" );
-                  return false;
-                },
-                504: function() {
-                  console.log( "504 Gateway Timeout" );
-                  return false;
-                }
-        
+              400: function() {
+                console.log("400 Bad Request");
+                return false;
               },
+              403: function() {
+                console.log("403 Forbidden");
+                return false;
+              },
+              404: function() {
+                console.log("404 Not Found");
+                return false;
+              },
+              500: function() {
+                console.log("500 Internal Server Error");
+              },
+              502: function() {
+                console.log("502 Bad request");
+                return false;
+              },
+              503: function() {
+                console.log("503 Service Unavailable");
+                return false;
+              },
+              504: function() {
+                console.log("504 Gateway Timeout");
+                return false;
+              }
+            },
             success: function(data) {
-                data = JSON.parse(data);
-                if(data.result==true){
-                    $('#sendChat').attr('disabled',true);
-                    myLastChatID.push(data.lastid);
-                    setTimeout(function(){
-                        $('#sendChat').attr('disabled',false);
-                    },3000);
-                }
+              data = JSON.parse(data);
+              if (data.result == true) {
+                $("#sendChat").attr("disabled", true);
+                myLastChatID.push(data.lastid);
+                setTimeout(function() {
+                  $("#sendChat").attr("disabled", false);
+                }, 3000);
+              }
 
-                if(data.result==false){
-                    if(data.msg!=''){
-                        alertify.error(data.msg);
-                    }
-                    $('#divsndID').remove();
+              if (data.result == false) {
+                if (data.msg != "") {
+                  alertify.error(data.msg);
                 }
-                
+                $("#divsndID").remove();
+              }
             }
-        }); 
-        $('#message').val('');
-    }
-}else{
-    var hex = tronWeb.toHex('trontopia');
-    hex = hex.substring(2);
-    var signed = await tronWeb.trx.sign(hex);
-    if(signed!=''){
-        global.userSigned = true;
-        $('#sendChat').trigger('click');
-    }
-}
+          });
+          $("#message").val("");
+        }
+      } else {
+        var hex = tronWeb.toHex("trontopia");
+        hex = hex.substring(2);
+        var signed = await tronWeb.trx.sign(hex);
+        if (signed != "") {
+          global.userSigned = true;
+          $("#sendChat").trigger("click");
+        }
+      }
     }
   },
   mounted: async function() {

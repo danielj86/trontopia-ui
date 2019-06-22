@@ -34,8 +34,8 @@
           <div class="row" id="numView">
             <BettingBox/>
             <LeaderBoard/>
-            <BestTabuler/>
           </div>
+          <BestTabuler/>
         </div>
 
         <!-- End Main Content -->

@@ -7,9 +7,9 @@ class UserHelper {
 
     static async getgameStats() {
         let betsWinResult = await HTTP.GET("https://www.trontopia.co/api/getBetsWin.php");
-        store.commit('SET_TOTAL_BETS',{
-            totalbets:data.totalbets,
-            totalWin:data.totalWin
+        store.commit('SET_TOTAL_BETS', {
+            totalbets: betsWinResult.totalbets,
+            totalWin: betsWinResult.totalWin
         });
     }
 
@@ -227,120 +227,53 @@ class UserHelper {
     }
 
     static async allSideBetsData() {
-        if (allSideBetsData_running) return;
-        allSideBetsData_running = true;
 
-        try {
-            $.get("api/allsidebets.php", function (data, status) {
-                try {
-                    data = JSON.parse(data);
-                    if (data.result == true) {
-                        var resultking = data.data;
+        let highRillersResult = await HTTP.GET("https://www.trontopia.co/api/allsidebets.php");
 
-                        var rowBoarderColorClass;
-                        var allSideBetsTableHTML = ' <div class="table-bets"><ul>    <li class="head-at"><div class="row">   <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">   <p>Time</p>      </div>    </div>     <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">   <p>Player</p>     </div>     </div>  <div class="col-md-2 col-sm-2 col-xs-2">   <div class="head-th">  <p>Prediction</p>     </div>  </div>   <div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th">   <p>Lucky Number</p>     </div>   </div>     <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">   <p>Bets</p>     </div>    </div>    <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">      <p>Payout</p>        </div>     </div>   </div>   </li>';
+        let data = highRillersResult.data;
 
-                        $.each(resultking, function (key, obj) {
-                            var result = obj.result;
-                            if (result == "true") {
-                                rowBoarderColorClass = "safe";
-                                payout = obj.winamount / 1000000;
-                                payout = payout.toFixed(2);
-                                //payout = payout.toString(); 
-                                //payout = payout.slice(0, (payout.indexOf("."))+3);
-                                payout += " <span>TRX</span>";
-                            } else {
-                                rowBoarderColorClass = "redalt";
-                                payout = '-';
-                            }
+        for (let i = 0; i < data.length; i++) {
 
-                            let user = getUserAddress(tronWeb.address.fromHex(obj.user));
-                            if (obj.bet != 0) {
+            let item = data[i];
+            item.result = item.result == 'true';
 
-                                allSideBetsTableHTML += '<li class="dt-tbs ' + rowBoarderColorClass + '"><div class="row"><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + obj.timestamp + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + user + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + obj.sidebet + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + obj.winningNumber + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th poit"><p> ' + obj.bet + ' <span>TRX</span></p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th poit"><p> ' + payout + ' </p></div></div></div></li>';
+            if (item.result) {
 
-                            }
-                        });
-
-                        allSideBetsTableHTML += '</ul></div>';
-
-                        $("#bet5").html(allSideBetsTableHTML);
-
-                    } else {
-
-                        $("#bet5").html('<div class="text-center" style="color: #fff; padding: 60px;">' + data.msg + '</div>');
-                    }
-                }
-                catch (e) {
-                    console.error(e);
-                    console.error("Failed to parse all side bets data");
-                }
-                allSideBetsData_running = false;
-            });
+                let multiplier = this.getMultiplier(item.startNumber, item.endNumber);
+                let payout = multiplier * item.bet;
+                item.payout = payout.toFixed(2) + ' TRX';
+            }
+            else{
+                item.payout = '-';
+            }
         }
-        catch (e) {
-            console.error(e);
-            console.error("Failed to fetch all side bets data");
-            allSideBetsData_running = false;
-        }
+
+        return data;
     }
 
     static async rareWinsData() {
-        if (rareWinsData_running) return;
-        rareWinsData_running = true;
+        
+        let highRillersResult = await HTTP.GET("https://www.trontopia.co/api/rarewins.php");
 
-        try {
-            $.get("api/rarewins.php", function (data, status) {
-                try {
-                    data = JSON.parse(data);
-                    if (data.result == true) {
-                        var resultking = data.data;
+        let data = highRillersResult.data;
 
-                        var rowBoarderColorClass;
-                        var rareWinsTableHTML = ' <div class="table-bets"><ul>    <li class="head-at"><div class="row">   <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">   <p>Time</p>      </div>    </div>     <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">   <p>Player</p>     </div>     </div>  <div class="col-md-2 col-sm-2 col-xs-2">   <div class="head-th">  <p>Prediction</p>     </div>  </div>   <div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th">   <p>Lucky Number</p>     </div>   </div>     <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">   <p>Bets</p>     </div>    </div>    <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">      <p>Payout</p>        </div>     </div>   </div>   </li>';
+        for (let i = 0; i < data.length; i++) {
 
-                        $.each(resultking, function (key, obj) {
-                            var result = obj.result;
-                            if (result == "true") {
-                                rowBoarderColorClass = "safe";
-                                let multiplier = getMultiplier(obj.startNumber, obj.endNumber);
-                                var payout = multiplier * obj.bet;
-                                payout = payout.toFixed(2);
-                                //payout = payout.toString(); 
-                                //payout = payout.slice(0, (payout.indexOf("."))+3);
-                                payout += " <span>TRX</span>";
+            let item = data[i];
+            item.result = item.result == 'true';
 
-                            } else {
-                                rowBoarderColorClass = "redalt";
-                                payout = '-';
-                            }
+            if (item.result) {
 
-                            let user = getUserAddress(tronWeb.address.fromHex(obj.user));
-                            rareWinsTableHTML += '<li class="dt-tbs ' + rowBoarderColorClass + '"><div class="row"><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + obj.timestamp + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + user + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + obj.startNumber + " - " + obj.endNumber + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + obj.winningNumber + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th poit"><p> ' + obj.bet + ' <span>TRX</span></p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th poit"><p> ' + payout + ' </p></div></div></div></li>';
-
-                        });
-
-                        rareWinsTableHTML += '</ul></div>';
-
-                        $("#bet4").html(rareWinsTableHTML);
-
-                    } else {
-
-                        $("#bet4").html('<div class="text-center" style="color: #fff; padding: 60px;">' + data.msg + '</div>');
-                    }
-                }
-                catch (e) {
-                    console.error(e);
-                    console.error("Failed to parse rare wins data");
-                }
-                rareWinsData_running = false;
-            });
+                let multiplier = this.getMultiplier(item.startNumber, item.endNumber);
+                let payout = multiplier * item.bet;
+                item.payout = payout.toFixed(2) + ' TRX';
+            }
+            else{
+                item.payout = '-';
+            }
         }
-        catch (e) {
-            console.error(e);
-            console.error("Failed to fetch rare wins data");
-            rareWinsData_running = false;
-        }
+
+        return data;
     }
 
     static levelPercentages(i) {
@@ -514,122 +447,52 @@ class UserHelper {
     }
 
     static async highRollersData() {
-        if (highRollersData_running) return;
-        highRollersData_running = true;
 
-        try {
-            $.get("api/highrollers.php", function (data, status) {
-                try {
-                    data = JSON.parse(data);
-                    if (data.result == true) {
-                        var resultking = data.data;
+        let highRillersResult = await HTTP.GET("https://www.trontopia.co/api/highrollers.php");
 
-                        var rowBoarderColorClass;
-                        var highRollersTableHTML = ' <div class="table-bets"><ul>    <li class="head-at"><div class="row">   <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">   <p>Time</p>      </div>    </div>     <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">   <p>Player</p>     </div>     </div>  <div class="col-md-2 col-sm-2 col-xs-2">   <div class="head-th">  <p>Prediction</p>     </div>  </div>   <div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th">   <p>Lucky Number</p>     </div>   </div>     <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">   <p>Bets</p>     </div>    </div>    <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">      <p>Payout</p>        </div>     </div>   </div>   </li>';
+        let data = highRillersResult.data;
 
-                        $.each(resultking, function (key, obj) {
-                            var result = obj.result;
-                            if (result == "true") {
-                                rowBoarderColorClass = "safe";
-                                let multiplier = getMultiplier(obj.startNumber, obj.endNumber);
-                                var payout = multiplier * obj.bet;
-                                payout = payout.toFixed(2);
-                                //payout = payout.toString(); 
-                                //payout = payout.slice(0, (payout.indexOf("."))+3);
-                                payout += " <span>TRX</span>";
+        for (let i = 0; i < data.length; i++) {
 
-                            } else {
-                                rowBoarderColorClass = "redalt";
-                                payout = '-';
-                            }
+            let item = data[i];
+            item.result = item.result == 'true';
 
-                            let user = getUserAddress(tronWeb.address.fromHex(obj.user));
+            if (item.result) {
 
-                            /* 1st position:  "dividend * 0.5 /100 * 50 /100"  and so on. */
-
-                            highRollersTableHTML += '<li class="dt-tbs ' + rowBoarderColorClass + '"><div class="row"><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + obj.timestamp + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + user + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + obj.startNumber + " - " + obj.endNumber + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + obj.winningNumber + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th poit"><p> ' + obj.bet + ' </p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th poit"><p> ' + payout + ' <span>TRX</span></p></div></div></div></li>';
-
-                        });
-
-                        highRollersTableHTML += '</ul></div>';
-
-                        $("#bet3").html(highRollersTableHTML);
-
-                    } else {
-
-                        $("#bet3").html('<div class="text-center" style="color: #fff; padding: 60px;">' + data.msg + '</div>');
-                    }
-                }
-                catch (e) {
-                    console.error(e);
-                    console.error("Failed to parse high rollers data.");
-                }
-                highRollersData_running = false;
-            });
+                let multiplier = this.getMultiplier(item.startNumber, item.endNumber);
+                let payout = multiplier * item.bet;
+                item.payout = payout.toFixed(2) + ' TRX';
+            }
+            else{
+                item.payout = '-';
+            }
         }
-        catch (e) {
-            console.error(e);
-            console.error("Failed to fetch high rollers data");
-            highRollersData_running = false;
-        }
+
+        return data;
     }
 
     static async allBetsData() {
-        try {
-            $.get("api/allbets.php", function (data, status) {
-                try {
-                    data = JSON.parse(data);
-                    if (data.result == true) {
-                        $('#tab_2').empty();
-                        var resultking = data.data;
+        let betsWinResult = await HTTP.GET("https://www.trontopia.co/api/allbets.php");
 
-                        var rowBoarderColorClass;
-                        var allBetTableHTML = ' <div class="table-bets"><ul>    <li class="head-at"><div class="row">   <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">   <p>Time</p>      </div>    </div>     <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">   <p>Player</p>     </div>     </div>  <div class="col-md-2 col-sm-2 col-xs-2">   <div class="head-th">  <p>Prediction</p>     </div>  </div>   <div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th">   <p>Lucky Number</p>     </div>   </div>     <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">   <p>Bets</p>     </div>    </div>    <div class="col-md-2 col-sm-2 col-xs-2">    <div class="head-th">      <p>Payout</p>        </div>     </div>   </div>   </li>';
 
-                        $.each(resultking, function (key, obj) {
-                            var result = obj.result;
-                            if (result == "true") {
-                                rowBoarderColorClass = "safe";
-                                let multiplier = getMultiplier(obj.startNumber, obj.endNumber);
-                                var payout = multiplier * obj.bet;
-                                payout = payout.toFixed(2);
-                                //payout = payout.toString(); 
-                                //payout = payout.slice(0, (payout.indexOf("."))+3);
-                                payout += " <span>TRX</span>";
-                            }
-                            else {
-                                rowBoarderColorClass = "redalt";
-                                //payout = '-'+obj.bet;
-                                payout = '-';
-                            }
+        for (let i = 0; i < betsWinResult.data.length; i++) {
 
-                            let user = getUserAddress(tronWeb.address.fromHex(obj.user));
+            let item = betsWinResult.data[i];
+            item.result = item.result == 'true';
 
-                            allBetTableHTML += '<li class="dt-tbs ' + rowBoarderColorClass + '"><div class="row"><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + obj.timestamp + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + user + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + obj.startNumber + " - " + obj.endNumber + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th"><p>' + obj.winningNumber + '</p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th poit"><p> ' + obj.bet + ' <span>TRX</span></p></div></div><div class="col-md-2 col-sm-2 col-xs-2"><div class="head-th poit"><p> ' + payout + ' </p></div></div></div></li>';
-                        });
+            if (item.result) {
 
-                        allBetTableHTML += '</ul></div>';
-
-                        $("#bet2").html(allBetTableHTML);
-                    }
-                    else {
-                        $("#bet2").html('<div class="text-center" style="color: #fff; padding: 60px;">' + data.msg + '</div>');
-                    }
-                }
-                catch (e) {
-                    console.error(e);
-                    console.error("Parsing all bets data failed. Retrying in 2 seconds...");
-                    setTimeout(allbetsData, 2000);
-                }
-                allbetsData_running = false;
-            });
+                let multiplier = this.getMultiplier(item.startNumber, item.endNumber);
+                let payout = multiplier * item.bet;
+                item.payout = payout.toFixed(2) + ' TRX';
+            }
+            else{
+                item.payout = '-';
+            }
         }
-        catch (e) {
-            console.error(e);
-            console.error("Loading all bets data failed. Retrying in 2 seconds...");
-            setTimeout(allbetsData, 2000);
-            allbetsData_running = false;
-        }
+
+        return betsWinResult.data;
+        
     }
 
     static async myBetsData() {
